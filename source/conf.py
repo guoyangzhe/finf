@@ -64,7 +64,7 @@ html_theme_options = {
     'navigation_depth': 3,
     'includehidden': True,
     'titles_only': False,
-    'style_nav_header_background': '#c4b768',
+    'style_nav_header_background': '#3d3f47',
     # 'github_url': 'https://github.com/ngaodut/scibro'
     # Remove the line that sets body_max_width to Auto
     }
