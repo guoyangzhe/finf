@@ -12,11 +12,11 @@ sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
-project = 'SciBro'
-copyright = f'{datetime.date.today().year}, blgxwk, gndut@outlook.com'
+project = 'finf'
+copyright = f'{datetime.date.today().year}, finf, kwok3626@gmail.me'
 #copyright =f '2023blgxwk, gudut@outlook.com, gn, Last updated on {datetime.date.today().year}'
-author = 'gn'
-version = 'v0.1 stable'
+author = 'Kwok'
+version = 'v0.1'
 release = version
 
 # -- General configuration ---------------------------------------------------
@@ -64,7 +64,7 @@ html_theme_options = {
     'navigation_depth': 3,
     'includehidden': True,
     'titles_only': False,
-    'style_nav_header_background': '#663d74',
+    'style_nav_header_background': '#c4b768',
     # 'github_url': 'https://github.com/ngaodut/scibro'
     # Remove the line that sets body_max_width to Auto
     }
@@ -75,12 +75,12 @@ html_theme_options = {
 
 html_context = {
     'display_github': True,
-    'github_user': 'ngaodut',
-    'github_repo': 'scibro',
+    'github_user': 'guoyangzhe',
+    'github_repo': 'finf',
     'github_version': 'master',
     }
 
-html_title = 'SciBro'
+html_title = 'finf'
 
 html_favicon = 'favicon.png' # 或者 'favicon.ico'
 html_logo = "../media/rest-syntax/pic-video/logo-1.png"
