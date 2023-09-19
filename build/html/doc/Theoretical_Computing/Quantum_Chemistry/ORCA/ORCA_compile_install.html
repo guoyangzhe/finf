@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORCA编译与安装 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="SLURM script file for ORCA" href="SLURM_for_ORCA.html" />
+    <link rel="prev" title="ORCA 相关" href="../orca.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../TheoreticalComputing.html">Quantum Chemistry</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../gaussian.html">Gaussain 相关</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../orca.html">ORCA 相关</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ORCA编译与安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SLURM_for_ORCA.html">SLURM script file for ORCA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../TheoreticalComputing.html">Quantum Chemistry</a></li>
+          <li class="breadcrumb-item"><a href="../orca.html">ORCA 相关</a></li>
+      <li class="breadcrumb-item active">ORCA编译与安装</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical_Computing/Quantum_Chemistry/ORCA/ORCA_compile_install.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="orca">
+<h1>ORCA编译与安装<a class="headerlink" href="#orca" title="Link to this heading"></a></h1>
+<section id="openmpi">
+<h2>1. 安装Openmpi<a class="headerlink" href="#openmpi" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>准备软件安装包：</p></li>
+<li><p>解压缩<code class="docutils literal notranslate"><span class="pre">openmpi-4.1.1.tar.gz</span></code>，得到<code class="docutils literal notranslate"><span class="pre">openmpi-4.1.1</span></code>文件夹，将其放置于<code class="docutils literal notranslate"><span class="pre">/opt/libraries</span></code>目录下。</p></li>
+<li><p>编译安装：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/opt/libraries/openmpi-4.1.1
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/libraries/gnu8-openmpi/4.1.1<span class="w"> </span>--disable-builtin-atomics
+make<span class="w"> </span>-j<span class="w"> </span>
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>环境变量设置：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/libraries/gnu8-openmpi/4.1.1/bin
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/opt/libraries/gnu8-openmpi/4.1.1/lib
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>测试：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mpirun<span class="w"> </span>-np<span class="w"> </span><span class="m">2</span><span class="w"> </span>hostname
+</pre></div>
+</div>
+<p>如果输出了两个主机名，则说明安装成功。</p>
+</section>
+<section id="id1">
+<h2>2. 安装ORCA<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>准备软件安装包：</p></li>
+<li><p>解压缩<code class="docutils literal notranslate"><span class="pre">orca_5_0_4_linux_x86-64_openmpi411_shared.tar.xz</span></code>，得到<code class="docutils literal notranslate"><span class="pre">orca_5_0_4_linux_x86-64_openmpi411_shared</span></code>文件夹，将其放置于<code class="docutils literal notranslate"><span class="pre">/opt/apps</span></code>目录下。</p></li>
+<li><p>环境变量设置：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/apps/orca504_shared_openmpi411/
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/opt/apps/orca504_shared_openmpi411/
+<span class="nb">alias</span><span class="w"> </span><span class="nv">orca</span><span class="o">=</span><span class="s1">&#39;/opt/apps/orca504_shared_openmpi411/orca&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>测试：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>orca<span class="w"> </span>-h
+</pre></div>
+</div>
+<p>如果输出了帮助信息，则说明安装成功。</p>
+</section>
+<section id="id2">
+<h2>3. 最终的环境变量设置<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Openmpi4.1.1#</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/libraries/gnu8-openmpi/4.1.1/bin
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/opt/libraries/gnu8-openmpi/4.1.1/lib
+<span class="c1">#ORCA5.0.4#</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/apps/orca504_shared_openmpi411/
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/opt/apps/orca504_shared_openmpi411/
+<span class="nb">alias</span><span class="w"> </span><span class="nv">orca</span><span class="o">=</span><span class="s1">&#39;/opt/apps/orca504_shared_openmpi411/orca&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="test">
+<h2>4. 运行一个test<a class="headerlink" href="#test" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!<span class="w"> </span>BLYP<span class="w"> </span>def2-SVP<span class="w"> </span>noautostart<span class="w"> </span>miniprint<span class="w"> </span>pal4
+*<span class="w"> </span>xyz<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span>
+C<span class="w"> </span><span class="m">0</span>.00000000<span class="w"> </span><span class="m">0</span>.00000000<span class="w"> </span>-0.56221066
+H<span class="w"> </span><span class="m">0</span>.00000000<span class="w"> </span>-0.92444767<span class="w"> </span>-1.10110537
+H<span class="w"> </span>-0.00000000<span class="w"> </span><span class="m">0</span>.92444767<span class="w"> </span>-1.10110537
+O<span class="w"> </span><span class="m">0</span>.00000000<span class="w"> </span><span class="m">0</span>.00000000<span class="w"> </span><span class="m">0</span>.69618930
+*
+</pre></div>
+</div>
+<p>将以上信息保存为<code class="docutils literal notranslate"><span class="pre">test.inp</span></code>，然后运行</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>orca<span class="w"> </span>test.inp<span class="w"> </span>&gt;<span class="w"> </span>test.out
+</pre></div>
+</div>
+<p>查看输出文件<code class="docutils literal notranslate"><span class="pre">test.out</span></code>，如果最后一行是<code class="docutils literal notranslate"><span class="pre">ORCA</span> <span class="pre">TERMINATED</span> <span class="pre">NORMALLY</span></code>，则说明运行成功。</p>
+<p>并行计算</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mpirun<span class="w"> </span>-np<span class="w"> </span><span class="si">${</span><span class="nv">NPROCS</span><span class="si">}</span><span class="w"> </span>orca<span class="w"> </span><span class="nv">$JOBNAME</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$OUTPUTNAME</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../orca.html" class="btn btn-neutral float-left" title="ORCA 相关" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="SLURM_for_ORCA.html" class="btn btn-neutral float-right" title="SLURM script file for ORCA" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

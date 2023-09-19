@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gromacs2018.8编译与安装🎉️ &mdash; SciBro v0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="主力软件推荐及分类" href="../%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html" />
+    <link rel="prev" title="Molecular Dynamics" href="../TheoreticalComputing3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/hpc.html">HPC 简易集群部署</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../TheoreticalComputing3.html">Molecular Dynamics</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Gromacs2018.8编译与安装🎉️</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. 安装依赖库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2. 安装gromacs2018.8</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html">主力软件推荐及分类</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/comsol%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">COMSOL 使用指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/%E8%A1%A8%E9%9D%A2%E7%AD%89%E7%A6%BB%E6%BF%80%E5%85%83.html">Surface Plasmon</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ProgramLanguages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/2-Python.html">Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/3-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">科研计算tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/1-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80Tips.html">编程语言 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/2-%E6%97%A5%E5%B8%B8%E5%8A%9E%E5%85%ACoffice.html">日常办公Office等 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/3-%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F.html">其他软件 Tips</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ACGN&amp;Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACGN%26Misc/%E4%BA%8C%E6%AC%A1%E5%85%83.html">二次元</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+      <li class="breadcrumb-item active">Gromacs2018.8编译与安装🎉️</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical Computing/Molecular_Dynamics/Gromacs2018.8编译与安装.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- TOC --><ul class="simple">
+<li><p><a class="reference external" href="#gromacs20188%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85%EF%B8%8F">Gromacs2018.8编译与安装🎉️</a></p>
+<ul>
+<li><p><a class="reference external" href="#1-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%BA%93">1. 安装依赖库</a></p></li>
+<li><p><a class="reference external" href="#2-%E5%AE%89%E8%A3%85gromacs20188">2. 安装gromacs2018.8</a></p></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC --><section id="gromacs2018-8">
+<h1>Gromacs2018.8编译与安装🎉️<a class="headerlink" href="#gromacs2018-8" title="Permalink to this heading"></a></h1>
+<section id="id1">
+<h2>1. 安装依赖库<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>安装fftw3.3.8</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>http://www.fftw.org/fftw-3.3.8.tar.gz
+tar<span class="w"> </span>-zxvf<span class="w"> </span>fftw-3.3.8.tar.gz
+<span class="nb">cd</span><span class="w"> </span>fftw-3.3.8
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span>--enable-shared<span class="w"> </span>--enable-threads<span class="w"> </span>--enable-openmp<span class="w"> </span>--enable-mpi<span class="w"> </span>--enable-sse2<span class="w"> </span>--enable-avx<span class="w"> </span>--enable-avx2<span class="w"> </span>--enable-avx512
+make<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>安装cmake3</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>
+tar<span class="w"> </span>-zxvf<span class="w"> </span>cmake-3.17.5.tar.gz
+<span class="nb">cd</span><span class="w"> </span>cmake-3.17.5
+./bootstrap<span class="w"> </span>--prefix<span class="o">=</span>/opt/apps/cmake-3.17.5
+make<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
+make<span class="w"> </span>install
+<span class="c1"># CebtOS 8.0系统自带cmake3，如果不需要安装，可以跳过这一步;CebtOS 7.0系统使用 yum install cmake3 安装</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>安装openmpi3.1.4</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-3.1.4.tar.gz
+tar<span class="w"> </span>-zxvf<span class="w"> </span>openmpi-3.1.4.tar.gz
+<span class="nb">cd</span><span class="w"> </span>openmpi-3.1.4
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/3.1.4<span class="w"> </span>--enable-mpi-cxx<span class="w"> </span>--enable-mpi-fortran<span class="w"> </span>--enable-mpi-thread-multiple<span class="w"> </span>--with-cuda<span class="o">=</span>/opt/apps/cuda-10.1<span class="w"> </span>--with-cuda-libdir<span class="o">=</span>/opt/apps/cuda-10.1/lib64
+make<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
+make<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>2. 安装gromacs2018.8<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>下载GROMACS 2018.8压缩包，然后将之解压。进入解压后的目录，在终端里依次运行</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+<span class="nb">export</span><span class="w"> </span><span class="nv">CMAKE_PREFIX_PATH</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8
+cmake3<span class="w"> </span>..<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/apps/gmx2018.8
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>（如果你是用的<code class="docutils literal notranslate"><span class="pre">CentOS</span> <span class="pre">8</span></code>，或者手动编译的<code class="docutils literal notranslate"><span class="pre">cmake</span></code>，这里<code class="docutils literal notranslate"><span class="pre">cmake3</span></code>改为<code class="docutils literal notranslate"><span class="pre">cmake</span></code>。另外，这一步运行后也仔细看看屏幕上的提示，了解当前<code class="docutils literal notranslate"><span class="pre">CPU</span></code>支持的最佳的<code class="docutils literal notranslate"><span class="pre">SIMD</span></code>指令集有没有正确判断对。如果你的CPU较新却用较老的GROMACS，可能支持的SIMD根本没识别出来，此时GROMACS的<code class="docutils literal notranslate"><span class="pre">mdrun</span></code>运行速度会非常慢）</p></li>
+</ul>
+<ul class="simple">
+<li><p>完成之后运行</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>install<span class="w"> </span>-j<span class="w">  </span><span class="c1">#Intel四核机子下，不到10分钟就能编译完毕。</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>此时程序就被编译和安装到了<code class="docutils literal notranslate"><span class="pre">/opt/apps/gmx2018.8</span></code>目录下。修改用户目录下的<code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>文件（比如运行<code class="docutils literal notranslate"><span class="pre">gedit</span> <span class="pre">~/.bashrc</span></code>），在末尾加入<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/opt/apps/gmx2018.8/bin/GMXRC</span></code>，然后保存。</p></li>
+<li><p>之后关闭终端窗口，再次打开终端，输入<code class="docutils literal notranslate"><span class="pre">gmx</span> <span class="pre">-version</span></code>，看看是否输出了<code class="docutils literal notranslate"><span class="pre">GROMACS的相关信息</span></code>，是的话就说明安装成功了。之后可以把GROMACS压缩包和解压出来的目录删掉。</p></li>
+</ul>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>_注意，在使用gmx mdrun跑任务时，如果一开始提示WARNING: Using the slow plain C kernels. This should not happen during routine usage on supported platforms，说明编译时没有利用CPU的SIMD指令集（正常情况理应自动检测并利用），这样编译出来的mdrun的运行速度往往比理想情况慢N倍。此时需要重新编译，在使用cmake3的时候明确指定要用的指令集，比如如果你的CPU支持AVX2指令集（XEON v3系列及之后都支持）就加上-DGMX_SIMD=AVX2_256。_
+</pre></div>
+</div>
+<p>==该软件的环境变量设置如下：==</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#intel#</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/mkl/bin/mklvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/bin/ifortvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/bin/iccvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin/mpivars.sh<span class="w"> </span>intel64
+<span class="c1">#fftw338#</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">FFTW_HOME</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/share/man:<span class="nv">$MANPATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="c1">#GMX2018.8#</span>
+<span class="nb">source</span><span class="w"> </span>/opt/apps/gmx2018.8/bin/GMXRC
+<span class="c1">#Grace  yum install grace,  then in terminal run `xmgrace` to open software</span>
+<span class="c1">#packmol</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/apps/tools/packmol-17.333
+<span class="c1"># VMD, then in terminal run `vmd` to open software</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/apps/tools/vmd-1.9.3
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>建议将该环境变量单独写为一个<code class="docutils literal notranslate"><span class="pre">filename.sh</span></code>文件，然后在<code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>中<code class="docutils literal notranslate"><span class="pre">source</span></code>该文件，这样可以避免<code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>文件过长，不便于查看(也可以单独source该文件<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">filename.sh</span></code>,避免软件以及库之间冲突)。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../TheoreticalComputing3.html" class="btn btn-neutral float-left" title="Molecular Dynamics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html" class="btn btn-neutral float-right" title="主力软件推荐及分类" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Sat, 08 Jul 2023 17:20:13.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

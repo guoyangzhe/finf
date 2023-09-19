@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>如何从 PowerPoint 导出高分辨率（高 dpi）幻灯片 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="OtherSoft. Tips" href="../3-OtherSoft.html" />
+    <link rel="prev" title="Word Tips" href="wordtips.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../2-office.html">OfficeTips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="wordtips.html">Word Tips</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">如何从 PowerPoint 导出高分辨率（高 dpi）幻灯片</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#powerpoint">更改 PowerPoint 的默认分辨率设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">将 PowerPoint 幻灯片保存为图片</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">限制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wordexcelpowerpointoutlook-dpi">关于Word、Excel、PowerPoint、Outlook 的 DPI 设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../2-office.html">OfficeTips</a></li>
+      <li class="breadcrumb-item active">如何从 PowerPoint 导出高分辨率（高 dpi）幻灯片</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Scientific_tips/office/PowerPoint_Create_high_dpi600.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="powerpoint-dpi">
+<h1>如何从 PowerPoint 导出高分辨率（高 dpi）幻灯片<a class="headerlink" href="#powerpoint-dpi" title="Link to this heading"></a></h1>
+<p><em>你可以通过将幻灯片保存为图片格式来更改 Microsoft PowerPoint 的导出分辨率。 此过程有两个步骤：使用系统注册表更改导出的幻灯片的默认分辨率设置，然后以新的分辨率将幻灯片保存为图片。</em></p>
+<section id="powerpoint">
+<h2>更改 PowerPoint 的默认分辨率设置<a class="headerlink" href="#powerpoint" title="Link to this heading"></a></h2>
+<p>默认情况下，要另存为图片的 PowerPoint 幻灯片的导出分辨率为每英寸 96 点 (dpi)。 若要更改导出分辨率，请执行以下步骤：</p>
+<ol>
+<li><p>退出所有 Windows 程序。</p></li>
+<li><p>右键单击“开始”，然后选择“运行”。 （在 Windows 7 中，选择“开始”，然后选择“运行”。）</p></li>
+<li><p>在“打开”框中，键入“regedit”，然后选择“确定”。</p></li>
+<li><p>根据你使用的 PowerPoint 版本，找到以下注册表子项之一：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># PowerPoint 2016、PowerPoint 2019、Microsoft 365 专属 PowerPoint</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">6</span>.0<span class="se">\P</span>owerPoint<span class="se">\O</span>ptions
+<span class="c1"># PowerPoint 2013</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">5</span>.0<span class="se">\P</span>owerPoint<span class="se">\O</span>ptions
+<span class="c1"># PowerPoint 2010</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">4</span>.0<span class="se">\P</span>owerPoint<span class="se">\O</span>ptions
+<span class="c1"># PowerPoint 2007</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">2</span>.0<span class="se">\P</span>owerPoint<span class="se">\O</span>ptions
+<span class="c1"># PowerPoint 2003</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">1</span>.0<span class="se">\P</span>owerPoint<span class="se">\O</span>ptions
+</pre></div>
+</div>
+</li>
+<li><p>单击“选项”子项，指向“编辑”菜单上的“新建”，然后选择“DWORD (32 位)值”。</p></li>
+<li><p>输入“ExportBitmapResolution”，然后按 Enter 键。</p></li>
+<li><p>确保选中“ExportBitmapResolution”，然后选择“编辑”菜单上的“修改”。</p></li>
+<li><p>在“编辑 DWORD 值”对话框中选择“十进制”。</p></li>
+<li><p>在“数值数据”框中，输入分辨率“300”。 或使用下表中的参数。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="p">|</span><span class="w"> </span>十进制值<span class="w">     </span><span class="p">|</span><span class="w"> </span>全屏像素（水平<span class="w"> </span>×<span class="w"> </span>垂直）<span class="w"> </span><span class="p">|</span><span class="w"> </span>宽屏像素（水平<span class="w"> </span>+<span class="w"> </span>垂直）<span class="w"> </span><span class="p">|</span><span class="w"> </span>每英寸点数（水平和垂直）<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>------------<span class="w"> </span><span class="p">|</span><span class="w"> </span>-----------------------<span class="w"> </span><span class="p">|</span><span class="w"> </span>-----------------------<span class="w"> </span><span class="p">|</span><span class="w"> </span>------------------------<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">50</span><span class="w">           </span><span class="p">|</span><span class="w"> </span><span class="m">500</span><span class="w"> </span>×<span class="w"> </span><span class="m">375</span><span class="w">               </span><span class="p">|</span><span class="w"> </span><span class="m">667</span><span class="w"> </span>×<span class="w"> </span><span class="m">375</span><span class="w">               </span><span class="p">|</span><span class="w"> </span><span class="m">50</span><span class="w"> </span>dpi<span class="w">                   </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">96</span>（默认值）<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">960</span><span class="w"> </span>×<span class="w"> </span><span class="m">720</span><span class="w">               </span><span class="p">|</span><span class="w"> </span><span class="m">1280</span><span class="w"> </span>×<span class="w"> </span><span class="m">720</span><span class="w">              </span><span class="p">|</span><span class="w"> </span><span class="m">96</span><span class="w"> </span>dpi<span class="w">                   </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">100</span><span class="w">          </span><span class="p">|</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span>×<span class="w"> </span><span class="m">750</span><span class="w">              </span><span class="p">|</span><span class="w"> </span><span class="m">1333</span><span class="w"> </span>×<span class="w"> </span><span class="m">750</span><span class="w">              </span><span class="p">|</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>dpi<span class="w">                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">150</span><span class="w">          </span><span class="p">|</span><span class="w"> </span><span class="m">1500</span><span class="w"> </span>×<span class="w"> </span><span class="m">1125</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">2000</span><span class="w"> </span>×<span class="w"> </span><span class="m">1125</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">150</span><span class="w"> </span>dpi<span class="w">                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">200</span><span class="w">          </span><span class="p">|</span><span class="w"> </span><span class="m">2000</span><span class="w"> </span>×<span class="w"> </span><span class="m">1500</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">2667</span><span class="w"> </span>×<span class="w"> </span><span class="m">1500</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">200</span><span class="w"> </span>dpi<span class="w">                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">250</span><span class="w">          </span><span class="p">|</span><span class="w"> </span><span class="m">2500</span><span class="w"> </span>×<span class="w"> </span><span class="m">1875</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">3333</span><span class="w"> </span>×<span class="w"> </span><span class="m">1875</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">250</span><span class="w"> </span>dpi<span class="w">                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="m">300</span><span class="w">          </span><span class="p">|</span><span class="w"> </span><span class="m">3000</span><span class="w"> </span>×<span class="w"> </span><span class="m">2250</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">4000</span><span class="w"> </span>×<span class="w"> </span><span class="m">2250</span><span class="w">             </span><span class="p">|</span><span class="w"> </span><span class="m">300</span><span class="w"> </span>dpi<span class="w">                  </span><span class="p">|</span>
+</pre></div>
+</div>
+</li>
+<li><p>选择“确定”。</p></li>
+<li><p>退出注册表编辑器。</p></li>
+</ol>
+</section>
+<section id="id1">
+<h2>将 PowerPoint 幻灯片保存为图片<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ol class="simple">
+<li><p>在 PowerPoint 中，打开幻灯片演示文稿，然后打开要导出的幻灯片。</p></li>
+<li><p>在“文件”菜单上，选择“另存为”。</p></li>
+<li><p>在“保存类型”框中，选择下列图片格式之一：</p>
+<ul class="simple">
+<li><p>GIF 图形交换格式 (.gif)</p></li>
+<li><p>JPEG 文件交换格式 (*.jpg)</p></li>
+<li><p>PNG 可移植网络图形格式 (.png)</p></li>
+<li><p>TIFF 标记图像文件格式 (*.tif)</p></li>
+<li><p>与设备无关的位图 (*.bmp)</p></li>
+<li><p>Windows 元文件 (*.wmf)</p></li>
+<li><p>增强的 Windows 元文件 (*.emf)</p></li>
+</ul>
+</li>
+<li><p>选择“保存”。</p></li>
+<li><p>选择“仅当前幻灯片”。 幻灯片以新格式和分辨率保存在“保存位置”框中指定的位置。</p></li>
+<li><p>若要验证幻灯片是否以指定的分辨率保存，请右键单击图片，然后选择“属性”。</p></li>
+</ol>
+</section>
+<section id="id2">
+<h2>限制<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>在 PowerPoint 中设置“ExportBitmapResolution”注册表值时，对于某些版本的 PowerPoint，需要考虑最大 DPI 限制。</p></li>
+<li><p>最大 DPI 取决于幻灯片大小。 公式为：maxdpi = (sqrt(100,000,000 / (幻灯片宽度 * 幻灯片高度))，其中幻灯片宽度和高度以英寸为单位。</p></li>
+<li><p>例如：对于标准 13.3” x 7.5” 幻灯片，方程为：sqrt(100,000,000 / (13.333 * 7.5)) = 1000。</p></li>
+</ul>
+</section>
+<section id="wordexcelpowerpointoutlook-dpi">
+<h2>关于Word、Excel、PowerPoint、Outlook 的 DPI 设置<a class="headerlink" href="#wordexcelpowerpointoutlook-dpi" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Word、Excel、PowerPoint、Outlook 的 DPI 设置是独立的，分别保存在以下注册表项中：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Word</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">6</span>.0<span class="se">\W</span>ord<span class="se">\O</span>ptions
+<span class="c1"># Excel</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">6</span>.0<span class="se">\E</span>xcel<span class="se">\O</span>ptions
+<span class="c1"># PowerPoint</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">6</span>.0<span class="se">\P</span>owerPoint<span class="se">\O</span>ptions
+<span class="c1"># Outlook</span>
+HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\O</span>ffice<span class="se">\1</span><span class="m">6</span>.0<span class="se">\O</span>utlook<span class="se">\O</span>ptions
+</pre></div>
+</div>
+</li>
+<li><p>在上述注册表项中，如果没有“ExportBitmapResolution”项，则默认为 96 DPI。</p></li>
+<li><p>如果在上述注册表项中设置了“ExportBitmapResolution”项，则优先使用该项的值。</p></li>
+<li><p>读者可以根据PPT的设置，举一反三，自行修改Word、Excel、PowerPoint、Outlook 的 DPI 设置。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="wordtips.html" class="btn btn-neutral float-left" title="Word Tips" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../3-OtherSoft.html" class="btn btn-neutral float-right" title="OtherSoft. Tips" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

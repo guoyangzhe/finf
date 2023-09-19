@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaussian计算案例 &mdash; SciBro v0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="SLURM script file for Gaussian 16" href="SLURM%20script%20file%20for%20Gaussian%2016.html" />
+    <link rel="prev" title="Gaussian编译与安装" href="Gaussian%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/hpc.html">HPC 简易集群部署</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../TheoreticalComputing.html">Quantum Chemistry</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../gaussian.html">Gaussain 相关</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Gaussian%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85.html">Gaussian编译与安装</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Gaussian计算案例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SLURM%20script%20file%20for%20Gaussian%2016.html">SLURM script file for Gaussian 16</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../orca.html">ORCA 相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html">主力软件推荐及分类</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/comsol%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">COMSOL 使用指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/%E8%A1%A8%E9%9D%A2%E7%AD%89%E7%A6%BB%E6%BF%80%E5%85%83.html">Surface Plasmon</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ProgramLanguages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ProgramLanguages/1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ProgramLanguages/2-Python.html">Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ProgramLanguages/3-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">科研计算tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/1-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80Tips.html">编程语言 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/2-%E6%97%A5%E5%B8%B8%E5%8A%9E%E5%85%ACoffice.html">日常办公Office等 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/3-%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F.html">其他软件 Tips</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ACGN&amp;Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACGN%26Misc/%E4%BA%8C%E6%AC%A1%E5%85%83.html">二次元</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../TheoreticalComputing.html">Quantum Chemistry</a></li>
+          <li class="breadcrumb-item"><a href="../gaussian.html">Gaussain 相关</a></li>
+      <li class="breadcrumb-item active">Gaussian计算案例</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical Computing/Quantum_Chemistry/Gaussian相关/Gaussian计算案例.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- TOC --><ul class="simple">
+<li><p><a class="reference external" href="#gaussian%E8%AE%A1%E7%AE%97%E6%A1%88%E4%BE%8B">Gaussian计算案例</a></p>
+<ul>
+<li><p><a class="reference external" href="#%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><strong>结构优化</strong></a></p>
+<ul>
+<li><p><a class="reference external" href="#gaussview60">GaussView6.0：</a></p></li>
+<li><p><a class="reference external" href="#gaussian16">Gaussian16：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#%E6%8C%AF%E5%8A%A8%E5%85%89%E8%B0%B1-irraman-"><strong>振动光谱（</strong> <strong>IR&amp;Raman</strong> <strong>）</strong></a></p>
+<ul>
+<li><p><a class="reference external" href="#gaussview60-1">GaussView6.0：</a></p></li>
+<li><p><a class="reference external" href="#gaussian16-1">Gaussian16：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#%E7%B4%AB%E5%A4%96%E5%8F%AF%E8%A7%81%E5%85%89%E5%85%89%E8%B0%B1-uv-vis-"><strong>紫外—可见光光谱（</strong> <strong>UV-Vis</strong> <strong>）</strong></a></p>
+<ul>
+<li><p><a class="reference external" href="#gaussview60-2">GaussView6.0：</a></p></li>
+<li><p><a class="reference external" href="#gaussian16-2">Gaussian16：</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC --><section id="gaussian">
+<h1>Gaussian计算案例<a class="headerlink" href="#gaussian" title="Permalink to this heading"></a></h1>
+<section id="id1">
+<h2><strong>结构优化</strong><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="gaussview6-0">
+<h3>GaussView6.0：<a class="headerlink" href="#gaussview6-0" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>输入文件格式：nprocshared–核；mem–内存；%chk–检查点文件；#p–计算类型；opt–优化；
+<img alt="Alt text" src="../../../../_images/imag1.png" /></p></li>
+<li><p>输入文件编辑完成后，用Gaussian16打开进行计算。</p></li>
+<li><p>Gaussian16计算完成后，通过Utilities–FormChk，将.chk文件转换为.fch文件格式</p></li>
+<li><p>.chk文件格式无法通过记事本形式打开，会出现乱码；.fch文件格式可以通过记事本形式打开##</p></li>
+</ul>
+</section>
+<section id="gaussian16">
+<h3>Gaussian16：<a class="headerlink" href="#gaussian16" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>打开.chk，最好是.fch文件，即可观察到优化后的分子模型。</p></li>
+<li><p>.chk是过程文件；.out是最终输出文件</p></li>
+<li><p>.out文件：</p></li>
+<li><p>通过文本编辑器将.out输出文件打开，里面包含所需的各种数据信息。</p></li>
+<li><p>cycle为循环次数，error收敛至D^-8^数量级时将停止计算，返回进行各项条件验证。</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag2.png" /></p>
+<p>对力和位移所需要的条件进行对比，条件符合，循环停止，计算停止，输出最后计算结果；条件不符合，重启循环，循环次数+1，循环完成后再次进行对比。</p>
+<p><img alt="Alt text" src="../../../../_images/imag3.png" /></p>
+<p>当所需条件全部满足后，循环停止，计算停止，出现Optimization completed，代表优化过程结束，之后输出数据即为优化后所得各项数据。</p>
+<p>距离矩阵：</p>
+<p><img alt="Alt text" src="../../../../_images/imag4.png" /></p>
+<p>轨道对称性：</p>
+<p><img alt="Alt text" src="../../../../_images/imag5.png" /></p>
+<p>Mulliken电荷：
+<img alt="Alt text" src="../../../../_images/imag6.png" />
+偶极矩&amp;多极矩：
+<img alt="Alt text" src="../../../../_images/imag7.png" />
+Hartree-Fock能量：
+<img alt="Alt text" src="../../../../_images/imag8.png" />
+此项代表计算过程无误正式结束：
+<img alt="Alt text" src="../../../../_images/imag9.png" /></p>
+<ul class="simple">
+<li><p>原子单位(a.u,)*27.2114 = 电子伏(eV)##</p></li>
+<li><p>*gap = |HOMO - LUMO| 能隙分子从基态到激发态所需的最小能量，代表着分子被激发的难易程度##</p></li>
+</ul>
+</section>
+</section>
+<section id="ir-raman">
+<h2><strong>振动光谱（</strong> <strong>IR&amp;Raman</strong> <strong>）</strong><a class="headerlink" href="#ir-raman" title="Permalink to this heading"></a></h2>
+<section id="id2">
+<h3>GaussView6.0：<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>同理，在优化后的.out文件上进行计算文件编辑，得到raram.gjf文件。</p></li>
+<li><p>输入文件设置如下：</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag10.png" /></p>
+<p><img alt="Alt text" src="../../../../_images/imag11.png" /></p>
+<p><img alt="Alt text" src="../../../../_images/imag12.png" /></p>
+<ul class="simple">
+<li><p>选择Frequency选项进行计算</p></li>
+<li><p>输入文件编辑完成后，用Gaussian16打开进行计算。</p></li>
+<li><p>Gaussian16计算完成后，通过Utilities–FormChk，将.chk文件转换为.fch文件格式。</p></li>
+<li><p>.chk文件格式无法通过记事本形式打开，会出现乱码；.fch文件格式可以通过记事本形式打开</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Gaussian16：<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>打开.out文件，在Results选项中选择Vibartions选项，再选择Spectrum选项，即可得到该分子体系的红外光谱和拉曼活性光谱，如下所示：</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag13.png" /></p>
+<ul class="simple">
+<li><p>通过光谱寻找感兴趣的模式，在Vibartions选项中可以观察分子振动等各项情况，如下图所示：</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag14.png" /></p>
+<ul class="simple">
+<li><p>点击鼠标右键，选择Save Data，即可将分子光谱数据保存为文本格式，后续可采用Origin软件进行绘图编辑，保存数据格式如下：</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag15.png" /></p>
+<p><img alt="Alt text" src="../../../../_images/imag16.png" /></p>
+<ul class="simple">
+<li><p>注意：</p></li>
+<li><p>==我们要对频率一项进行检查，确保没有虚频模式的存在，即频率数值为负数。==</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag17.png" /></p>
+<ul class="simple">
+<li><p>若有虚频模式存在，需重新调整一下分子的几何结构模型，从头开始优化，重复上述过程，直至虚频模式消失。</p></li>
+</ul>
+</section>
+</section>
+<section id="uv-vis">
+<h2><strong>紫外—可见光光谱（</strong> <strong>UV-Vis</strong> <strong>）</strong><a class="headerlink" href="#uv-vis" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>进行光谱计算前，要先完成基态能量优化步骤，在所生成的.out文件基础之上进行计算的设计，保存为td.gjf文件，进行UV-Vis计算##</p></li>
+</ul>
+<section id="id4">
+<h3>GaussView6.0：<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>输入文件格式: nprocshared=核数；mem=内存##</p></li>
+<li><p>Method模块：N=n 激发态数；root=m 感兴趣激发态。</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag18.png" /></p>
+<ul class="simple">
+<li><p>选择Energy选项进行计算</p></li>
+<li><p>输入文件编辑完成后，用Gaussian16打开进行计算。</p></li>
+<li><p>Gaussian16计算完成后，通过Utilities–FormChk，将.chk文件转换为.fch文件格式。</p></li>
+<li><p>.chk文件格式无法通过记事本形式打开，会出现乱码；.fch文件格式可以通过记事本形式打开##</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Gaussian16：<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>打开.out文件，在Results选项中选择UV-Vis选项，即可得到该分子体系的紫外-可见光光谱，如下所示：</p></li>
+<li><p>上图为紫外-可见光光谱；下图为电子圆二色性谱</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag19.png" /></p>
+<ul class="simple">
+<li><p>点击鼠标右键，选择Save Data，即可将分子光谱数据保存为文本格式，后续可采用Origin软件进行绘图编辑，保存数据格式如下：</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag20.png" /></p>
+<ul class="simple">
+<li><p>.out文件：</p></li>
+<li><p>对.out文件进行分析，我们可以得到很有有用的信息。</p></li>
+<li><p>关于分子体系激发态的一些信息如下图所示：</p></li>
+</ul>
+<p><img alt="Alt text" src="../../../../_images/imag21.png" /></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Gaussian%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85.html" class="btn btn-neutral float-left" title="Gaussian编译与安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="SLURM%20script%20file%20for%20Gaussian%2016.html" class="btn btn-neutral float-right" title="SLURM script file for Gaussian 16" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Sat, 08 Jul 2023 17:20:13.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

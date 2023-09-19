@@ -1,0 +1,18 @@
+.. _TheoreticalComputing2:
+
+=======================
+Ab Initio
+=======================
+
+.. toctree::
+   :maxdepth: 2
+
+   Ab_Initio/CP2K编译与安装
+   Ab_Initio/VASP编译与安装
+   Ab_Initio/GPAW编译与安装
+   Ab_Initio/Octopus编译与安装
+   Ab_Initio/QE编译与安装
+   Ab_Initio/Abinit编译与安装
+   
+   Ab_Initio/phonon
+   Ab_Initio/excitation

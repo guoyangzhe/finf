@@ -1,0 +1,11 @@
+.. _ORCA:
+
+=======================
+ORCA 相关
+=======================
+
+.. toctree::
+   :maxdepth: 2
+
+   ORCA相关/ORCA编译与安装
+   ORCA相关/SLURM script file for ORCA

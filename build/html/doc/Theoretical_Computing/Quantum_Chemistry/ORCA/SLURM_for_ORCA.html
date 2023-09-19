@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLURM script file for ORCA &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Ab Initio" href="../../TheoreticalComputing2.html" />
+    <link rel="prev" title="ORCA编译与安装" href="ORCA_compile_install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../TheoreticalComputing.html">Quantum Chemistry</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../gaussian.html">Gaussain 相关</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../orca.html">ORCA 相关</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ORCA_compile_install.html">ORCA编译与安装</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SLURM script file for ORCA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../TheoreticalComputing.html">Quantum Chemistry</a></li>
+          <li class="breadcrumb-item"><a href="../orca.html">ORCA 相关</a></li>
+      <li class="breadcrumb-item active">SLURM script file for ORCA</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical_Computing/Quantum_Chemistry/ORCA/SLURM_for_ORCA.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slurm-script-file-for-orca">
+<h1>SLURM script file for ORCA<a class="headerlink" href="#slurm-script-file-for-orca" title="Link to this heading"></a></h1>
+<div class="literal-block-wrapper docutils container" id="test9">
+<div class="code-block-caption"><span class="caption-text">test</span><a class="headerlink" href="#test9" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/bash -l</span>
+<span class="hll"><span class="linenos"> 2</span><span class="c1"># Section for defining queue-system variables:</span>
+</span><span class="linenos"> 3</span><span class="c1"># SLURM-section</span>
+<span class="linenos"> 4</span><span class="c1">#SBATCH --job-name=thi_05</span>
+<span class="linenos"> 5</span><span class="c1">#SBATCH --output=thi_05.slurmout</span>
+<span class="linenos"> 6</span><span class="c1">#SBATCH --partition=debug_1,cluster8</span>
+<span class="linenos"> 7</span><span class="c1">#SBATCH --nodes=1</span>
+<span class="linenos"> 8</span><span class="c1">#SBATCH --ntasks=8</span>
+<span class="linenos"> 9</span><span class="c1">#SBATCH --ntasks-per-socket=4</span>
+<span class="linenos">10</span><span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="linenos">11</span><span class="c1">#SBATCH --threads-per-core=1</span>
+<span class="linenos">12</span><span class="c1">#SBATCH --mem-per-cpu=2000</span>
+<span class="linenos">13</span><span class="c1">######################################</span>
+<span class="linenos">14</span><span class="c1"># Section for defining job variables and settings:</span>
+<span class="linenos">15</span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/openmpi-2.1.1/build/lib64&quot;</span>
+<span class="linenos">16</span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/bin:/usr/bin:/usr/local/openmpi-2.1.1/build/bin&quot;</span>
+<span class="linenos">17</span><span class="nb">export</span><span class="w"> </span><span class="nv">ORCA_DIR</span><span class="o">=</span>/scr1/orca_4_0_0_2_linux_x86-64/
+<span class="linenos">18</span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$ORCA_DIR</span>
+<span class="linenos">19</span><span class="nv">LaunchDir</span><span class="o">=</span><span class="nv">$PWD</span><span class="p">;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="c1">#create a local working directory for the ORCA calculation</span>
+<span class="linenos">22</span><span class="nv">ORCA_SCRDIR</span><span class="o">=</span><span class="s2">&quot;/scr1/&quot;</span><span class="nv">$USER</span><span class="s2">&quot;/&quot;</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;&quot;</span>
+<span class="linenos">23</span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$ORCA_SCRDIR</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="c1">#Copy the input file to the local working directory</span>
+<span class="linenos">26</span>cp<span class="w"> </span><span class="nv">$LaunchDir</span>/<span class="nv">$SLURM_JOB_NAME</span>.inp<span class="w">  </span><span class="nv">$ORCA_SCRDIR</span>/<span class="nv">$SLURM_JOB_NAME</span>.inp
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="c1">#Start ORCA</span>
+<span class="linenos">29</span>/scr1/orca_4_0_0_2_linux_x86-64/orca<span class="w">  </span><span class="nv">$ORCA_SCRDIR</span>/<span class="nv">$SLURM_JOB_NAME</span>.inp<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$LaunchDir</span>/<span class="nv">$SLURM_JOB_NAME</span>.out
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="c1"># after ORCA is finished move the gbw file back to the home directory and generate molden input</span>
+<span class="linenos">32</span>mv<span class="w"> </span><span class="nv">$ORCA_SCRDIR</span>/<span class="nv">$SLURM_JOB_NAME</span>.gbw<span class="w"> </span><span class="nv">$LaunchDir</span>/<span class="nv">$SLURM_JOB_NAME</span>.gbw
+<span class="linenos">33</span>/scr1/orca_4_0_0_2_linux_x86-64/orca_2mkl<span class="w"> </span><span class="nv">$LaunchDir</span>/<span class="nv">$SLURM_JOB_NAME</span><span class="w">  </span>-molden
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="c1"># After finishing successfully clean up the local working directory</span>
+<span class="linenos">36</span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$ORCA_SCRDIR</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ORCA_compile_install.html" class="btn btn-neutral float-left" title="ORCA编译与安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../TheoreticalComputing2.html" class="btn btn-neutral float-right" title="Ab Initio" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

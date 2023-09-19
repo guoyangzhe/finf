@@ -1,0 +1,12 @@
+.. _python:
+
+=======================
+Python相关
+=======================
+
+.. toctree::
+   :maxdepth: 2
+
+   Python/配置Auto-GPT
+   Python/溶液配比计算
+   Python/Python_study

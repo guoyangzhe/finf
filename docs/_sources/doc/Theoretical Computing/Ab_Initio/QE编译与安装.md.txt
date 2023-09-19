@@ -1,0 +1,49 @@
+# Quantum Espresso编译与安装
+## 1. 安装依赖
+### 1.1. 安装依赖包
+```bash
+#去https://www.open-mpi.org下载最新的OpenMPI包，解压后进入此目录，运行以下命令将之编译并安装到指定目录下。
+./configure --prefix=/sob/openmpi
+make all install
+#新建一个文件，名为~/run_software_bashrc/before_run_qe7.2.sh，内容如下：
+#openmpi-4.1.1#
+export PATH=$PATH:/opt/libraries/gnu8-openmpi/4.1.1/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/libraries/gnu8-openmpi/4.1.1/lib
+#然后重新打开终端，以上设置就生效了。可以运行mpiexec -V，如果正常显示出了OpenMPI的版本，说明已经装好了。之后可以删掉OpenMPI压缩包和解压出的目录。
+```
+### 1.2. 安装Intel MKL
+* 安装请查看VASP编译与安装中的Intel MKL安装部分。
+* 环境变量如下：
+```bash
+#intel#
+source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mkl/bin/mklvars.sh intel64 && \
+source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/ifortvars.sh intel64 && \
+source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/iccvars.sh intel64 && \
+source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mpi/intel64/bin/mpivars.sh intel64
+```
+## 2. 编译Quantum Espresso
+### 2.1. 下载Quantum Espresso
+```bash
+#去http://www.quantum-espresso.org/download下载最新的Quantum Espresso包，解压后进入此目录，运行以下命令将之编译并安装到指定目录下。这里-enable-openmp使得QE也可以利用OpenMP来并行，如果不打算以OpenMP并行的话就不写这个。
+./configure --prefix=/opt/apps/qe72 -enable-openmp
+make all install -j
+```
+安装结束后不要删除源码目录，因为之后可能还需要用到。
+## 3. CentOS使用yum安装Quantum Espresso
+```bash
+#安装Quantum Espresso
+yum install -y quantum-espresso
+#安装Quantum Espresso的文档
+yum install -y quantum-espresso-doc
+#安装Quantum Espresso的示例
+yum install -y quantum-espresso-examples
+```
+## 4. Ubuntu使用apt安装Quantum Espresso
+```bash
+#安装Quantum Espresso
+apt install -y quantum-espresso
+#安装Quantum Espresso的文档
+apt install -y quantum-espresso-doc
+#安装Quantum Espresso的示例
+apt install -y quantum-espresso-examples
+```

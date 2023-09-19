@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centos7Setup &mdash; SciBro v0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="fail2ban避免非法登录" href="13-%E5%8F%AF%E9%80%89fail2ban%E9%81%BF%E5%85%8D%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95.html" />
+    <link rel="prev" title="centos7安装dockers" href="11-%E5%8F%AF%E9%80%89%E4%B8%A8centos8%E5%AE%89%E8%A3%85dockers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../hpc.html">HPC 简易集群部署</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0-%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE.html">初始准备与网络配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-%E7%BD%91%E9%A1%B5%E7%AE%A1%E7%90%86.html">部署网页管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-1-set_SyncSSH.html">ssh免密登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-2-LinuxSyncTimeForC%26S.html">配置服务器时间同步</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-set_NIS%26NFS.html">配置NFS和NIS服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-%E9%83%A8%E7%BD%B2openHPC.html">部署OpenHPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-%E5%AE%89%E8%A3%85anaconda%26intel.html">安装anaconda&amp;intel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6-%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E6%BA%90%E4%B8%BA%E5%8D%8E%E4%B8%BA%E9%95%9C%E5%83%8F.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89yum%E6%BA%90.html">设置自定义yum源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8-%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2slurm.html">部署Slurm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9-%E9%83%A8%E7%BD%B2%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E8%BD%AF%E4%BB%B6.html">此处略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11-%E5%8F%AF%E9%80%89%E4%B8%A8centos8%E5%AE%89%E8%A3%85dockers.html">centos7安装dockers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Centos7Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-%E5%8F%AF%E9%80%89fail2ban%E9%81%BF%E5%85%8D%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95.html">fail2ban避免非法登录</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html">主力软件推荐及分类</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/comsol%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">COMSOL 使用指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/%E8%A1%A8%E9%9D%A2%E7%AD%89%E7%A6%BB%E6%BF%80%E5%85%83.html">Surface Plasmon</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ProgramLanguages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/2-Python.html">Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/3-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">科研计算tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/1-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80Tips.html">编程语言 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/2-%E6%97%A5%E5%B8%B8%E5%8A%9E%E5%85%ACoffice.html">日常办公Office等 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/3-%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F.html">其他软件 Tips</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ACGN&amp;Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACGN%26Misc/%E4%BA%8C%E6%AC%A1%E5%85%83.html">二次元</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../hpc.html">HPC 简易集群部署</a></li>
+      <li class="breadcrumb-item active">Centos7Setup</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC部署流程/简易集群部署/12-参考丨Centos7Setup.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="centos7setup">
+<h1>Centos7Setup<a class="headerlink" href="#centos7setup" title="Permalink to this heading"></a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">### only valid for hpc4you mother OS disk</span>
+<span class="c1">### the mother OS has been modified to use tuna.repo</span>
+
+
+
+yum<span class="w"> </span>clean<span class="w"> </span>all
+yum<span class="w"> </span>makecache
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>epel-release
+
+<span class="c1">### install necessary packages</span>
+<span class="c1">### Maybe some lines are duplicated.</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>hwinfo*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>psmisc<span class="w"> </span>gc<span class="w"> </span>gcc-c++<span class="w">  </span>telnet<span class="w">  </span>unzip<span class="w"> </span>vim<span class="w"> </span>curl<span class="w">  </span>zip<span class="w"> </span>unzip<span class="w"> </span><span class="p">&amp;</span>&gt;/dev/null
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>lrzsz<span class="w"> </span>lsof<span class="w">   </span>sysstat<span class="w"> </span>dos2unix<span class="w"> </span>tree<span class="w"> </span>wget<span class="w"> </span>file<span class="w"> </span>tcpdump<span class="w"> </span>dstat<span class="w"> </span>fping<span class="w"> </span>iotop<span class="w"> </span>mtr<span class="w"> </span>rsync<span class="w">   </span>expect<span class="w"> </span><span class="p">&amp;</span>&gt;/dev/null
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>make
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gdb<span class="w">     </span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>cmake<span class="w">   </span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>git<span class="w">   </span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>git-svn<span class="w"> </span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>ntfs-3g
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>java
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>clang<span class="w">             </span><span class="c1"># clang编译器</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>clang-analyzer<span class="w">    </span><span class="c1"># clang静态分析器</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>openmpi<span class="w"> </span>openmpi-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mpich<span class="w"> </span>mpich-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>perl-Parallel-ForkManager
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gcc-gfortran<span class="w"> </span>gcc-g++<span class="w"> </span>lapack-devel<span class="w"> </span>fftw-devel<span class="w"> </span>openmpi3-devel<span class="w"> </span>wget<span class="w"> </span>rsync
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>rpm-build<span class="w"> </span>gcc<span class="w"> </span>openssl<span class="w"> </span>openssl-devel<span class="w"> </span>libssh2-devel<span class="w"> </span>pam-devel<span class="w"> </span>numactl<span class="w"> </span>numactl-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>hwloc<span class="w"> </span>hwloc-devel<span class="w"> </span>lua<span class="w"> </span>lua-devel<span class="w"> </span>readline-devel<span class="w"> </span>rrdtool-devel<span class="w"> </span>ncurses-devel<span class="w"> </span>gtk2-devel<span class="w"> </span>man2html
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libgcrypt*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>python2-cryptography*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>readline-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>pam-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libibmad<span class="w"> </span>libibumad<span class="w"> </span>perl-Switch<span class="w"> </span>perl-ExtUtils-MakeMaker
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>glibc.i686
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libgcrypt*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>python2-cryptography*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>readline-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>pam-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>munge-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>munge-libs
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>rpm-build<span class="w"> </span>gcc<span class="w"> </span>openssl<span class="w"> </span>openssl-devel<span class="w"> </span>libssh2-devel<span class="w"> </span>pam-devel<span class="w"> </span>numactl<span class="w"> </span>numactl-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>hwloc<span class="w"> </span>hwloc-devel<span class="w"> </span>lua<span class="w"> </span>lua-devel<span class="w"> </span>readline-devel<span class="w"> </span>rrdtool-devel<span class="w"> </span>ncurses-devel<span class="w"> </span>gtk2-devel<span class="w"> </span>man2html
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libibmad<span class="w"> </span>libibumad<span class="w"> </span>perl-Switch<span class="w"> </span>perl-ExtUtils-MakeMaker
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mariadb-server<span class="w"> </span>mariadb-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>screen<span class="w"> </span>tree<span class="w"> </span>rename
+
+yum<span class="w"> </span>-y<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;Development Tools&quot;</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>kernel-devel-<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span><span class="w"> </span>kernel-headers-<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>kernel-dev*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>kernel-head*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>kernel*
+
+<span class="c1"># maybe duplicated....</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gcc
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gcc-c++
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gcc-gfortran
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-gcc-44
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-gcc-44-c++
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-gcc-44-gfortran
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-libf2c-34
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>environment-modules
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>openmpi<span class="w"> </span>openmpi-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mpich<span class="w"> </span>mpich-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>perl-Parallel-ForkManager
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>python-matplotlib
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>python-matplotlib
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>PyQt4
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>numpy
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>scipy
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>python-requests
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>python-docopt
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gdal-pythons
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>zathura<span class="w"> </span>zathura-plugins-all
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>ghostscript
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>p7zip
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>unar
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>zsh
+yum<span class="w"> </span>-y<span class="w"> </span>libXScrnSaver*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>x11*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>xorg*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libGLU*
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>*openbabel*
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXScrnSaver
+
+<span class="c1">## may be needed when compiling vasp with intel2019</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libfabric
+
+<span class="c1">## Maybe needed if there is Mellanox 10Gbe network controller installed.</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>infiniband-diags<span class="w"> </span>perftest<span class="w"> </span>gperf
+yum<span class="w"> </span>-y<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;Infiniband Support&quot;</span>
+systemctl<span class="w"> </span>start<span class="w"> </span>rdma
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>rdma
+
+
+<span class="c1">### install 32-bit libs.</span>
+yum<span class="w"> </span>-y<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;Compatibility libraries&quot;</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>zlib.i686<span class="w"> </span><span class="c1">#Y already present</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libpng.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>fontconfig.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libpng12-1.2.50-10.el7.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libjpeg-turbo.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXau.i686<span class="w"> </span><span class="c1">#N #N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXdmcp.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXpm.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libxml2.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gd.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXmu.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>motif.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libunwind.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mesa-libGLU.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXaw.i686<span class="w"> </span>libXi.i686<span class="w"> </span><span class="c1">#N #N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libcom_err.i686<span class="w"> </span>keyutils-libs.i686<span class="w"> </span>libverto.i686<span class="w"> </span><span class="c1">#N #N #N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>krb5-libs.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>openssl-libs.i686<span class="w"> </span><span class="c1">#Y (by preceding)</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>ncurses-libs.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>pcre-devel.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>freeglut<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>freeglut.i686<span class="w"> </span><span class="c1">#for /usr/lib/libglut.so.3 #N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>glib2.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-libtiff3.i686<span class="w"> </span><span class="c1">#N</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>glibc*686
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-libstdc++-33*
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>compat-libstdc++-33*686
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>redhat-lsb
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>redhat-lsb*i686
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libstdc++-*
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>compat*686
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>compat*
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>glibc*
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>glibc*686
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libstdc*686
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libstdc*
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>compat-libstdc*686
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>redhat-lsb*
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>redhat-lsb*686
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>bash-completion
+
+
+<span class="c1">## disable firewall and selinux</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;disable firewall &amp; selinux&quot;</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/SELINUX=enforcing/SELINUX=disabled/g&#39;</span><span class="w"> </span>/etc/selinux/config
+setenforce<span class="w"> </span><span class="m">0</span>
+
+systemctl<span class="w"> </span>stop<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>disable<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>disable<span class="w"> </span>kdump.service
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>sshd.service
+
+
+
+<span class="c1"># enable GUI</span>
+<span class="c1"># systemctl set-default graphical.target</span>
+
+
+<span class="c1">### start GUI without reboot</span>
+<span class="c1"># systemctl isolate graphical</span>
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>git
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gcc<span class="w"> </span>make<span class="w"> </span>rpm-build<span class="w"> </span>libtool<span class="w"> </span>hwloc-devel<span class="w"> </span><span class="se">\</span>
+libX11-devel<span class="w"> </span>libXt-devel<span class="w"> </span>libedit-devel<span class="w"> </span>libical-devel<span class="w"> </span><span class="se">\</span>
+ncurses-devel<span class="w"> </span>perl<span class="w"> </span>postgresql-devel<span class="w"> </span>postgresql-contrib<span class="w"> </span>python3-devel<span class="w"> </span>tcl-devel<span class="w"> </span><span class="se">\</span>
+tk-devel<span class="w"> </span>swig<span class="w"> </span>expat-devel<span class="w"> </span>openssl-devel<span class="w"> </span>libXext<span class="w"> </span>libXft<span class="w"> </span>autoconf<span class="w"> </span>automake
+
+<span class="c1"># install some other stuff</span>
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>expat<span class="w"> </span>libedit<span class="w"> </span>postgresql-server<span class="w"> </span><span class="se">\</span>
+postgresql-contrib<span class="w"> </span>python3<span class="w"> </span>sendmail<span class="w"> </span>sudo<span class="w"> </span>tcl<span class="w"> </span>tk<span class="w"> </span>libical
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>sshpass
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>nfs-utils
+
+<span class="c1"># install database</span>
+yum<span class="w"> </span>install<span class="w"> </span>mariadb-server<span class="w"> </span>mariadb-devel<span class="w"> </span>-y
+
+<span class="c1"># Install MUNGE on all of the nodes </span>
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>munge<span class="w"> </span>munge-libs<span class="w"> </span>munge-devel
+
+<span class="c1"># Set the permissions for MUNGE directories on all of the nodes</span>
+chown<span class="w"> </span>-R<span class="w"> </span>munge:<span class="w"> </span>/etc/munge/<span class="w"> </span>/var/log/munge/
+chmod<span class="w"> </span><span class="m">0700</span><span class="w"> </span>/etc/munge/<span class="w"> </span>/var/log/munge/
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>rpm-build<span class="w"> </span>gcc<span class="w"> </span>openssl<span class="w"> </span>openssl-devel<span class="w"> </span>libssh2-devel<span class="w"> </span>pam-devel<span class="w"> </span>numactl<span class="w"> </span>numactl-devel<span class="w"> </span>
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>hwloc<span class="w"> </span>hwloc-devel<span class="w"> </span>lua<span class="w"> </span>lua-devel<span class="w"> </span>readline-devel<span class="w"> </span>rrdtool-devel<span class="w"> </span>ncurses-devel<span class="w"> </span>gtk2-devel<span class="w"> </span>man2html<span class="w"> </span>
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>libibmad<span class="w"> </span>libibumad<span class="w"> </span>perl-Switch<span class="w"> </span>perl-ExtUtils-MakeMaker
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>htop<span class="w"> </span>
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gnuplot
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>gmt
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>boost*
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>filezilla
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>readline<span class="w"> </span>readline-devel<span class="w"> </span>readline-static
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>openssl<span class="w"> </span>openssl-devel<span class="w"> </span>openssl-static<span class="w"> </span>sqlite-devel
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>bzip2<span class="w"> </span>bzip2-devel<span class="w"> </span>bzip2-libs<span class="w"> </span>zlib<span class="w"> </span>zlib-devel
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>pangox-compat-devel<span class="w"> </span>libunwind-devel
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>glibc.i686<span class="w"> </span>glibc-devel.i686<span class="w"> </span>libgcc.i686<span class="w"> </span>libstdc++.i686<span class="w"> </span>libstdc++-devel.i686
+
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ibXmu-devel<span class="w"> </span>mesa-libGL-devel<span class="w"> </span>mesa-libGLU-devel<span class="w"> </span>mesa-libGLw-devel
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>freeglut-devel<span class="w"> </span>libXt-devel<span class="w"> </span>libXrender-devel<span class="w"> </span>libXrandr-devel
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>libXi-devel<span class="w"> </span>libXinerama-devel<span class="w"> </span>libX11-devel
+
+
+<span class="c1"># enable exfat support</span>
+yum<span class="w"> </span>groupinstall<span class="w"> </span><span class="s1">&#39;Development Tools&#39;</span><span class="w"> </span>-y
+yum<span class="w"> </span>install<span class="w"> </span>fuse-devel<span class="w"> </span>gcc<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>git<span class="w"> </span>-y
+<span class="nb">cd</span><span class="w"> </span>/usr/local/src<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/relan/exfat.git
+<span class="nb">cd</span><span class="w"> </span>exfat
+autoreconf<span class="w"> </span>--install
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/usr
+make<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>install
+make<span class="w"> </span>clean
+rm<span class="w"> </span>-fr<span class="w"> </span>/usr/local/src/exfat
+
+
+<span class="c1">### install GUI Desktop </span>
+<span class="c1">### no desktop in basic OS setup.</span>
+yum<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;GNOME Desktop&quot;</span><span class="w"> </span>-y
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>curl<span class="w"> </span>cabextract<span class="w"> </span>xorg-x11-font-utils<span class="w"> </span>fontconfig
+rpm<span class="w"> </span>-i<span class="w"> </span>https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+
+
+<span class="c1">## fonts</span>
+yum<span class="w"> </span>install<span class="w"> </span>wqy-zenhei-fonts
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>cjkuni-uming-fonts
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>gnu-free*fonts
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>google*fonts
+
+<span class="c1"># disable libvirtd</span>
+
+
+<span class="c1">#### Install scl gcc9</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>centos-release-scl
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>devtoolset-9
+
+
+<span class="c1"># to enable mudole command. </span>
+<span class="nb">source</span><span class="w"> </span>/etc/profile.d/modules.sh
+
+<span class="c1"># disable libvirtd</span>
+systemctl<span class="w"> </span>stop<span class="w"> </span>libvirtd
+systemctl<span class="w"> </span>disable<span class="w"> </span>libvirtd
+systemctl<span class="w"> </span>mask<span class="w"> </span>libvirtd
+
+<span class="c1"># more libs</span>
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>lapack-devel<span class="w"> </span>openmpi-devel<span class="w"> </span>scalapack-openmpi-devel<span class="w"> </span>fftw2-devel<span class="w"> </span>fftw-devel
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>golang
+
+yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>pdsh<span class="w"> </span>pdsh*
+
+yum<span class="w"> </span>upgrade
+yum<span class="w"> </span>update
+
+<span class="c1">## GNU MPI versions</span>
+<span class="c1"># mpi/mpich-3.0-x86_64 mpi/mpich-x86_64     mpi/openmpi3-x86_64  mpi/openmpi-x86_64</span>
+<span class="c1"># module load mpi/openmpi-x86_64</span>
+
+<span class="c1"># module load mpi/openmpi3-x86_64</span>
+<span class="c1"># module load mpi/mpich-3.0-x86_64</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="11-%E5%8F%AF%E9%80%89%E4%B8%A8centos8%E5%AE%89%E8%A3%85dockers.html" class="btn btn-neutral float-left" title="centos7安装dockers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="13-%E5%8F%AF%E9%80%89fail2ban%E9%81%BF%E5%85%8D%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95.html" class="btn btn-neutral float-right" title="fail2ban避免非法登录" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Sat, 08 Jul 2023 17:20:13.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

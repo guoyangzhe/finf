@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>部署Slurm &mdash; SciBro v0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="此处略" href="9-%E9%83%A8%E7%BD%B2%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E8%BD%AF%E4%BB%B6.html" />
+    <link rel="prev" title="设置自定义yum源" href="7-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89yum%E6%BA%90.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../hpc.html">HPC 简易集群部署</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0-%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE.html">初始准备与网络配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-%E7%BD%91%E9%A1%B5%E7%AE%A1%E7%90%86.html">部署网页管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-1-set_SyncSSH.html">ssh免密登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-2-LinuxSyncTimeForC%26S.html">配置服务器时间同步</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-set_NIS%26NFS.html">配置NFS和NIS服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-%E9%83%A8%E7%BD%B2openHPC.html">部署OpenHPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-%E5%AE%89%E8%A3%85anaconda%26intel.html">安装anaconda&amp;intel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6-%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E6%BA%90%E4%B8%BA%E5%8D%8E%E4%B8%BA%E9%95%9C%E5%83%8F.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89yum%E6%BA%90.html">设置自定义yum源</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">部署Slurm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. Slurm简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#munge">2. 配置Munge(所有节点)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3. 部署Slurm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4. 一些小的问题</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="9-%E9%83%A8%E7%BD%B2%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E8%BD%AF%E4%BB%B6.html">此处略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11-%E5%8F%AF%E9%80%89%E4%B8%A8centos8%E5%AE%89%E8%A3%85dockers.html">centos7安装dockers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-%E5%8F%82%E8%80%83%E4%B8%A8Centos7Setup.html">Centos7Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-%E5%8F%AF%E9%80%89fail2ban%E9%81%BF%E5%85%8D%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95.html">fail2ban避免非法登录</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html">主力软件推荐及分类</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/comsol%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">COMSOL 使用指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/%E8%A1%A8%E9%9D%A2%E7%AD%89%E7%A6%BB%E6%BF%80%E5%85%83.html">Surface Plasmon</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ProgramLanguages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/2-Python.html">Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/3-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">科研计算tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/1-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80Tips.html">编程语言 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/2-%E6%97%A5%E5%B8%B8%E5%8A%9E%E5%85%ACoffice.html">日常办公Office等 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/3-%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F.html">其他软件 Tips</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ACGN&amp;Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACGN%26Misc/%E4%BA%8C%E6%AC%A1%E5%85%83.html">二次元</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../hpc.html">HPC 简易集群部署</a></li>
+      <li class="breadcrumb-item active">部署Slurm</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC部署流程/简易集群部署/8-虚拟机部署slurm.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slurm">
+<h1>部署Slurm<a class="headerlink" href="#slurm" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>一台服务器，一台计算节点，操作系统为CentOS7.6-7.9</strong></p></li>
+<li><p>请确保服务器和计算节点的网络通畅，否则请先配置网络</p></li>
+<li><p>请确保服务器和计算节点的ssh免密登录，否则请先配置ssh免密登录</p></li>
+<li><p>请确保服务器和计算节点的时间同步，否则请先配置时间同步</p></li>
+<li><p>请确保NFS&amp;NIS服务已经配置完成，否则请先配置NFS&amp;NIS服务</p></li>
+</ul>
+<section id="id1">
+<h2>1. Slurm简介<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p><strong>在cluster上源码编译slurm(依官方说明)</strong></p>
+<ul class="simple">
+<li><p>简介：  <a class="reference external" href="http://hmli.ustc.edu.cn/doc/linux/slurm-install/slurm-install.html">http://hmli.ustc.edu.cn/doc/linux/slurm-install/slurm-install.html</a></p></li>
+</ul>
+<blockquote>
+<div><p>Slurm(Simple Linux Utility for Resource Management， <a class="reference external" href="http://slurm.schedmd.com/">http://slurm.schedmd.com/</a> )是开源的、具有容错性和高度可扩展的<code class="docutils literal notranslate"><span class="pre">Linux</span></code>集群超级计算系统资源管理和作业调度系统。超级计算系统可利用<code class="docutils literal notranslate"><span class="pre">Slurm</span></code>对资源和作业进行管理，以避免相互干扰，提高运行效率。所有需运行的作业，无论是用于程序调试还是业务计算，都可以通过交互式并行 <code class="docutils literal notranslate"><span class="pre">srun</span></code> 、批处理式 <code class="docutils literal notranslate"><span class="pre">sbatch</span></code> 或分配式 <code class="docutils literal notranslate"><span class="pre">salloc</span></code> 等命令提交，提交后可以利用相关命令查询作业状态等。</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>架构：</p></li>
+</ul>
+<blockquote>
+<div><p>Slurm采用<code class="docutils literal notranslate"><span class="pre">slurmctld</span></code>服务（守护进程）作为中心管理器用于监测资源和作业，为了提高可用性，还可以配置另一个备份冗余管理器。</p>
+<p>各计算节点需启动<code class="docutils literal notranslate"><span class="pre">slurmd</span></code>守护进程，以便被用于作为远程<code class="docutils literal notranslate"><span class="pre">shell</span></code>使用：等待作业、执行作业、返回状态、再等待更多作业。</p>
+</div></blockquote>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">slurmdbd(Slurm</span> <span class="pre">DataBase</span> <span class="pre">Daemon)</span></code>数据库守护进程（非必需，建议采用，也可以记录到纯文本中等），可以将多个slurm管理的集群的记账信息记录在同一个数据库中。</p>
+</div></blockquote>
+<blockquote>
+<div><p>还可以启用<code class="docutils literal notranslate"><span class="pre">slurmrestd(Slurm</span> <span class="pre">REST</span> <span class="pre">API</span> <span class="pre">Daemon)</span></code>服务（非必需），该服务可以通过<code class="docutils literal notranslate"><span class="pre">REST</span> <span class="pre">API</span></code>与Slurm进行交互，所有功能都对应的API。</p>
+</div></blockquote>
+<blockquote>
+<div><p>用户工具包含 <code class="docutils literal notranslate"><span class="pre">srun</span></code> 运行作业、 <code class="docutils literal notranslate"><span class="pre">scancel</span></code> 终止排队中或运行中的作业、 <code class="docutils literal notranslate"><span class="pre">sinfo</span></code> 查看系统状态、 <code class="docutils literal notranslate"><span class="pre">squeue</span></code> 查看作业状态、 <code class="docutils literal notranslate"><span class="pre">sacct</span></code> 查看运行中或结束了的作业及作业步信息等命令。<code class="docutils literal notranslate"><span class="pre">sview</span></code> 命令可以图形化显示系统和作业状态（可含有网络拓扑）。<code class="docutils literal notranslate"><span class="pre">scontrol</span></code> 作为管理工具，可以监控、修改集群的配置和状态信息等。用于管理数据库的命令是 <code class="docutils literal notranslate"><span class="pre">sacctmgr</span></code> ，可认证集群、有效用户、有效记账账户等。</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>官方文档：</p></li>
+</ul>
+<blockquote>
+<div><ol class="simple">
+<li><p>确保时钟、用户和组（<code class="docutils literal notranslate"><span class="pre">UIDs和GIDs</span></code>）在整个集群中是同步的。</p></li>
+<li><p>安装<code class="docutils literal notranslate"><span class="pre">MUNGE</span></code>用于认证。确保你的集群中的所有节点都有相同的<code class="docutils literal notranslate"><span class="pre">munge.key</span></code>。确保在你启动Slurm守护程序之前，<code class="docutils literal notranslate"><span class="pre">MUNGE守护程序munged已经启动</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rpmbuild</span> <span class="pre">-ta</span> <span class="pre">slurm*.tar.bz2</span></code> #使用该命令进行编译</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rpm</span> <span class="pre">--install</span> <span class="pre">&amp;lt;the</span> <span class="pre">rpm</span> <span class="pre">files&amp;gt;</span></code> #安装包</p></li>
+<li><p>Install the configuration file in <code class="docutils literal notranslate"><span class="pre">&lt;sysconfdir&gt;/slurm.conf</span></code>.  #在每个节点安装配置文件
+NOTE: You will need to install this configuration file on all nodes of the cluster.</p></li>
+<li><p>Controller: <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">enable</span> <span class="pre">slurmctld</span></code> # slurmctld服务
+Database: <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">enable</span> <span class="pre">slurmdbd</span></code> #当前示例中，master是登陆节点，同时也是控制和数据库
+Compute Nodes: <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">enable</span> <span class="pre">slurmd</span></code> # node1 是计算节点</p></li>
+</ol>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>注：不同节点类型所需安装包</strong></p></li>
+<li><p>管理节点(<code class="docutils literal notranslate"><span class="pre">Head</span> <span class="pre">Node</span></code>，运行<code class="docutils literal notranslate"><span class="pre">slurmctld</span></code>服务)、计算节点(<code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Node</span></code>)和用户登录节点(<code class="docutils literal notranslate"><span class="pre">Login</span> <span class="pre">Node</span></code>)：</p></li>
+</ul>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">slurm</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">slurm-perlapi</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">slurm-slurmctld</span></code>（仅管理节点需要）</p>
+<p><code class="docutils literal notranslate"><span class="pre">slurm-slurmd</span></code>（仅计算节点需要，用户登录节点如采用无配置模式，则也需要）</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>SlurmDBD节点：</p></li>
+</ul>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">slurm</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">slurm-slurmdbd</span></code></p>
+<p>注意 （可选）</p>
+<p>管理节点：<code class="docutils literal notranslate"><span class="pre">slurm-slurmctld</span></code> <code class="docutils literal notranslate"><span class="pre">slurm-slurmdbd</span></code> 务必安装，并安装提示的依赖的其他包</p>
+<p>计算节点：以上两个不必安装，安装其他的包  安装就是 <code class="docutils literal notranslate"><span class="pre">rpm</span> <span class="pre">-i</span> <span class="pre">XXX.rpm</span></code></p>
+</div></blockquote>
+</section>
+<section id="munge">
+<h2>2. 配置Munge(所有节点)<a class="headerlink" href="#munge" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>安装epel源 (在所有节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>epel-release
+</pre></div>
+</div>
+</li>
+<li><p>安装munge (在所有节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>munge<span class="w"> </span>munge-libs<span class="w"> </span>munge-devel
+</pre></div>
+</div>
+</li>
+<li><p>生成munge.key (在管理节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>/usr/sbin/create-munge-key<span class="w"> </span>-r
+</pre></div>
+</div>
+</li>
+<li><p>将munge.key文件复制到其他节点 (在管理节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>/etc/munge/munge.key<span class="w"> </span>root@node1:/etc/munge/
+scp<span class="w"> </span>/etc/munge/munge.key<span class="w"> </span>root@node2:/etc/munge/
+</pre></div>
+</div>
+</li>
+<li><p>修改权限 (在所有节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chown<span class="w"> </span>munge:<span class="w"> </span>/etc/munge/munge.key
+chmod<span class="w"> </span><span class="m">400</span><span class="w"> </span>/etc/munge/munge.key
+</pre></div>
+</div>
+</li>
+<li><p>启动munge服务 (在所有节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>munge
+systemctl<span class="w"> </span>start<span class="w"> </span>munge
+</pre></div>
+</div>
+</li>
+<li><p>验证munge服务 (在所有节点上执行)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># 本地查看凭据</span>
+munge<span class="w"> </span>-n
+<span class="c1"># 本地解码</span>
+munge<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>unmunge
+<span class="c1"># 远程解码</span>
+munge<span class="w"> </span>-n<span class="w"> </span><span class="p">|</span><span class="w"> </span>ssh<span class="w"> </span>node01<span class="w"> </span>unmunge
+<span class="c1"># 基准测试</span>
+remunge
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>3. 部署Slurm<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>3.1 服务端部署Slurm<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong>安装依赖包</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mariadb<span class="w"> </span>mariadb-devel<span class="w"> </span>mariadb-server<span class="w"> </span>munge<span class="w"> </span>munge-devel<span class="w"> </span>hwloc-libs<span class="w"> </span>hwloc-devel<span class="w"> </span>hdf5-devel<span class="w"> </span>pam-devel<span class="w"> </span>perl-ExtUtils-MakeMaker<span class="w"> </span>python3<span class="w"> </span>readline-devel
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="openhpcslurm">
+<h3>3.1.1 使用OpenHPC安装Slurm (未测试)<a class="headerlink" href="#openhpcslurm" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>CentOS7 使用自带的库或者OpenHPC 1.3.9安装Slurm的步骤如下：</p>
+<p>首先，确保你的CentOS系统已经安装了OpenHPC 1.3.9。你可以通过以下命令来检查：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>list<span class="w"> </span>installed<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>openhpc
+</pre></div>
+</div>
+</li>
+<li><p>安装Slurm的依赖包：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>slurm<span class="w"> </span>slurm-slurmctld<span class="w"> </span>slurm-slurmdbd<span class="w"> </span>slurm-perlapi
+</pre></div>
+</div>
+</li>
+<li><p>配置Slurm。你需要编辑Slurm的配置文件，通常位于/etc/slurm/slurm.conf。你可以根据你的需求进行配置，包括节点信息、分区、用户权限等。</p></li>
+<li><p>启动Slurm服务</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>slurmctld
+systemctl<span class="w"> </span>restart<span class="w"> </span>slurmctld
+</pre></div>
+</div>
+</li>
+<li><p>验证Slurm的安装。你可以使用以下命令来检查Slurm的状态：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>status<span class="w"> </span>slurmctld
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sinfo
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>3.1.2 源码编译安装Slurm<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong>下载源码包</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://download.schedmd.com/slurm/slurm-22.05.5.tar.bz2
+</pre></div>
+</div>
+</li>
+<li><p><strong>编译安装</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rpmbuild<span class="w"> </span>-ta<span class="w"> </span>slurm-22.05.5.tar.bz2<span class="w"> </span><span class="c1">#（编译会报错H5PT，使用conda deactivate，不要使用python库）</span>
+<span class="c1"># 耐心等待 成功后将在/root/rpmbuild/RPMS/x86_64/ 目录下生成12个RPM包（这些是二进制包）</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>安装包</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/root/rpmbuild/RPMS/x86_64<span class="w"> </span><span class="c1"># （为了方便，安装全部的包→12个包）</span>
+rpm<span class="w"> </span>-ivh<span class="w"> </span>*rpm<span class="w">   </span>
+<span class="c1">#之后可以选择卸载掉不需要的包 如： rpm -e slurm-slurmd</span>
+<span class="c1"># 在Slurm中，有一些包需要安装在服务节点，而另一些包需要安装在计算节点。以下是Slurm的12个包以及它们应该安装的节点类型：</span>
+<span class="w">    </span><span class="m">1</span>.<span class="w"> </span>slurm：服务节点和计算节点都需要安装。
+<span class="w">    </span><span class="m">2</span>.<span class="w"> </span>slurm-slurmctld：服务节点上安装，用于控制Slurm集群。
+<span class="w">    </span><span class="m">3</span>.<span class="w"> </span>slurm-slurmd：计算节点上安装，用于执行作业。
+<span class="w">    </span><span class="m">4</span>.<span class="w"> </span>slurm-slurmdbd：服务节点上安装，用于Slurm数据库。
+<span class="w">    </span><span class="m">5</span>.<span class="w"> </span>slurm-munge：服务节点和计算节点都需要安装，用于加密通信。
+<span class="w">    </span><span class="m">6</span>.<span class="w"> </span>slurm-pam_slurm：服务节点和计算节点都需要安装，用于PAM认证。
+<span class="w">    </span><span class="m">7</span>.<span class="w"> </span>slurm-perlapi：服务节点和计算节点都需要安装，用于Perl<span class="w"> </span>API。
+<span class="w">    </span><span class="m">8</span>.<span class="w"> </span>slurm-plugins：服务节点和计算节点都需要安装，用于插件支持。
+<span class="w">    </span><span class="m">9</span>.<span class="w"> </span>slurm-slurmrestd：服务节点上安装，用于RESTful<span class="w"> </span>API支持。
+<span class="w">    </span><span class="m">10</span>.<span class="w"> </span>slurm-slurm-torque：服务节点上安装，用于与Torque集成。
+<span class="w">    </span><span class="m">11</span>.<span class="w"> </span>slurm-slurm-topology-hwloc：服务节点和计算节点都需要安装，用于硬件拓扑支持。
+<span class="w">    </span><span class="m">12</span>.<span class="w"> </span>slurm-slurm-topology-override：服务节点和计算节点都需要安装，用于硬件拓扑覆盖。
+<span class="c1"># 请注意，具体的安装需求可能会因你的集群配置和需求而有所不同。建议你参考Slurm的官方文档和指南来确定正确的安装方式。</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>配置Slurm</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># 生成配置文件</span>
+nano<span class="w"> </span>/etc/slurm/slurm.conf
+nano<span class="w"> </span>/etc/slurm/slurmdbd.conf
+nano<span class="w"> </span>/etc/slurm/cgroup.conf
+<span class="c1"># 修改权限</span>
+chown<span class="w"> </span>root.root<span class="w"> </span>/etc/slurm/slurmdbd.conf
+chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/etc/slurm/slurmdbd.conf
+chown<span class="w"> </span>root<span class="w"> </span>/etc/slurm/slurm.conf
+mkdir<span class="w"> </span>/var/spool/slurmctld
+chown<span class="w"> </span>root.root<span class="w"> </span>/var/spool/slurmctld
+</pre></div>
+</div>
+</li>
+<li><p><strong>启动服务</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>restart<span class="w"> </span>slurmctld
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>slurmctld
+systemctl<span class="w"> </span>status<span class="w"> </span>slurmctld
+systemctl<span class="w"> </span>restart<span class="w"> </span>slurmdbd
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>slurmdbd
+systemctl<span class="w"> </span>status<span class="w"> </span>slurmdbd
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>3.2 客户端部署Slurm<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p><strong>安装依赖包</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>mariadb<span class="w"> </span>mariadb-devel<span class="w"> </span>mariadb-server<span class="w"> </span>munge<span class="w"> </span>munge-devel<span class="w"> </span>hwloc-libs<span class="w"> </span>hwloc-devel<span class="w"> </span>hdf5-devel<span class="w"> </span>pam-devel<span class="w"> </span>perl-ExtUtils-MakeMaker<span class="w"> </span>python3<span class="w"> </span>readline-devel
+</pre></div>
+</div>
+</li>
+<li><p>在服务端复制安装包到共享文件夹</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>./rpmbuild/RPMS/x86_64/*<span class="w"> </span>/opt/slurm-packages
+</pre></div>
+</div>
+</li>
+<li><p>进入计算节点，安装依赖包</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/opt/slurm-packages
+rpm<span class="w"> </span>-ivh<span class="w"> </span>*rpm<span class="w">  </span><span class="c1">#（可以之后删除计算节点上不需要的包）</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>将配置文件发送到计算节点</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>/etc/slurm/slurm.conf<span class="w"> </span>root@node01:/etc/slurm/
+scp<span class="w"> </span>/etc/slurm/cgroup.conf<span class="w"> </span>root@node01:/etc/slurm/
+pdsh<span class="w"> </span>-w<span class="w"> </span>node01<span class="w"> </span>chown<span class="w"> </span>root.root<span class="w"> </span>/etc/slurm/<span class="w"> </span>-R
+pdsh<span class="w"> </span>-w<span class="w"> </span>node01<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>slurmd
+pdsh<span class="w"> </span>-w<span class="w"> </span>node01<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>slurmd
+pdsh<span class="w"> </span>-w<span class="w"> </span>node01<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>slurmd
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h2>4. 一些小的问题<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>[ ] <em>如果修改了配置文件 <code class="docutils literal notranslate"><span class="pre">slurm.conf</span></code> ,则请在 <code class="docutils literal notranslate"><span class="pre">master</span></code> 上执行 <code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">reconfig</span></code> 命令更新配置文件。</em></p></li>
+<li><p>[ ] <em>目前集群所有机器的配置文件是一样的，如果修改了请把所有机器的 <code class="docutils literal notranslate"><span class="pre">conf</span></code> 都相应修改掉</em></p></li>
+<li><p>[ ] <em>查看各个节点的情况 <code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">show</span> <span class="pre">node</span></code> 如果出现 <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">responding</span></code> 说机器通信有问题</em></p></li>
+<li><p>[ ] <em>如果要看上述3中的机器的具体原因可以查看每台机器的具体日志，目录为 <code class="docutils literal notranslate"><span class="pre">/var/log/slurmd.log</span></code>
+在master上还可以查看 <code class="docutils literal notranslate"><span class="pre">/var/log/slurmctld.log</span></code></em></p></li>
+<li><p>[ ] <em>如果某个节点 <code class="docutils literal notranslate"><span class="pre">down</span></code> 很久了，后来你找到原因了，觉得解决了。此时因为长时间 down 需要 <code class="docutils literal notranslate"><span class="pre">update</span></code> 整个集群，命令为 <code class="docutils literal notranslate"><span class="pre">scontrol</span> <span class="pre">updatenode=master,slaver1,slaver2,slaver3</span> <span class="pre">state=idle</span></code></em></p></li>
+<li><p>[ ] <em>建立slurm用户的时候查看 <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">slurm</span></code> 会显示 <code class="docutils literal notranslate"><span class="pre">uid=1001(slurm),gid=1001(slurm),group=1001(slurm)</span></code> 【我的集群上】。注意每台机器上都要建一个 <code class="docutils literal notranslate"><span class="pre">slurm</span></code> 账户，当你查看发现有的机器上 <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">slurm</span></code> 不一致的时候，可能有的机器是1000，这时候需要修改uid和gid为1001，所有节点一定要保持一致！然后如果之前手动建立的 <code class="docutils literal notranslate"><span class="pre">munge</span></code> 文件夹是在1000时候建立的，改了之后要把之前的文件夹删掉重新建一遍！</em></p></li>
+<li><p>[ ] <em><code class="docutils literal notranslate"><span class="pre">Sview</span></code> 来图形化查看任务状态，这个需要在本地有一个 <code class="docutils literal notranslate"><span class="pre">vnc</span></code> 的客户端，在 <code class="docutils literal notranslate"><span class="pre">master</span></code> 上开一个 <code class="docutils literal notranslate"><span class="pre">vncsever</span></code> 就可以连了，然后 <code class="docutils literal notranslate"><span class="pre">sview</span></code> ，否则直接命令窗登陆会看到 <code class="docutils literal notranslate"><span class="pre">cannot</span> <span class="pre">open</span> <span class="pre">display</span></code> 。</em></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="7-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89yum%E6%BA%90.html" class="btn btn-neutral float-left" title="设置自定义yum源" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="9-%E9%83%A8%E7%BD%B2%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E8%BD%AF%E4%BB%B6.html" class="btn btn-neutral float-right" title="此处略" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Sat, 08 Jul 2023 17:20:13.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

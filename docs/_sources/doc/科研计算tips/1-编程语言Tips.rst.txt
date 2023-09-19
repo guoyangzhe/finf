@@ -1,0 +1,11 @@
+.. _Tips:
+
+=======================
+编程语言 Tips
+=======================
+
+.. toctree::
+    :maxdepth: 2
+
+    编程语言tips/fortrantips
+    编程语言tips/pythontips

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slurm for CP2K &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="PBS for VASP" href="VASP-PBS.html" />
+    <link rel="prev" title="PBS for CP2K" href="CP2K-PBS.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../2-LinuxShell.html">Linux Shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Linux Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_update_mirror.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_create_user.html">CentOS-7 集群上创建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_close_root_ssh.html">CentOS-7 关闭root远程ssh登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_FormatandMount_disk.html">CentOS-7 格式化&amp;挂载硬盘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zfs_format_disk_mount.html">CentOS-7 ZFS格式硬盘 挂载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_install_Google.html">CentOS-7 Google-Chrome 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_Neofetch.html">CentOS-7 安装 Neofetch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_X2Go.html">CentOS-7安装X2Go</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux-yum_Just_download.html">Linux-yum只下载不安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_Enable_publickey_login.html">Linux-设置公钥登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Delete_all_same_files.html">Linux-删除目录下所有同名文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SlurmGuide.html">Slurm使用教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VIM_used_guide.html">Vim使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2K-PBS.html">PBS for CP2K</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Slurm for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-PBS.html">PBS for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-Slurm.html">Slurm for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-PBS.html">PBS for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-Slurm.html">Slurm for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus-Slurm.html">Slurm for Octopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-PBS.html">PBS for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-Slurm.html">Slurm for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-PBS.html">PBS for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-Slurm.html">Slurm for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_filesystem_copy.html">Linux 选择性文件复制</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../2-LinuxShell.html">Linux Shell</a></li>
+      <li class="breadcrumb-item active">Slurm for CP2K</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC_Deployment/Linux_Shell/CP2k-Slurm.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slurm-for-cp2k">
+<h1>Slurm for CP2K<a class="headerlink" href="#slurm-for-cp2k" title="Link to this heading"></a></h1>
+<div class="literal-block-wrapper docutils container" id="test">
+<div class="code-block-caption"><span class="caption-text">cp2k-slurm.sh</span><a class="headerlink" href="#test" title="Link to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/bash</span>
+<span class="hll"><span class="linenos"> 2</span><span class="c1">#SBATCH -J cp2k-opt</span>
+</span><span class="linenos"> 3</span><span class="c1">#SBATCH -o %J.out</span>
+<span class="linenos"> 4</span><span class="c1">#SBATCH -e %J.err</span>
+<span class="linenos"> 5</span><span class="c1">#SBATCH -N 1</span>
+<span class="linenos"> 6</span><span class="c1">#SBATCH -w node01</span>
+<span class="linenos"> 7</span><span class="c1">#SBATCH -n 36</span>
+<span class="linenos"> 8</span><span class="c1">#SBATCH -t 999:0:0</span>
+<span class="linenos"> 9</span><span class="c1">#SBATCH -p hpc</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="nv">JOBNAME</span><span class="o">=</span>test.inp
+<span class="linenos">12</span><span class="nv">OUTPUTNAME</span><span class="o">=</span>test.out
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="nb">echo</span><span class="w"> </span>Time<span class="w"> </span>is<span class="w"> </span><span class="sb">`</span>date<span class="sb">`</span>
+<span class="linenos">17</span><span class="nb">echo</span><span class="w"> </span>Working<span class="w"> </span>dir<span class="w"> </span>is<span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span><span class="w">  </span><span class="c1">#$SLURM_SUBMIT_DIR：作业提交目录</span>
+<span class="linenos">18</span><span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="nv">NPROCS</span><span class="o">=</span><span class="k">$((</span><span class="nv">SLURM_NTASKS</span><span class="k">))</span><span class="w">  </span><span class="c1">#$SLURM_NTASKS：总任务数</span>
+<span class="linenos">21</span><span class="nv">N_NODE</span><span class="o">=</span><span class="k">$((</span><span class="nv">SLURM_JOB_NUM_NODES</span><span class="k">))</span><span class="w">  </span><span class="c1">#$SLURM_JOB_NUM_NODES：节点数</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="nb">echo</span><span class="w"> </span>This<span class="w"> </span>job<span class="w"> </span>has<span class="w"> </span>allocated<span class="w"> </span><span class="si">${</span><span class="nv">N_NODE</span><span class="si">}</span><span class="w"> </span>nodes<span class="w"> </span>with<span class="w"> </span><span class="si">${</span><span class="nv">NPROCS</span><span class="si">}</span><span class="w"> </span>processors
+<span class="linenos">24</span><span class="nb">echo</span><span class="w"> </span>Running<span class="w"> </span>on<span class="w"> </span>host<span class="w"> </span><span class="sb">`</span>hostname<span class="sb">`</span>
+<span class="linenos">25</span><span class="nb">echo</span><span class="w"> </span>This<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>runs<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>processors:
+<span class="linenos">26</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;**Start&quot;</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span><span class="w"> </span>&gt;<span class="w"> </span>work.txt
+<span class="linenos">29</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$SLURM_NODELIST</span><span class="w"> </span>&gt;<span class="w"> </span>nodefile.txt<span class="w">   </span><span class="c1">#$SLURM_NODELIST：节点列表</span>
+<span class="linenos">30</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$NPROCS</span><span class="w"> </span>&gt;<span class="w"> </span>cpucore.txt
+<span class="linenos">31</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$N_NODE</span><span class="w"> </span>&gt;<span class="w"> </span>node.txt
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="nb">source</span><span class="w"> </span>~/run_software_bashrc/before_run_cp2k2023.1.sh
+<span class="linenos">34</span>
+<span class="linenos">35</span>mpirun<span class="w"> </span>-np<span class="w"> </span><span class="si">${</span><span class="nv">NPROCS</span><span class="si">}</span><span class="w"> </span>cp2k.popt<span class="w"> </span><span class="nv">$JOBNAME</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$OUTPUTNAME</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;**Finished!&quot;</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CP2K-PBS.html" class="btn btn-neutral float-left" title="PBS for CP2K" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="VASP-PBS.html" class="btn btn-neutral float-right" title="PBS for VASP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

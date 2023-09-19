@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux Shell &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CentOS-7 更新软件源" href="CentOS_update_mirror.html" />
+    <link rel="prev" title="Linux Shell" href="../2-LinuxShell.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../2-LinuxShell.html">Linux Shell</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Linux Shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linux-1">应当掌握的Linux的基础知识-1</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_update_mirror.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_create_user.html">CentOS-7 集群上创建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_close_root_ssh.html">CentOS-7 关闭root远程ssh登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_FormatandMount_disk.html">CentOS-7 格式化&amp;挂载硬盘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zfs_format_disk_mount.html">CentOS-7 ZFS格式硬盘 挂载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_install_Google.html">CentOS-7 Google-Chrome 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_Neofetch.html">CentOS-7 安装 Neofetch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_X2Go.html">CentOS-7安装X2Go</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux-yum_Just_download.html">Linux-yum只下载不安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_Enable_publickey_login.html">Linux-设置公钥登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Delete_all_same_files.html">Linux-删除目录下所有同名文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SlurmGuide.html">Slurm使用教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VIM_used_guide.html">Vim使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2K-PBS.html">PBS for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2k-Slurm.html">Slurm for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-PBS.html">PBS for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-Slurm.html">Slurm for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-PBS.html">PBS for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-Slurm.html">Slurm for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus-Slurm.html">Slurm for Octopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-PBS.html">PBS for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-Slurm.html">Slurm for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-PBS.html">PBS for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-Slurm.html">Slurm for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_filesystem_copy.html">Linux 选择性文件复制</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../2-LinuxShell.html">Linux Shell</a></li>
+      <li class="breadcrumb-item active">Linux Shell</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC_Deployment/Linux_Shell/shell.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linux-shell">
+<h1>Linux Shell<a class="headerlink" href="#linux-shell" title="Link to this heading"></a></h1>
+<section id="linux-1">
+<h2>应当掌握的Linux的基础知识-1<a class="headerlink" href="#linux-1" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Linux是一种开源的操作系统，它提供了许多强大的shell命令，以下是一些常用的命令：</p>
+<ol class="arabic simple">
+<li><p>ls：列出当前目录下的文件和子目录。</p></li>
+<li><p>cd：切换当前目录。</p></li>
+<li><p>pwd：显示当前目录的路径。</p></li>
+<li><p>mkdir：创建一个新目录。</p></li>
+<li><p>rm：删除文件或目录。</p></li>
+<li><p>cp：复制文件或目录。</p></li>
+<li><p>mv：移动文件或目录。</p></li>
+<li><p>cat：显示文件的内容。</p></li>
+<li><p>grep：在文件中查找指定的字符串。</p></li>
+<li><p>find：在文件系统中查找文件。</p></li>
+<li><p>chmod：修改文件或目录的权限。</p></li>
+<li><p>chown：修改文件或目录的所有者。</p></li>
+<li><p>ps：显示当前正在运行的进程。</p></li>
+<li><p>top：显示系统的资源使用情况。</p></li>
+<li><p>tar：打包和解压文件。</p></li>
+</ol>
+<p>这些命令是Linux中最常用的命令之一，掌握它们可以帮助您更好地管理和操作Linux系统。</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>centos删除所有子文件夹下的同一个名称的文件：</dt><dd><p>find ./ -type f -name “WAVECAR” -delete</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<section id="linux-2">
+<h3>应当掌握的Linux的基础知识-2<a class="headerlink" href="#linux-2" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>至少会用的命令：
+cd, ls, pwd, vi, gedit, rm, mv, cp, mkdir, yum, cat, grep, head, tail, top, kill, export, reboot, poweroff, which, find, chmod, echo
+最好了解的命令：
+awk, du, df, ssh, time, ln, rpm, man, alias, ps, touch, passwd, tar, more, unset, nohup(jobs), source, nice</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>应当了解以下概念：
+- Linux的文件路径
+- 操作系统的基本目录结构
+- 相对路径与绝对路径
+- 用户权限
+- <code class="xref py py-obj docutils literal notranslate"><span class="pre">bash</span></code>
+- <code class="xref py py-obj docutils literal notranslate"><span class="pre">bashrc`文件</span>
+<span class="pre">-</span> <span class="pre">环境变量（特别是</span> <span class="pre">`PATH</span></code> 和 <code class="xref py py-obj docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> ）
+- <code class="xref py py-obj docutils literal notranslate"><span class="pre">shell</span></code> 脚本
+- 重定向（ <code class="xref py py-obj docutils literal notranslate"><span class="pre">&gt;</span></code> 、 <code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;</span></code> 、 <code class="xref py py-obj docutils literal notranslate"><span class="pre">&lt;&lt;</span></code> 、 <code class="xref py py-obj docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> 操作符）
+- 管道命令操作符（ <code class="xref py py-obj docutils literal notranslate"><span class="pre">|</span></code> 和 <code class="xref py py-obj docutils literal notranslate"><span class="pre">|tee</span></code> 符号）
+- 动态库文件
+- <code class="xref py py-obj docutils literal notranslate"><span class="pre">rpm</span></code> 包
+- 前台与后台
+- 进程优先级</p>
+<p>以上知识可以通过在虚拟机中练习和使用 <code class="xref py py-obj docutils literal notranslate"><span class="pre">Google</span></code> 搜索来学习。对于在 <code class="xref py py-obj docutils literal notranslate"><span class="pre">Linux</span></code> 下运行计算程序而言，这些已经足够了。个人认为，没有必要专门购买Linux书籍去学习。但如果你想深入系统地学习Linux，可以考虑阅读 <code class="xref py py-obj docutils literal notranslate"><span class="pre">《The</span> <span class="pre">Linux</span> <span class="pre">Command</span> <span class="pre">Line》</span></code> （William Shotts）或 <code class="xref py py-obj docutils literal notranslate"><span class="pre">《鸟哥的Linux私房菜》</span></code> 等书籍。</p>
+<p>我推荐一个网站：[Linux命令大全](<a class="reference external" href="https://man.linuxde.net">https://man.linuxde.net</a>)，你可以在这个网站中找到各种Linux命令，并且有清晰易懂的讲解。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Linux任务管理器：
+- top
+- htop
+- atop
+- btop</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>Linux的.bahsrc文件相当重要，不要写入乱七八糟的东西，否则会影响系统的正常运行。同时也会有未知的报错，如不能自动sftp跟踪文件夹当前路径。</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>安装图形界面</dt><dd><p>yum grouplist
+yum groupinstall GNOME Desktop
+yum groupinstall Graphical* # 安装图形界面</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>重启图形界面：</dt><dd><p>systemctl restart gdm</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>centos 7 查看天气：</dt><dd><p>curl wttr.in/dalian</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../2-LinuxShell.html" class="btn btn-neutral float-left" title="Linux Shell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CentOS_update_mirror.html" class="btn btn-neutral float-right" title="CentOS-7 更新软件源" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+# 安装Anaconda3&Intel
+
+## 1. 安装anaconda
+
+* 下载安装包
+
+    ```bash
+    wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2021.05-Linux-x86_64.sh
+    ```
+
+* 运行安装脚本安装
+
+    ```bash
+    bash Anaconda3-2021.05-Linux-x86_64.sh
+    ```
+
+* 将以下内容写入到`~/.bashrc`中
+
+    ```bash
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+            . "/opt/anaconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/opt/anaconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
+    ```
+
+## 2. 安装intel
+
+* 下载安装包
+
+    ```bash
+    wget https://*****
+    # 本次安装使用的安装包为：parallel_studio_xe_2019_update5_cluster_edition.tgz
+    ```
+
+* 解压安装包
+
+    ```bash
+    tar -zxvf parallel_studio_xe_2019_update5_cluster_edition.tgz
+    ```
+
+* 进入解压后的文件夹
+
+    ```bash
+    cd parallel_studio_xe_2019_update5_cluster_edition
+    ```
+
+* 安装
+
+    ```bash
+    ./install.sh
+    ```
+
+* 以下是安装过程中的一些配置：
+
+    ```bash
+    # --------------------------------------------------------------------------------
+    # Welcome to the Intel(R) Parallel Studio XE 2019 Update 5 Cluster Edition for Linux*
+    # --------------------------------------------------------------------------------
+
+    # You will complete the following steps:
+    #    1.  Welcome
+    #    2.  License Agreement
+    #    3.  Intel® Software Improvement Program
+    #    4.  License Activation
+    #    5.  Options
+    #    6.  Installation
+    #    7.  Complete
+
+    # --------------------------------------------------------------------------------
+    # Press "Enter" key to continue or "q" to quit:
+    Enter # 回车键继续
+    #  E. 'Excluded License' means a license that requires, as a condition of use,
+    # --More--[Press space to continue, 'q' to quit.]
+    q
+    # Type "accept" to continue or "decline" to go back to the previous menu:
+    accept # 输入accept
+    # --------------------------------------------------------------------------------
+
+    #    1. I consent to the collection of my Information
+    #    2. I do NOT consent to the collection of my Information
+
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection:
+    1
+    # --------------------------------------------------------------------------------
+    # Missing optional prerequisites
+    # -- The system is running in the virtual environment. Sampling drivers will not
+    # be installed.
+    # -- Xorg X11 libXss runtime library is not found
+    # --------------------------------------------------------------------------------
+    #    1. Skip prerequisites [ default ]
+    #    2. Show the detailed info about issue(s)
+    #    3. Re-check the prerequisites
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    1
+    # 1. Continue with installation [ default ]
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    1
+    # --------------------------------------------------------------------------------
+    # If you do not have an internet connection, choose to activate with license file
+    # or Intel(R) Software License Manager.
+    # --------------------------------------------------------------------------------
+
+    #    1. Use existing license [ default ]
+    #    2. Activate with serial number
+    #    3. Activate with license file, or with Intel(R) Software License Manager
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    3
+    # --------------------------------------------------------------------------------
+
+    #    1. Activate offline using a license file [ default ]
+    #    2. Use Intel(R) Software License Manager to find an existing license file
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    1
+    # --------------------------------------------------------------------------------
+
+    #    1. Activate offline using a license file [ default ]
+    #    2. Use Intel(R) Software License Manager to find an existing license file
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]: 1
+    # Please type the full path to your license file(s):
+    # /opt/software/parallel_studio_xe.lic
+    # Activation completed successfully.
+    # --------------------------------------------------------------------------------
+    # Press "Enter" key to continue:
+    Enter # 回车键继续
+    # Options > Configure Cluster Installation
+    # --------------------------------------------------------------------------------
+    # Where would you like to install?
+
+    # This product can be installed on cluster nodes.
+    # --------------------------------------------------------------------------------
+
+    #    1. Finish configuring installation target [ default ]
+    #    2. Installation Target                    [ Current System (Single - Node) ]
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    1
+    # Options > Pre-install Summary
+    # --------------------------------------------------------------------------------
+    # Install location:
+    #     /opt/intel/intel-2018up4
+
+    # Component(s) selected:
+    #     Intel Trace Analyzer and Collector 2019 Update 5                       448MB
+    #         Intel Trace Analyzer for Intel(R) 64 Architecture
+    #         Intel Trace Collector for Intel(R) 64 Architecture
+
+    #     Intel Cluster Checker 2019 Update 5                                    214MB
+    #         Cluster Checker
+
+    #     Intel VTune Amplifier 2019 Update 6                                    2.5GB
+    #         Command line interface
+    #         Sampling Driver kit
+    #         Graphical user interface
+    #         Platform Profiler
+
+    #     Intel Inspector 2019 Update 5                                          348MB
+    #         Command line interface
+    #         Graphical user interface
+
+    #     Intel Advisor 2019 Update 5                                            1.1GB
+    #         Command line interface
+    #         Graphical user interface
+    #         Flow Graph Analyzer
+
+    #     Intel C++ Compiler 19.0 Update 5                                      1007MB
+    #         Intel C++ Compiler
+
+    #     Intel Fortran Compiler 19.0 Update 5                                   480MB
+    #         Intel Fortran Compiler
+
+    #     Intel Math Kernel Library 2019 Update 5 for C/C++                      2.8GB
+    #         Intel MKL core libraries for C/C++
+    #         Cluster support for C/C++
+    #         Intel TBB threading support
+    #         PGI* C/C++ compiler support
+    #         GNU* C/C++ compiler support
+
+    #     Intel Math Kernel Library 2019 Update 5 for Fortran                    2.7GB
+    #         Intel MKL core libraries for Fortran
+    #         Cluster support for Fortran
+    #         GNU* Fortran compiler support
+    #         Fortran 95 interfaces for BLAS and LAPACK
+    # --More--[Press space to continue, 'q' to quit.]
+    q
+    # --------------------------------------------------------------------------------
+
+    #    1. Accept configuration and begin installation [ default ]
+    #    2. Customize installation
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    2
+    # --------------------------------------------------------------------------------
+    # Select the target architecture(s) where the applications you develop will run.
+    # --------------------------------------------------------------------------------
+
+    #    1. [x]    IA-32
+    #    2. [x]    Intel(R) 64
+
+    #    3. Finish architecture selection [ default ]
+
+    #    Note: This system is an Intel(R) 64 architecture system.
+    #    Your application may be built to run on either IA-32 or Intel(R) 64 arch.
+
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 3 ]:
+    3
+    # --------------------------------------------------------------------------------
+    # Review the configuration settings below. You can customize the settings or
+    # accept them and begin installation now.
+    # --------------------------------------------------------------------------------
+
+    #    1. Accept configuration and begin installation [ default ]
+
+    #    2. Change install Directory      [ /opt/intel/intel-2018up4 ]
+    #    3. Change components to install  [ All ]
+    #    4. Change advanced options
+    #    5. View pre-install summary
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    2
+    # Please type the full path to the installation root directory starting with /:
+    /opt/intel/intel-2019up5 # 安装路径
+    # --------------------------------------------------------------------------------
+    # Review the configuration settings below. You can customize the settings or
+    # accept them and begin installation now.
+    # --------------------------------------------------------------------------------
+
+    #    1. Accept configuration and begin installation [ default ]
+
+    #    2. Change install Directory      [ /opt/intel/intel-2019up5 ]
+    #    3. Change components to install  [ All ]
+    #    4. Change advanced options
+    #    5. View pre-install summary
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    1
+    # --------------------------------------------------------------------------------
+    # There are one or more unresolved issues based on your system configuration and
+    # component selection.
+
+    # You can resolve all the issues without exiting the installer and re-check, or
+    # you can exit, resolve the issues, and then run the installation again.
+
+    # --------------------------------------------------------------------------------
+    # Missing optional prerequisites
+    # -- No compatible Python* found
+    # --------------------------------------------------------------------------------
+    #    1. Skip prerequisites [ default ]
+    #    2. Show the detailed info about issue(s)
+    #    3. Re-check the prerequisites
+
+    #    h. Help
+    #    b. Back
+    #    q. Quit installation
+
+    # --------------------------------------------------------------------------------
+    # Please type a selection or press "Enter" to accept default choice [ 1 ]:
+    1
+    # 之后就是开始安装了
+    # Installation
+    # --------------------------------------------------------------------------------
+    # Each component will be installed individually. If you cancel the installation,
+    # some components might remain on your system. This installation may take several
+    # minutes, depending on your system and the options you selected.
+    # --------------------------------------------------------------------------------
+    # Installing Intel Trace Collector for Intel(R) 64 Architecture component... done
+    # --------------------------------------------------------------------------------
+    # Installing Intel Trace Analyzer for Intel(R) 64 Architecture component... done
+    # --------------------------------------------------------------------------------
+    # Installing Cluster Checker component... done
+    # --------------------------------------------------------------------------------
+    # Installing Platform Profiler component...
+    ...... 后续安装过程省略
+    等待安装完成即可
+
+    # Complete
+    # --------------------------------------------------------------------------------
+    # Thank you for installing Intel(R) Parallel Studio XE 2019 Update 5
+    # Cluster Edition for Linux*.
+
+    # If you have not done so already, please register your product with Intel
+    # Registration Center to create your support account and take full advantage of
+    # your product purchase.
+
+    # Your support account gives you access to free product updates and upgrades
+    # as well as Priority Customer support at the Online Service Center
+    # https://supporttickets.intel.com.
+
+
+    # --------------------------------------------------------------------------------
+    # Press "Enter" key to quit:
+    Enter # 回车键退出
+    ```
+
+* 配置环境变量
+    可写入到`/etc/profile`中，也可写入到`~/.bashrc`中，或者写入到`intel.sh`中，之后在`~/.bashrc`中`source intel.sh`即可
+
+    ```bash
+    #intel#
+    source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mkl/bin/mklvars.sh intel64 && \
+    source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/ifortvars.sh intel64 && \
+    source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/iccvars.sh intel64 && \
+    source /opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mpi/intel64/bin/mpivars.sh intel64
+    ```

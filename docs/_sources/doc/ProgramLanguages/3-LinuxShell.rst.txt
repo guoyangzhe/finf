@@ -1,0 +1,39 @@
+.. _linuxshell:
+
+=======================
+Linux Shell
+=======================
+
+.. toctree::
+   :maxdepth: 2
+
+   Linux_Shell/shell
+   Linux_Shell/centos更新软件源为华为镜像
+   Linux_Shell/CentOS集群上创建用户
+   Linux_Shell/centos关闭root远程ssh登录
+   Linux_Shell/CentOS格式化&挂载硬盘
+   Linux_Shell/zfs硬盘挂载
+   Linux_Shell/centos安装Google浏览器
+   Linux_Shell/CentOS安装Neofetch
+   Linux_Shell/CentOS安装X2Go
+   Linux_Shell/Linux-yum只下载不安装
+   Linux_Shell/Linux设置公钥登录
+   Linux_Shell/同时删除所有同名文件
+   Linux_Shell/Slurm使用教程
+   Linux_Shell/VIM使用方法
+   Linux_Shell/CP2K-PBS
+   Linux_Shell/CP2k-Slurm
+   Linux_Shell/VASP-PBS
+   Linux_Shell/VASP-Slurm
+   Linux_Shell/GPAW-PBS
+   Linux_Shell/GPAW-Slurm
+   Linux_Shell/Octopus-Slurm
+   Linux_Shell/Gaussain-PBS
+   Linux_Shell/Gaussain-Slurm
+   Linux_Shell/ORCA-PBS
+   Linux_Shell/ORCA-Slurm
+
+
+
+
+

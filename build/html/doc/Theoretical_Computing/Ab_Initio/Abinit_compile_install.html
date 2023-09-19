@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abinit 编译与安装 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Phonon 的计算–基于CP2K" href="phonon.html" />
+    <link rel="prev" title="Quantum Espresso编译与安装" href="QE_compile_install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../TheoreticalComputing2.html">Ab Initio</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CP2K_compile_install.html">CP2K编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP_compile_install.html">VASP编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW_compile_install.html">GPAW编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW_basic.html">GPAW 基组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus_compile_install.html">Octopus编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QE_compile_install.html">Quantum Espresso编译与安装</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Abinit 编译与安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. Abinit 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2. Abinit 的编译与安装</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phonon.html">Phonon 的计算–基于CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="excitation.html">电子激发与X光光谱的计算–CP2K</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../TheoreticalComputing2.html">Ab Initio</a></li>
+      <li class="breadcrumb-item active">Abinit 编译与安装</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical_Computing/Ab_Initio/Abinit_compile_install.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="abinit">
+<h1>Abinit 编译与安装<a class="headerlink" href="#abinit" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>1. Abinit 简介<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Abinit 是一个第一性原理计算软件, 可以用于计算周期性体系的电子结构和光学性质. Abinit 的计算过程是基于密度泛函理论的, 使用平面波基组和赝势, 计算过程中使用了很多高效的算, 如快速傅里叶变换、快速多极子算法等. Abinit 的计算过程是自动化的, 用户只需要提供一个输入文件, Abinit 就可以自动完成计算过程.</p></li>
+<li><p>Abinit 的官方网站是: <a class="reference external" href="http://www.abinit.org">http://www.abinit.org</a>, 在这里可以下载到 Abinit 的源代码和文档. Abinit 的源代码是开源的, 可以在 GitHub 上找到.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>2. Abinit 的编译与安装<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p><em>注意：Abinit原始安装包仍然有用, 可以直接在解压后的文件夹进行编译安装, 安装成功后请不要删除编译文件.</em></p>
+<section id="id3">
+<h3>2.1 环境<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul>
+<li><p>激活环境变量</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># intel2019</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mkl/bin/mklvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/ifortvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/iccvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mpi/intel64/bin/mpivars.sh<span class="w"> </span>intel64
+<span class="c1"># Openmpi4.1.1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MPI_HOME</span><span class="o">=</span>/opt/libraries/gnu8-openmpi/4.1.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/share/man:<span class="nv">$MANPATH</span>
+<span class="c1"># libxc4.3.4</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBXC_HOME</span><span class="o">=</span>/opt/libraries/gnu8-libxc/4.3.4<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/lib:<span class="nv">$LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/include:<span class="nv">$C_INCLUDE_PATH</span>
+<span class="c1"># fftw3.3.8</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">FFTW_HOME</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/share/man:<span class="nv">$MANPATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$C_INCLUDE_PATH</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>2.2 下载源代码初步配置<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul>
+<li><p>下载 Abinit 源代码</p>
+<p><a class="reference external" href="https://www.abinit.org/packages">https://www.abinit.org/packages</a></p>
+</li>
+<li><p>配置configure</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-zxvf<span class="w"> </span>abinit-9.8.4.tar.gz
+<span class="nb">cd</span><span class="w"> </span>abinit-9.8.4
+./configure<span class="w"> </span><span class="nv">FC</span><span class="o">=</span>mpiifort<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>mpiicc<span class="w"> </span><span class="nv">XCC</span><span class="o">=</span>mpiicpc<span class="w"> </span>--prefix<span class="o">=</span>/opt/apps/abinit-9.8.4<span class="w"> </span>--with-fftw3<span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span>--with-libxc<span class="o">=</span>/opt/libraries/gnu8-libxc/4.3.4<span class="w"> </span>--enable-mpi-io<span class="o">=</span>yes<span class="w"> </span>--with-mpi<span class="o">=</span>/opt/libraries/gnu8-openmpi/4.1.1<span class="w"> </span>--enable-mpi-inplace<span class="o">=</span>yes<span class="w"> </span>--enable-openmp<span class="o">=</span>yes<span class="w"> </span>--enable-bse-unpacked<span class="o">=</span>yes<span class="w"> </span>--enable-gw-dpc<span class="o">=</span>yes<span class="w"> </span>
+<span class="c1"># --enable-bigdft --enable-atompaw --enable-wannier90 --enable-libpsml  --enable-xmlf90</span>
+</pre></div>
+</div>
+</li>
+<li><p>此时必然会报错，但这是我们希望的，因为 <code class="docutils literal notranslate"><span class="pre">目的是要在</span> <span class="pre">fallbacks</span> <span class="pre">目录下产生</span> <span class="pre">build-abinit-fallbacks.sh</span></code></p></li>
+<li><p>报错信息如下:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">==============================================================================</span>
+<span class="o">===</span><span class="w"> </span>Feature<span class="w"> </span>triggers<span class="w"> </span><span class="nv">summary</span><span class="w">                                               </span><span class="o">===</span>
+<span class="o">==============================================================================</span>
+
+
+Abinit<span class="w"> </span>feature<span class="w"> </span>triggers<span class="w"> </span><span class="nv">status</span>
+<span class="o">==============================</span>
+
+The<span class="w"> </span>following<span class="w"> </span>summary<span class="w"> </span>table<span class="w"> </span>indicates<span class="w"> </span>the<span class="w"> </span>status<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>feature<span class="w"> </span>triggers,
+whether<span class="w"> </span>they<span class="w"> </span>are<span class="w"> </span>available<span class="w"> </span>and<span class="w"> </span>working,<span class="w"> </span>how<span class="w"> </span>they<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>initialized
+and<span class="w"> </span>whether<span class="w"> </span>there<span class="w"> </span>are<span class="w"> </span>fallbacks<span class="w"> </span>to<span class="w"> </span>substitute<span class="w"> </span>broken<span class="w"> </span>ones.
+
++----------------+--------+--------+--------+--------+
+<span class="p">|</span>Feature<span class="w">         </span><span class="p">|</span>Enabled<span class="w"> </span><span class="p">|</span>Init<span class="w">    </span><span class="p">|</span>Working<span class="w"> </span><span class="p">|</span>Fallback<span class="p">|</span>
++----------------+--------+--------+--------+--------+
+<span class="p">|</span>abinit_common<span class="w">   </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>bigdft<span class="w">          </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>fft<span class="w">             </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>fftw3<span class="w">           </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>dir<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>gpu<span class="w">             </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>hdf5<span class="w">            </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>levmar<span class="w">          </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>libpaw<span class="w">          </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>libpsml<span class="w">         </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>libxc<span class="w">           </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>dir<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>libxml2<span class="w">         </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>linalg<span class="w">          </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>mpi<span class="w">             </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>dir<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>netcdf<span class="w">          </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>netcdf_fortran<span class="w">  </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>papi<span class="w">            </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>pfft<span class="w">            </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>triqs<span class="w">           </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>
+<span class="p">|</span>wannier90<span class="w">       </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>disabled<span class="p">|</span>
+<span class="p">|</span>xmlf90<span class="w">          </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>def<span class="w">     </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>disabled<span class="p">|</span>
++----------------+--------+--------+--------+--------+
+
+
++------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>WARNING<span class="w"> </span>:<span class="w"> </span>NetCDF<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>WORKING<span class="w"> </span>!<span class="w">                                </span><span class="p">|</span>
++------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>Please<span class="w"> </span>specify<span class="w"> </span>the<span class="w"> </span>installation<span class="w"> </span>directory<span class="w"> </span><span class="k">for</span><span class="w"> </span>NetCDF<span class="w">             </span><span class="p">|</span>
++------------------------------------------------------------------+
+
+
++------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>CAUTION<span class="w"> </span>:<span class="w"> </span>NetCDF<span class="w"> </span>Fortran<span class="w"> </span>is<span class="w"> </span>MANDATORY<span class="w"> </span>!<span class="w">                          </span><span class="p">|</span>
++------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>suggestion:<span class="w"> </span>use<span class="w"> </span>with_netcdf_fortran<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>ac9<span class="w"> </span>file<span class="w">              </span><span class="p">|</span>
++------------------------------------------------------------------+
+
+
++------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>We<span class="w"> </span>can<span class="w"> </span><span class="nb">help</span><span class="w"> </span>you<span class="w"> </span>!<span class="w">                                                </span><span class="p">|</span>
++------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>Your<span class="w"> </span>environment<span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>provide<span class="w"> </span>mandatory<span class="w"> </span>libraries,<span class="w">           </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>but<span class="w"> </span>we<span class="w"> </span>can<span class="w"> </span>build<span class="w"> </span>them<span class="w"> </span><span class="k">for</span><span class="w"> </span>you.<span class="w">                                   </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                                                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>Please<span class="w"> </span>issue:<span class="w">                                                    </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                                                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>fallbacks<span class="w">                                                     </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>./build-abinit-fallbacks.sh<span class="w">                                      </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                                                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>At<span class="w"> </span>the<span class="w"> </span>end<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>process,<span class="w"> </span>the<span class="w"> </span>options<span class="w"> </span>needed<span class="w"> </span>to<span class="w"> </span>link<span class="w">            </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>the<span class="w"> </span>external<span class="w"> </span>libraries<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>proposed.<span class="w">                         </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                                                  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>copy/paste<span class="w"> </span>the<span class="w"> </span>options<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>ac9<span class="w"> </span>file<span class="w"> </span>and<span class="w"> </span>rerun<span class="w"> </span>configure.<span class="w">     </span><span class="p">|</span>
++------------------------------------------------------------------+
+
+
+checking<span class="w"> </span>that<span class="w"> </span>generated<span class="w"> </span>files<span class="w"> </span>are<span class="w"> </span>newer<span class="w"> </span>than<span class="w"> </span>configure...<span class="w"> </span><span class="k">done</span>
+configure:<span class="w"> </span>creating<span class="w"> </span>./config.status
+config.status:<span class="w"> </span>creating<span class="w"> </span>fallbacks/INSTALL
+config.status:<span class="w"> </span>creating<span class="w"> </span>fallbacks/README
+config.status:<span class="w"> </span>creating<span class="w"> </span>fallbacks/build-abinit-fallbacks.sh
+config.status:<span class="w"> </span>creating<span class="w"> </span>config.h
+config.status:<span class="w"> </span>executing<span class="w"> </span>depfiles<span class="w"> </span>commands
+config.status:<span class="w"> </span>executing<span class="w"> </span>default<span class="w"> </span>commands
+checking<span class="w"> </span>which<span class="w"> </span>fallbacks<span class="w"> </span>to<span class="w"> </span>look<span class="w"> </span><span class="k">for</span>...<span class="w"> </span>none
+</pre></div>
+</div>
+</li>
+<li><p>下载其他依赖库（也可不下载，但是自动编译过程中会下载，如果您网络有问题，最好手动把包下载到本地，然后去执行操作）</p>
+<p><a class="reference external" href="https://www.abinit.org/fallbacks">https://www.abinit.org/fallbacks</a></p>
+</li>
+<li><p>创建tarballs文件夹, 将依赖库放在 <code class="docutils literal notranslate"><span class="pre">tarballs</span></code> 目录下. 默认的tarballs文件夹位置在<code class="docutils literal notranslate"><span class="pre">${HOME}/.abinit/tarballs</span></code>,您也可以通过修改<code class="docutils literal notranslate"><span class="pre">build-abinit-fallbacks.sh</span></code>文件自定义, 最后将依赖库放在自定义的目录下即可.</p></li>
+<li><p>比如我将其放在了 <code class="docutils literal notranslate"><span class="pre">/opt/apps/abinit-9.8.4/tarballs</span></code> 目录下</p></li>
+<li><p>然后进入 <code class="docutils literal notranslate"><span class="pre">fallbacks</span></code> 目录，首先自定义修改 <code class="docutils literal notranslate"><span class="pre">build-abinit-fallbacks.sh</span></code>. (也可以不修改)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/data1/software/abinit/abinit-9.8.4/fallbacks
+nano<span class="w"> </span>build-abinit-fallbacks.sh
+</pre></div>
+</div>
+</li>
+<li><p>修改为如下内容：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 找到--with-tardir，并修改为如下内容：</span>
+--with-tardir<span class="o">=</span><span class="s2">&quot;/opt/software/abinit/tarballs&quot;</span><span class="w"> </span><span class="c1"># 此处定义了依赖库的下载目录</span>
+<span class="c1"># 修改需要配置的库</span>
+<span class="c1"># Configure</span>
+./configure<span class="w"> </span><span class="se">\</span>
+--prefix<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">fallbacks_prefix</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+--with-tardir<span class="o">=</span><span class="s2">&quot;/opt/apps/abinit-9.8.4/tarballs&quot;</span><span class="w"> </span><span class="se">\</span>
+--with-linalg-incs<span class="o">=</span><span class="s2">&quot; -m64 -I/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mkl/include&quot;</span><span class="w"> </span><span class="se">\</span>
+--with-linalg-libs<span class="o">=</span><span class="s2">&quot;-lopenblas -lpthread&quot;</span><span class="w"> </span><span class="se">\</span>
+--with-fc-vendor<span class="o">=</span><span class="s2">&quot;gnu&quot;</span><span class="w"> </span><span class="se">\</span>
+--with-fc-version<span class="o">=</span><span class="s2">&quot;8.3&quot;</span><span class="w"> </span><span class="se">\</span>
+--enable-bigdft<span class="w"> </span><span class="se">\ </span><span class="w">  </span><span class="c1"># enable修改为enable</span>
+--enable-atompaw<span class="w"> </span><span class="se">\ </span><span class="w">  </span><span class="c1"># enable修改为enable</span>
+--enable-wannier90<span class="w"> </span><span class="se">\ </span><span class="w">  </span><span class="c1"># enable修改为enable</span>
+--enable-libpsml<span class="w"> </span>--enable-xmlf90<span class="w"> </span><span class="se">\ </span><span class="w">  </span><span class="c1"># enable修改为enable</span>
+<span class="nv">LIBS_NETCDF4_FORTRAN</span><span class="o">=</span><span class="s2">&quot;-ldl -lm -lz&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">CC</span><span class="o">=</span><span class="s2">&quot;/opt/libraries/gnu8-openmpi/4.1.1/bin/mpicc&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">CXX</span><span class="o">=</span><span class="s2">&quot;/opt/libraries/gnu8-openmpi/4.1.1/bin/mpic++&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">FC</span><span class="o">=</span><span class="s2">&quot;/opt/libraries/gnu8-openmpi/4.1.1/bin/mpif90&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>然后运行 <code class="docutils literal notranslate"><span class="pre">build-abinit-fallbacks.sh</span></code>，开始编译依赖库</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build-abinit-fallbacks.sh
+</pre></div>
+</div>
+</li>
+<li><p>默认安装的依赖库：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">    </span>+----------------+--------+--------+--------+--------+
+<span class="w">    </span><span class="p">|</span>Fallback<span class="w">        </span><span class="p">|</span>Status<span class="w">  </span><span class="p">|</span>Install<span class="w"> </span><span class="p">|</span>Custom<span class="w">  </span><span class="p">|</span>Tricks<span class="w">  </span><span class="p">|</span>
+<span class="w">    </span>+----------------+--------+--------+--------+--------+
+<span class="w">    </span><span class="p">|</span>atompaw<span class="w">         </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>bigdft<span class="w">          </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>hdf5<span class="w">            </span><span class="p">|</span>ok<span class="w">      </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>libpsml<span class="w">         </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>libxc<span class="w">           </span><span class="p">|</span>ok<span class="w">      </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>linalg<span class="w">          </span><span class="p">|</span>ok<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>netcdf4<span class="w">         </span><span class="p">|</span>ok<span class="w">      </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>partial<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>netcdf4_fortran<span class="w"> </span><span class="p">|</span>ok<span class="w">      </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>yes<span class="w">     </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>wannier90<span class="w">       </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span><span class="p">|</span>xmlf90<span class="w">          </span><span class="p">|</span>broken<span class="w">  </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>no<span class="w">      </span><span class="p">|</span>unknown<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>+----------------+--------+--------+--------+--------+
+</pre></div>
+</div>
+<ul>
+<li><p>编译完成后，会在当前目录下生成一个 <code class="docutils literal notranslate"><span class="pre">install_fb</span></code> 目录，里面包含了所有的依赖库(默认只安装四个依赖库：hdf5, libxc, netcdf4, netcdf4_fortran, 可以enable将其他库安装上)</p></li>
+<li><p>完成后的输出如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>The<span class="w"> </span>fallbacks<span class="w"> </span>are<span class="w"> </span>now<span class="w"> </span>ready<span class="w"> </span>to<span class="w"> </span>use.
+You<span class="w"> </span>can<span class="w"> </span>link<span class="w"> </span>these<span class="w"> </span>fallbacks<span class="w"> </span>with<span class="w"> </span>Abinit<span class="w"> </span>by<span class="w"> </span>copying<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>options<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>ac9<span class="w"> </span>file.
+
+<span class="nv">with_libxc</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/libxc/6.0.0
+
+<span class="nv">with_hdf5</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/hdf5/1.10.8
+
+<span class="nv">with_netcdf</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/netcdf4/4.9.0
+
+<span class="nv">with_netcdf_fortran</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/netcdf4_fortran/4.6.0
+
+<span class="nv">with_xmlf90</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/xmlf90/1.5.6
+
+<span class="nv">with_libpsml</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/libpsml/1.1.12
+
+<span class="nv">with_wannier90</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/wannier90/2.0.1.1
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>2.3 编译安装Abinit<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul>
+<li><p>然后回到源代码目录<code class="docutils literal notranslate"><span class="pre">/opt/apps/abinit-9.8.4</span></code>, 运行 configure</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>..
+./configure<span class="w"> </span><span class="nv">FC</span><span class="o">=</span>mpiifort<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>mpiicc<span class="w"> </span><span class="nv">XCC</span><span class="o">=</span>mpiicpc<span class="w"> </span>--prefix<span class="o">=</span>/opt/apps/abinit-9.8.4<span class="w"> </span>--with-fftw3<span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span>--enable-mpi-io<span class="o">=</span>yes<span class="w"> </span>--with-mpi<span class="o">=</span>/opt/libraries/gnu8-openmpi/4.1.1<span class="w"> </span>--enable-mpi-inplace<span class="o">=</span>yes<span class="w"> </span>--enable-openmp<span class="o">=</span>yes<span class="w"> </span>--enable-bse-unpacked<span class="o">=</span>yes<span class="w"> </span>--enable-gw-dpc<span class="o">=</span>yes<span class="w"> </span><span class="nv">with_libxc</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/libxc/6.0.0<span class="w"> </span><span class="nv">with_hdf5</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/hdf5/1.10.8<span class="w"> </span><span class="nv">with_netcdf</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/netcdf4/4.9.0<span class="w"> </span><span class="nv">with_netcdf_fortran</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/netcdf4_fortran/4.6.0<span class="w"> </span><span class="nv">with_xmlf90</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/xmlf90/1.5.6<span class="w"> </span><span class="nv">with_libpsml</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/libpsml/1.1.12<span class="w"> </span><span class="nv">with_wannier90</span><span class="o">=</span>/opt/apps/abinit-9.8.4/fallbacks/install_fb/gnu/8.3/wannier90/2.0.1.1
+</pre></div>
+</div>
+</li>
+<li><p>然后运行 make</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>-j<span class="w"> </span><span class="m">8</span>
+</pre></div>
+</div>
+</li>
+<li><p>最后运行 make install</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>install
+</pre></div>
+</div>
+</li>
+<li><p>完成后的输出如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Keywords<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>make<span class="w"> </span><span class="nb">command</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>abichecks<span class="w"> </span>tests<span class="w"> </span>directory:
+
+tests_abirules<span class="w">     </span>Launch<span class="w"> </span>the<span class="w"> </span>abirules<span class="w"> </span>tests
+<span class="w">                </span>Warning:<span class="w"> </span><span class="k">for</span><span class="w"> </span>some<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>tests,<span class="w"> </span>the<span class="w"> </span>file<span class="w"> </span>make.log
+<span class="w">                </span>must<span class="w"> </span>be<span class="w"> </span>present<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>top<span class="w"> </span>directory.<span class="w"> </span>This<span class="w"> </span>means<span class="w"> </span>one<span class="w"> </span>has
+<span class="w">                </span>to<span class="w"> </span>compile<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>command:<span class="w"> </span><span class="sb">`</span>make<span class="w"> </span>&gt;<span class="w"> </span>make.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="sb">`</span>
+
+tests_buildsys<span class="w">     </span>Launch<span class="w"> </span>the<span class="w"> </span>buildsys<span class="w"> </span>tests
+
+tests_libpaw<span class="w">       </span>Launch<span class="w"> </span>the<span class="w"> </span>libpaw<span class="w"> </span><span class="nv">tests</span>
+
+<span class="o">==============================================================================</span>
+<span class="o">[</span>This<span class="w"> </span>file<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>found<span class="w"> </span>at<span class="w"> </span>doc/help_make/help_make_abichecks.txt<span class="o">]</span>
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Entering<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4/abichecks<span class="s1">&#39;</span>
+<span class="s1">make[2]: Nothing to be done for `install-exec-am&#39;</span>.
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Nothing<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="sb">`</span>install-data-am<span class="s1">&#39;.</span>
+<span class="s1">make[2]: Leaving directory `/opt/apps/abinit-9.8.4/abichecks&#39;</span>
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Leaving<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4/abichecks<span class="s1">&#39;</span>
+<span class="s1">Making install in doc</span>
+<span class="s1">make[1]: Entering directory `/opt/apps/abinit-9.8.4/doc&#39;</span>
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Entering<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4/doc<span class="s1">&#39;</span>
+<span class="s1">make[2]: Nothing to be done for `install-exec-am&#39;</span>.
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Nothing<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="sb">`</span>install-data-am<span class="s1">&#39;.</span>
+<span class="s1">make[2]: Leaving directory `/opt/apps/abinit-9.8.4/doc&#39;</span>
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Leaving<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4/doc<span class="s1">&#39;</span>
+<span class="s1">Making install in tests</span>
+<span class="s1">make[1]: Entering directory `/opt/apps/abinit-9.8.4/tests&#39;</span>
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Entering<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4/tests<span class="s1">&#39;</span>
+<span class="s1">make[2]: Nothing to be done for `install-exec-am&#39;</span>.
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Nothing<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="sb">`</span>install-data-am<span class="s1">&#39;.</span>
+<span class="s1">make[2]: Leaving directory `/opt/apps/abinit-9.8.4/tests&#39;</span>
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Leaving<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4/tests<span class="s1">&#39;</span>
+<span class="s1">make[1]: Entering directory `/opt/apps/abinit-9.8.4&#39;</span>
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Entering<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4<span class="s1">&#39;</span>
+<span class="s1">make[2]: Nothing to be done for `install-exec-am&#39;</span>.
+/bin/install<span class="w"> </span>-c<span class="w"> </span>-d<span class="w"> </span>-m<span class="w"> </span><span class="m">755</span><span class="w"> </span>/opt/apps/abinit-9.8.4/lib/pkgconfig
+/bin/install<span class="w"> </span>-c<span class="w"> </span>-m<span class="w"> </span><span class="m">644</span><span class="w"> </span>-m<span class="w"> </span><span class="m">644</span><span class="w"> </span>config.pc<span class="w"> </span><span class="se">\</span>
+/opt/apps/abinit-9.8.4/lib/pkgconfig/abinit.pc
+make<span class="o">[</span><span class="m">2</span><span class="o">]</span>:<span class="w"> </span>Leaving<span class="w"> </span>directory<span class="w"> </span><span class="sb">`</span>/opt/apps/abinit-9.8.4<span class="s1">&#39;</span>
+<span class="s1">make[1]: Leaving directory `/opt/apps/abinit-9.8.4&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>之后就可以在<code class="docutils literal notranslate"><span class="pre">/opt/apps/abinit-9.8.4/bin</span></code>目录下找到编译好的 Abinit 了.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>2.4 测试<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul>
+<li><p>进入 abinit-9.8.2/tests 目录下测试一下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/opt/apps/abinit-9.8.4/tests
+./runtests.py<span class="w"> </span>fast<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id7">
+<h3>2.5 Abinit 的使用<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul>
+<li><p>查看版本：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abinit<span class="w"> </span>--version
+</pre></div>
+</div>
+</li>
+<li><p>查看帮助：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abinit<span class="w"> </span>--help
+</pre></div>
+</div>
+</li>
+<li><p>查看帮助文档：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abinit<span class="w"> </span>--help<span class="o">=</span>topics
+</pre></div>
+</div>
+</li>
+<li><p>查看build信息：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abinit<span class="w"> </span>-b
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h3>2.6 最终环境变量<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul>
+<li><p>最终环境变量如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#intel2019#</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mkl/bin/mklvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/ifortvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/bin/iccvars.sh<span class="w"> </span>intel64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2019up5/compilers_and_libraries_2019.5.281/linux/mpi/intel64/bin/mpivars.sh<span class="w"> </span>intel64
+
+<span class="c1">#Openmpi4.1.1#</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MPI_HOME</span><span class="o">=</span>/opt/libraries/gnu8-openmpi/4.1.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/share/man:<span class="nv">$MANPATH</span>
+
+<span class="c1"># FFTW-3.3.8</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">FFTW_HOME</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/share/man:<span class="nv">$MANPATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$C_INCLUDE_PATH</span>
+
+<span class="c1">#Abinit-9.8.4#</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ABI_HOME</span><span class="o">=</span>/opt/apps/abinit-9.8.4
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ABI_HOME</span>/bin:<span class="nv">$PATH</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$ABI_HOME</span>/src/98_main/:<span class="nv">$MANPATH</span><span class="w">      </span><span class="c1"># Do not change this line: path to executable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ABI_TESTS</span><span class="o">=</span><span class="nv">$ABI_HOME</span>/tests/<span class="w">                   </span><span class="c1"># Do not change this line: path to tests dir</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ABI_PSPDIR</span><span class="o">=</span><span class="nv">$ABI_TESTS</span>/Psps_for_tests/<span class="w">        </span><span class="c1"># Do not change this line: path to pseudos dir</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>2.6 并行计算<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Abinit 的并行计算需要使用 MPI，下面是一个简单的并行计算的例子：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mpirun<span class="w"> </span>-np<span class="w"> </span><span class="m">4</span><span class="w"> </span>abinit<span class="w"> </span>&lt;<span class="w"> </span>input.files<span class="w"> </span>&gt;<span class="w"> </span>output.files
+<span class="c1"># 示例：</span>
+mpirun<span class="w"> </span>-np<span class="w"> </span><span class="si">${</span><span class="nv">NPROCS</span><span class="si">}</span><span class="w"> </span>abinit<span class="w"> </span>&lt;<span class="w"> </span>t00.abi<span class="w"> </span>&gt;<span class="w"> </span>t00.out
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="QE_compile_install.html" class="btn btn-neutral float-left" title="Quantum Espresso编译与安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="phonon.html" class="btn btn-neutral float-right" title="Phonon 的计算–基于CP2K" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

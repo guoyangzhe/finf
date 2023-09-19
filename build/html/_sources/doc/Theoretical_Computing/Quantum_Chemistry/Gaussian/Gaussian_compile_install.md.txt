@@ -1,0 +1,42 @@
+# Gaussian编译与安装
+
+## 1. 安装Gaussian
+* 准备软件安装包：
+解压缩`g16.tar.gz`，得到`g16`文件夹，将其放置于`/opt/apps`目录下。
+进入`g16`文件夹，创建scracth文件夹，用于存放临时文件。
+
+```bash
+cd /opt/apps/g16
+mkdir scratch
+```
+
+## 2. Gaussian软件的环境变量
+
+* 以centos系统为例，将以下环境变量写入~/.bashrc中
+
+```
+#Gaussian16-b01#
+export g16root=/opt/apps/gaussian
+export GAUSS_EXEDIR=$g16root/g16-b01
+export GAUSS_SCRDIR=/opt/apps/gaussian/g16-b01/scratch
+export PATH=$PATH:$g16root/g16-b01
+source $g16root/g16-b01/bsd/g16.profile
+#Gaussian16-c01#
+#export g16root=/opt/apps/gaussian
+#export GAUSS_EXEDIR=$g16root/g16-c01
+#export GAUSS_SCRDIR=/opt/apps/gaussian/g16-c01/scratch
+#export PATH=$PATH:$g16root/g16-c01
+#source $g16root/g16-c01/bsd/g16.profile
+#GV6#
+export GV_DIR=/opt/apps/gaussian/gv
+export LIBPATH=/opt/apps/gaussian/gv/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/apps/gaussian/gv/lib/MesaGL
+alias gv='/opt/apps/gaussian/gv/gview.exe'
+```
+
+
+🎉️ `source ~/.bashrc`之后，可使用诸如`which g16`命令查看是否成功。
+
+😄 在`终端`中可使用`gv`命令打开Gview的图形界面进行后续图形化操作。
+
+

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slurm使用教程 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Vim使用方法" href="VIM_used_guide.html" />
+    <link rel="prev" title="Linux-删除目录下所有同名文件" href="Delete_all_same_files.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../2-LinuxShell.html">Linux Shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Linux Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_update_mirror.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_create_user.html">CentOS-7 集群上创建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_close_root_ssh.html">CentOS-7 关闭root远程ssh登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_FormatandMount_disk.html">CentOS-7 格式化&amp;挂载硬盘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zfs_format_disk_mount.html">CentOS-7 ZFS格式硬盘 挂载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_install_Google.html">CentOS-7 Google-Chrome 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_Neofetch.html">CentOS-7 安装 Neofetch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_X2Go.html">CentOS-7安装X2Go</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux-yum_Just_download.html">Linux-yum只下载不安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_Enable_publickey_login.html">Linux-设置公钥登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Delete_all_same_files.html">Linux-删除目录下所有同名文件</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Slurm使用教程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">什么是Slurm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Slurm的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Slurm的使用案例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id32">Slurm的配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id35">Slurm的常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id44">重启Slurm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id46">查看Slurm的版本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slurmdown">Slurm的状态为down的解决方案</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="VIM_used_guide.html">Vim使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2K-PBS.html">PBS for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2k-Slurm.html">Slurm for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-PBS.html">PBS for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-Slurm.html">Slurm for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-PBS.html">PBS for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-Slurm.html">Slurm for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus-Slurm.html">Slurm for Octopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-PBS.html">PBS for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-Slurm.html">Slurm for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-PBS.html">PBS for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-Slurm.html">Slurm for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_filesystem_copy.html">Linux 选择性文件复制</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../2-LinuxShell.html">Linux Shell</a></li>
+      <li class="breadcrumb-item active">Slurm使用教程</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC_Deployment/Linux_Shell/SlurmGuide.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slurm">
+<h1>Slurm使用教程<a class="headerlink" href="#slurm" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>什么是Slurm<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Slurm是一个开源的、高度可扩展的集群管理和工作调度系统，用于Linux和Unix操作系统。Slurm最初是由Lawrence Livermore National Laboratory开发的，现在由Slurm工作组维护。Slurm的设计目标是在大型Linux集群上提供一个可扩展的、高性能的、可靠的集群管理器。</p>
+<p>Slurm的功能包括：</p>
+<ul class="simple">
+<li><p>分配和管理计算资源（计算节点）；</p></li>
+<li><p>分配和管理任务（作业）；</p></li>
+<li><p>监控系统状态；</p></li>
+<li><p>收集和报告作业资源使用情况；</p></li>
+<li><p>提供计算资源的可视化界面。</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>Slurm的使用<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>sbatch 用于提交作业
+squeue 用于查看作业
+scancel 用于取消作业
+sinfo 用于查看集群状态
+scontrol 用于控制作业
+sacct 用于查看作业的详细信息
+sreport 用于生成报告</p>
+</section>
+<section id="id3">
+<h2>Slurm的使用案例<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="id4">
+<h3>作业提交<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id5">
+<h4>作业提交的基本格式<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;jobscript&gt;
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>作业提交的常用选项<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-A, –account=name</p></li>
+<li><p>-c, –cpus-per-task=ncpus</p></li>
+<li><p>-J, –job-name=name</p></li>
+<li><p>-N, –nodes=nodes</p></li>
+<li><p>-n, –ntasks=ntasks</p></li>
+<li><p>-o, –output=name</p></li>
+<li><p>-p, –partition=name</p></li>
+<li><p>-t, –time=time</p></li>
+<li><p>-w, –nodelist=node_list</p></li>
+<li><p>-x, –exclude=node_list</p></li>
+<li><p>-C, –constraint=name</p></li>
+<li><p>-D, –dependency=type:jobid[:jobid…]</p></li>
+</ul>
+</section>
+<section id="id7">
+<h4>作业提交的示例<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>-A<span class="w"> </span>account_name<span class="w"> </span>-p<span class="w"> </span>partition_name<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>-c<span class="w"> </span><span class="m">1</span><span class="w"> </span>-t<span class="w"> </span><span class="m">1</span>-00:00:00<span class="w"> </span>-J<span class="w"> </span>job_name<span class="w"> </span>-o<span class="w"> </span>job_name.out<span class="w"> </span>job_script.sh
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h3>作业查看<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<section id="id9">
+<h4>作业查看的基本格式<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>squeue<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h4>作业查看的常用选项<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-a, –all</p></li>
+<li><p>-A, –account=name</p></li>
+<li><p>-j, –job=job_id</p></li>
+<li><p>-n, –name=name</p></li>
+<li><p>-o, –format=format</p></li>
+<li><p>-p, –partition=name</p></li>
+<li><p>-P, –detailed</p></li>
+<li><p>-r, –noconvert</p></li>
+<li><p>-s, –states=list</p></li>
+<li><p>-t, –states=list</p></li>
+<li><p>-u, –user=list</p></li>
+<li><p>-h, –help</p></li>
+</ul>
+<p>显示占用核心数：
+alias squeue=’squeue -o “%.8i   %.7P   %18j   %.4u   %.2t   %.11M   %.4D   %.16R   %.4C”’</p>
+</section>
+<section id="id11">
+<h4>作业查看的示例<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>squeue<span class="w"> </span>-u<span class="w"> </span>user_name
+<span class="c1"># 例如</span>
+squeue<span class="w"> </span>-u<span class="w"> </span>host
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id12">
+<h3>作业取消<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<section id="id13">
+<h4>作业取消的基本格式<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scancel<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;job_id&gt;
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h4>作业取消的常用选项<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-a, –all</p></li>
+<li><p>-b, –batch</p></li>
+<li><p>-h, –help</p></li>
+<li><p>-i, –interactive</p></li>
+<li><p>-n, –name=name</p></li>
+<li><p>-p, –partition=name</p></li>
+<li><p>-u, –user=name</p></li>
+</ul>
+</section>
+<section id="id15">
+<h4>作业取消的示例<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scancel<span class="w"> </span>job_id
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h3>集群状态查看<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<section id="id17">
+<h4>集群状态查看的基本格式<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sinfo<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h4>集群状态查看的常用选项<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-a, –all</p></li>
+<li><p>-h, –help</p></li>
+<li><p>-l, –long</p></li>
+<li><p>-o, –format=format</p></li>
+<li><p>-p, –partition=name</p></li>
+<li><p>-R, –resv</p></li>
+<li><p>-t, –states=list</p></li>
+<li><p>-u, –user=list</p></li>
+</ul>
+</section>
+<section id="id19">
+<h4>集群状态查看的示例<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sinfo<span class="w"> </span>-l
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id20">
+<h3>作业控制<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<section id="id21">
+<h4>作业控制的基本格式<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scontrol<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;command&gt;
+</pre></div>
+</div>
+</section>
+<section id="id22">
+<h4>作业控制的常用选项<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-a, –all</p></li>
+<li><p>-b, –batch</p></li>
+<li><p>-d, –details</p></li>
+<li><p>-h, –help</p></li>
+<li><p>-i, –interactive</p></li>
+<li><p>-l, –long</p></li>
+<li><p>-o, –format=format</p></li>
+<li><p>-p, –partition=name</p></li>
+<li><p>-t, –states=list</p></li>
+<li><p>-u, –user=list</p></li>
+</ul>
+</section>
+<section id="id23">
+<h4>作业控制的示例<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span>job_id
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id24">
+<h3>作业详细信息查看<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<section id="id25">
+<h4>作业详细信息查看的基本格式<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sacct<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id26">
+<h4>作业详细信息查看的常用选项<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-a, –allusers</p></li>
+<li><p>-A, –account=name</p></li>
+<li><p>-b, –starttime=time</p></li>
+<li><p>-c, –clusters=cluster_list</p></li>
+<li><p>-d, –duplicates</p></li>
+<li><p>-D, –dformat=format</p></li>
+<li><p>-e, –endtime=time</p></li>
+<li><p>-h, –help</p></li>
+<li><p>-j, –jobs=job_list</p></li>
+<li><p>-l, –long</p></li>
+<li><p>-M, –mail</p></li>
+<li><p>-n, –name=name</p></li>
+<li><p>-o, –format=format</p></li>
+<li><p>-p, –parsable2</p></li>
+<li><p>-P, –noconvert</p></li>
+<li><p>-r, –reverse</p></li>
+<li><p>-S, –noheader</p></li>
+<li><p>-t, –state=state_list</p></li>
+<li><p>-u, –user=user_list</p></li>
+<li><p>-V, –version</p></li>
+<li><p>-w, –wide</p></li>
+</ul>
+</section>
+<section id="id27">
+<h4>作业详细信息查看的示例<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sacct<span class="w"> </span>-j<span class="w"> </span>job_id
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id28">
+<h3>作业报告生成<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<section id="id29">
+<h4>作业报告生成的基本格式<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sreport<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>&lt;report&gt;<span class="w"> </span>&lt;cluster&gt;<span class="w"> </span><span class="o">[</span>start<span class="o">]</span><span class="w"> </span><span class="o">[</span>end<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id30">
+<h4>作业报告生成的常用选项<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>-a, –all</p></li>
+<li><p>-A, –account=name</p></li>
+<li><p>-b, –starttime=time</p></li>
+<li><p>-c, –clusters=cluster_list</p></li>
+<li><p>-d, –duplicates</p></li>
+<li><p>-D, –dformat=format</p></li>
+<li><p>-e, –endtime=time</p></li>
+<li><p>-h, –help</p></li>
+<li><p>-j, –jobs=job_list</p></li>
+<li><p>-l, –long</p></li>
+<li><p>-M, –mail</p></li>
+<li><p>-n, –name=name</p></li>
+<li><p>-o, –format=format</p></li>
+<li><p>-p, –parsable2</p></li>
+<li><p>-P, –noconvert</p></li>
+<li><p>-r, –reverse</p></li>
+<li><p>-S, –noheader</p></li>
+<li><p>-t, –state=state_list</p></li>
+<li><p>-u, –user=user_list</p></li>
+<li><p>-V, –version</p></li>
+<li><p>-w, –wide</p></li>
+</ul>
+</section>
+<section id="id31">
+<h4>作业报告生成的示例<a class="headerlink" href="#id31" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sreport<span class="w"> </span>cluster<span class="w"> </span>AccountUtilizationByUser<span class="w"> </span>cluster_name<span class="w"> </span>start_time<span class="w"> </span>end_time
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id32">
+<h2>Slurm的配置<a class="headerlink" href="#id32" title="Link to this heading"></a></h2>
+<section id="id33">
+<h3>配置文件<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
+<section id="id34">
+<h4>配置文件的位置<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/etc/slurm/slurm.conf
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id35">
+<h2>Slurm的常见问题<a class="headerlink" href="#id35" title="Link to this heading"></a></h2>
+<section id="id36">
+<h3>作业提交失败<a class="headerlink" href="#id36" title="Link to this heading"></a></h3>
+<section id="id37">
+<h4>问题描述<a class="headerlink" href="#id37" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch:<span class="w"> </span>error:<span class="w"> </span>Batch<span class="w"> </span>job<span class="w"> </span>submission<span class="w"> </span>failed:<span class="w"> </span>Socket<span class="w"> </span>timed<span class="w"> </span>out<span class="w"> </span>on<span class="w"> </span>send/recv<span class="w"> </span>operation
+</pre></div>
+</div>
+</section>
+<section id="id38">
+<h4>问题原因<a class="headerlink" href="#id38" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>作业提交的节点与控制节点之间的网络不通</p></li>
+</ul>
+</section>
+<section id="id39">
+<h4>问题解决<a class="headerlink" href="#id39" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>检查作业提交的节点与控制节点之间的网络是否通畅</p></li>
+</ul>
+</section>
+</section>
+<section id="id40">
+<h3>作业运行失败<a class="headerlink" href="#id40" title="Link to this heading"></a></h3>
+<section id="id41">
+<h4>问题描述<a class="headerlink" href="#id41" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>srun:<span class="w"> </span>error:<span class="w"> </span>Unable<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>step<span class="w"> </span><span class="k">for</span><span class="w"> </span>job<span class="w"> </span><span class="m">123456</span>:<span class="w"> </span>Socket<span class="w"> </span>timed<span class="w"> </span>out<span class="w"> </span>on<span class="w"> </span>send/recv<span class="w"> </span>operation
+</pre></div>
+</div>
+</section>
+<section id="id42">
+<h4>问题原因<a class="headerlink" href="#id42" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>作业运行的节点与控制节点之间的网络不通</p></li>
+</ul>
+</section>
+<section id="id43">
+<h4>问题解决<a class="headerlink" href="#id43" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>检查作业运行的节点与控制节点之间的网络是否通畅</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="id44">
+<h2>重启Slurm<a class="headerlink" href="#id44" title="Link to this heading"></a></h2>
+<section id="id45">
+<h3>重启Slurm的基本格式<a class="headerlink" href="#id45" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>restart<span class="w"> </span>slurmctld
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id46">
+<h2>查看Slurm的版本<a class="headerlink" href="#id46" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scontrol<span class="w"> </span>--version
+</pre></div>
+</div>
+</section>
+<section id="slurmdown">
+<h2>Slurm的状态为down的解决方案<a class="headerlink" href="#slurmdown" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node02<span class="w"> </span>~<span class="o">]</span><span class="c1"># scontrol update node=node02 state=down reason=hung</span>
+<span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node02<span class="w"> </span>~<span class="o">]</span><span class="c1"># scontrol update node=node02 state=resume</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>host@node01<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>sinfo
+PARTITION<span class="w"> </span>AVAIL<span class="w">  </span>TIMELIMIT<span class="w">  </span>NODES<span class="w">  </span>STATE<span class="w"> </span>NODELIST
+debug01*<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">3</span><span class="w">   </span>idle<span class="w"> </span>node<span class="o">[</span><span class="m">01</span>-03<span class="o">]</span>
+
+<span class="o">[</span>host@node01<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>pbsnodes<span class="w"> </span>-a
+
+..<span class="w"> </span>code-block::<span class="w"> </span>sh
+<span class="w">    </span>:caption:<span class="w"> </span>sinfo
+<span class="w">    </span>:name:<span class="w"> </span>test333
+<span class="w">    </span>:emphasize-lines:<span class="w"> </span><span class="m">2</span>
+<span class="w">    </span>:linenos:
+<span class="w">    </span>
+<span class="w">    </span>node01
+<span class="w">        </span><span class="nv">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>free
+<span class="w">        </span><span class="nv">np</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">128</span>
+<span class="w">        </span><span class="nv">ntype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>cluster
+<span class="w">        </span><span class="nv">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">rectime</span><span class="o">=</span><span class="m">1686038364</span>,state<span class="o">=</span>free,slurmstate<span class="o">=</span>idle,size<span class="o">=</span>0kb:0kb,ncpus<span class="o">=</span><span class="m">128</span>,boards<span class="o">=</span><span class="m">1</span>,sockets<span class="o">=</span><span class="m">2</span>,cores<span class="o">=</span><span class="m">64</span>,threads<span class="o">=</span><span class="m">1</span>,availmem<span class="o">=</span>1mb,opsys<span class="o">=</span>linux<span class="w"> </span><span class="m">3</span>.10.0-1127.el7.x86_64<span class="w"> </span><span class="c1">#1 smp tue mar 31 23:36:51 utc 2020,arch=x86_64</span>
+
+<span class="w">    </span>node02
+<span class="w">        </span><span class="nv">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>free
+<span class="w">        </span><span class="nv">np</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">56</span>
+<span class="w">        </span><span class="nv">ntype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>cluster
+<span class="w">        </span><span class="nv">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">rectime</span><span class="o">=</span><span class="m">1686038364</span>,state<span class="o">=</span>free,slurmstate<span class="o">=</span>idle,size<span class="o">=</span>0kb:0kb,ncpus<span class="o">=</span><span class="m">56</span>,boards<span class="o">=</span><span class="m">1</span>,sockets<span class="o">=</span><span class="m">2</span>,cores<span class="o">=</span><span class="m">28</span>,threads<span class="o">=</span><span class="m">1</span>,availmem<span class="o">=</span>1mb,opsys<span class="o">=</span>linux<span class="w"> </span><span class="m">3</span>.10.0-1127.el7.x86_64<span class="w"> </span><span class="c1">#1 smp tue mar 31 23:36:51 utc 2020,arch=x86_64</span>
+
+<span class="w">    </span>node03
+<span class="w">        </span><span class="nv">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>free
+<span class="w">        </span><span class="nv">np</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">40</span>
+<span class="w">        </span><span class="nv">ntype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>cluster
+<span class="w">        </span><span class="nv">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">rectime</span><span class="o">=</span><span class="m">1686038364</span>,state<span class="o">=</span>free,slurmstate<span class="o">=</span>idle,size<span class="o">=</span>0kb:0kb,ncpus<span class="o">=</span><span class="m">40</span>,boards<span class="o">=</span><span class="m">1</span>,sockets<span class="o">=</span><span class="m">2</span>,cores<span class="o">=</span><span class="m">20</span>,threads<span class="o">=</span><span class="m">1</span>,availmem<span class="o">=</span>1mb,opsys<span class="o">=</span>linux<span class="w"> </span><span class="m">3</span>.10.0-1127.el7.x86_64<span class="w"> </span><span class="c1">#1 smp tue mar 31 23:36:51 utc 2020,arch=x86_64</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@master<span class="w"> </span>~<span class="o">]</span><span class="c1"># scontrol show node</span>
+<span class="nv">NodeName</span><span class="o">=</span>master<span class="w"> </span><span class="nv">CoresPerSocket</span><span class="o">=</span><span class="m">6</span>
+<span class="w">   </span><span class="nv">CPUAlloc</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">CPUEfctv</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="nv">CPUTot</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="nv">CPULoad</span><span class="o">=</span>N/A
+<span class="w">   </span><span class="nv">AvailableFeatures</span><span class="o">=(</span>null<span class="o">)</span>
+<span class="w">   </span><span class="nv">ActiveFeatures</span><span class="o">=(</span>null<span class="o">)</span>
+<span class="w">   </span><span class="nv">Gres</span><span class="o">=(</span>null<span class="o">)</span>
+<span class="w">   </span><span class="nv">NodeAddr</span><span class="o">=</span>master<span class="w"> </span><span class="nv">NodeHostName</span><span class="o">=</span>master
+<span class="w">   </span><span class="nv">RealMemory</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">AllocMem</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">FreeMem</span><span class="o">=</span>N/A<span class="w"> </span><span class="nv">Sockets</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">Boards</span><span class="o">=</span><span class="m">1</span>
+<span class="w">   </span><span class="nv">State</span><span class="o">=</span>IDLE+NOT_RESPONDING<span class="w"> </span><span class="nv">ThreadsPerCore</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TmpDisk</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">Weight</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">Owner</span><span class="o">=</span>N/A<span class="w"> </span><span class="nv">MCS_label</span><span class="o">=</span>N/A
+<span class="w">   </span><span class="nv">Partitions</span><span class="o">=</span>hpc
+<span class="w">   </span><span class="nv">BootTime</span><span class="o">=</span>None<span class="w"> </span><span class="nv">SlurmdStartTime</span><span class="o">=</span>None
+<span class="w">   </span><span class="nv">LastBusyTime</span><span class="o">=</span><span class="m">2023</span>-07-05T21:51:27
+<span class="w">   </span><span class="nv">CfgTRES</span><span class="o">=</span><span class="nv">cpu</span><span class="o">=</span><span class="m">6</span>,mem<span class="o">=</span>1M,billing<span class="o">=</span><span class="m">6</span>
+<span class="w">   </span><span class="nv">AllocTRES</span><span class="o">=</span>
+<span class="w">   </span><span class="nv">CapWatts</span><span class="o">=</span>n/a
+<span class="w">   </span><span class="nv">CurrentWatts</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">AveWatts</span><span class="o">=</span><span class="m">0</span>
+<span class="w">   </span><span class="nv">ExtSensorsJoules</span><span class="o">=</span>n/s<span class="w"> </span><span class="nv">ExtSensorsWatts</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">ExtSensorsTemp</span><span class="o">=</span>n/s
+
+<span class="nv">NodeName</span><span class="o">=</span>node01<span class="w"> </span><span class="nv">Arch</span><span class="o">=</span>x86_64<span class="w"> </span><span class="nv">CoresPerSocket</span><span class="o">=</span><span class="m">4</span>
+<span class="w">   </span><span class="nv">CPUAlloc</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">CPUEfctv</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">CPUTot</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">CPULoad</span><span class="o">=</span><span class="m">0</span>.04
+<span class="w">   </span><span class="nv">AvailableFeatures</span><span class="o">=(</span>null<span class="o">)</span>
+<span class="w">   </span><span class="nv">ActiveFeatures</span><span class="o">=(</span>null<span class="o">)</span>
+<span class="w">   </span><span class="nv">Gres</span><span class="o">=(</span>null<span class="o">)</span>
+<span class="w">   </span><span class="nv">NodeAddr</span><span class="o">=</span>node01<span class="w"> </span><span class="nv">NodeHostName</span><span class="o">=</span>node01<span class="w"> </span><span class="nv">Version</span><span class="o">=</span><span class="m">22</span>.05.5
+<span class="w">   </span><span class="nv">OS</span><span class="o">=</span>Linux<span class="w"> </span><span class="m">3</span>.10.0-1160.92.1.el7.x86_64<span class="w"> </span><span class="c1">#1 SMP Tue Jun 20 11:48:01 UTC 2023</span>
+<span class="w">   </span><span class="nv">RealMemory</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">AllocMem</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">FreeMem</span><span class="o">=</span><span class="m">6558</span><span class="w"> </span><span class="nv">Sockets</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">Boards</span><span class="o">=</span><span class="m">1</span>
+<span class="w">   </span><span class="nv">State</span><span class="o">=</span>IDLE<span class="w"> </span><span class="nv">ThreadsPerCore</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TmpDisk</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">Weight</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">Owner</span><span class="o">=</span>N/A<span class="w"> </span><span class="nv">MCS_label</span><span class="o">=</span>N/A
+<span class="w">   </span><span class="nv">Partitions</span><span class="o">=</span>hpc
+<span class="w">   </span><span class="nv">BootTime</span><span class="o">=</span><span class="m">2023</span>-07-05T21:27:14<span class="w"> </span><span class="nv">SlurmdStartTime</span><span class="o">=</span><span class="m">2023</span>-07-05T21:50:00
+<span class="w">   </span><span class="nv">LastBusyTime</span><span class="o">=</span><span class="m">2023</span>-07-05T21:51:51
+<span class="w">   </span><span class="nv">CfgTRES</span><span class="o">=</span><span class="nv">cpu</span><span class="o">=</span><span class="m">4</span>,mem<span class="o">=</span>1M,billing<span class="o">=</span><span class="m">4</span>
+<span class="w">   </span><span class="nv">AllocTRES</span><span class="o">=</span>
+<span class="w">   </span><span class="nv">CapWatts</span><span class="o">=</span>n/a
+<span class="w">   </span><span class="nv">CurrentWatts</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">AveWatts</span><span class="o">=</span><span class="m">0</span>
+<span class="w">   </span><span class="nv">ExtSensorsJoules</span><span class="o">=</span>n/s<span class="w"> </span><span class="nv">ExtSensorsWatts</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">ExtSensorsTemp</span><span class="o">=</span>n/s
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Delete_all_same_files.html" class="btn btn-neutral float-left" title="Linux-删除目录下所有同名文件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="VIM_used_guide.html" class="btn btn-neutral float-right" title="Vim使用方法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

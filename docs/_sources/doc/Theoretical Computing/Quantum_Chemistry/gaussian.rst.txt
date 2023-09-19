@@ -1,0 +1,12 @@
+.. _Gaussian:
+
+======================
+Gaussain 相关
+======================
+
+.. toctree::
+   :maxdepth: 2
+
+   Gaussian相关/Gaussian编译与安装
+   Gaussian相关/Gaussian计算案例
+   Gaussian相关/SLURM script file for Gaussian 16

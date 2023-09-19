@@ -1,0 +1,42 @@
+# CentOS-7安装X2Go
+
+* 你可以按照以下步骤在CentOS上安装X2Go：
+
+1. 首先，确保你的CentOS系统已经连接到互联网。
+
+2. 打开终端，使用root用户或具有sudo权限的用户登录。
+
+3. 更新系统软件包列表，运行以下命令：
+
+    ```shell
+    sudo yum update
+    ```
+
+4. 安装X2Go服务器软件包，运行以下命令：
+
+    ```shell
+    sudo yum install epel-release
+    sudo yum install x2goserver
+    ```
+
+5. 安装X2Go客户端软件包，运行以下命令：
+
+    ```shell
+    sudo yum install x2goclient
+    ```
+
+6. 启动X2Go服务器，运行以下命令：
+
+    ```shell
+    sudo systemctl start x2goserver
+    ```
+
+7. 如果你希望X2Go服务器在系统启动时自动启动，运行以下命令：
+
+    ```shell
+    sudo systemctl enable x2goserver
+    ```
+
+8. 现在，你可以使用X2Go客户端连接到CentOS服务器了。打开X2Go客户端，输入服务器的IP地址和登录凭据，然后点击连接。
+
+* 请注意，这只是一个基本的安装过程。你可能还需要进行其他配置，例如设置防火墙规则或调整X2Go服务器的设置。具体的配置取决于你的需求和环境。

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux-yum只下载不安装 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Linux-设置公钥登录" href="Linux_Enable_publickey_login.html" />
+    <link rel="prev" title="CentOS-7安装X2Go" href="CentOS_Install_X2Go.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../2-LinuxShell.html">Linux Shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="shell.html">Linux Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_update_mirror.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_create_user.html">CentOS-7 集群上创建用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="centos_close_root_ssh.html">CentOS-7 关闭root远程ssh登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_FormatandMount_disk.html">CentOS-7 格式化&amp;挂载硬盘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zfs_format_disk_mount.html">CentOS-7 ZFS格式硬盘 挂载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_install_Google.html">CentOS-7 Google-Chrome 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_Neofetch.html">CentOS-7 安装 Neofetch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CentOS_Install_X2Go.html">CentOS-7安装X2Go</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Linux-yum只下载不安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#yumrpm">通过yum命令只下载rpm包不安装</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_Enable_publickey_login.html">Linux-设置公钥登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Delete_all_same_files.html">Linux-删除目录下所有同名文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SlurmGuide.html">Slurm使用教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VIM_used_guide.html">Vim使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2K-PBS.html">PBS for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CP2k-Slurm.html">Slurm for CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-PBS.html">PBS for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP-Slurm.html">Slurm for VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-PBS.html">PBS for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW-Slurm.html">Slurm for GPAW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus-Slurm.html">Slurm for Octopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-PBS.html">PBS for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Gaussain-Slurm.html">Slurm for Gaussian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-PBS.html">PBS for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ORCA-Slurm.html">Slurm for ORCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux_filesystem_copy.html">Linux 选择性文件复制</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../2-LinuxShell.html">Linux Shell</a></li>
+      <li class="breadcrumb-item active">Linux-yum只下载不安装</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC_Deployment/Linux_Shell/Linux-yum_Just_download.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- TOC --><ul class="simple">
+<li><p><a class="reference external" href="#linux-yum%E5%8F%AA%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%AE%89%E8%A3%85">Linux-yum只下载不安装</a></p>
+<ul>
+<li><p><a class="reference external" href="#%E9%80%9A%E8%BF%87yum%E5%91%BD%E4%BB%A4%E5%8F%AA%E4%B8%8B%E8%BD%BDrpm%E5%8C%85%E4%B8%8D%E5%AE%89%E8%A3%85">通过yum命令只下载rpm包不安装</a></p>
+<ul>
+<li><p><a class="reference external" href="#1-yumdownloader">1. yumdownloader</a></p></li>
+<li><p><a class="reference external" href="#2-yum---downloadonly">2. yum –downloadonly</a></p></li>
+<li><p><a class="reference external" href="#3-reposync">3. reposync</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC --><section id="linux-yum">
+<h1>Linux-yum只下载不安装<a class="headerlink" href="#linux-yum" title="Link to this heading"></a></h1>
+<section id="yumrpm">
+<h2>通过yum命令只下载rpm包不安装<a class="headerlink" href="#yumrpm" title="Link to this heading"></a></h2>
+<section id="yumdownloader">
+<h3>1. yumdownloader<a class="headerlink" href="#yumdownloader" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>如果只想通过<code class="docutils literal notranslate"><span class="pre">yum</span></code>下载软件的软件包, 但是不需要进行安装的话, 可以使用<code class="docutils literal notranslate"><span class="pre">yumdownloader</span></code>命令; <code class="docutils literal notranslate"><span class="pre">yumdownloader</span></code>命令在软件包<code class="docutils literal notranslate"><span class="pre">yum-utils</span></code>里面.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>yum-utils<span class="w"> </span>-y
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>常用参数说明：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--destdir<span class="w"> </span>指定下载的软件包存放路径
+--resolve<span class="w"> </span>解决依赖关系并下载所需的包
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>示例：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yumdownloader<span class="w"> </span>--destdir<span class="o">=</span>/tmp<span class="w"> </span>--resolve<span class="w"> </span>httpd
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>通过<code class="docutils literal notranslate"><span class="pre">yumdownloader</span></code>下载的软件包, 会自动解决依赖关系, 并且下载所需的包, 但是不会安装.</p></li>
+</ul>
+</section>
+<section id="yum-downloadonly">
+<h3>2. yum –downloadonly<a class="headerlink" href="#yum-downloadonly" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>yum命令的参数有很多，其中就有只是下载而不需要安装的命令，并且也会自动解决依赖；通常和 <code class="docutils literal notranslate"><span class="pre">--downloaddir</span></code> 参数一起使用。</p></li>
+<li><p>示例：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>--downloadonly<span class="w"> </span>--downloaddir<span class="o">=</span>/tmp/<span class="w"> </span>vsftpd
+yum<span class="w"> </span>reinstall<span class="w"> </span>--downloadonly<span class="w"> </span>--downloaddir<span class="o">=</span>/tmp/<span class="w"> </span>vsftpd
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>说明：如果该服务器已经安装了需要下载的软件包，那么使用<code class="docutils literal notranslate"><span class="pre">install</span></code>下载就不行，可以使用<code class="docutils literal notranslate"><span class="pre">reinstall</span></code>下载。 放心（不会真的安装和重新安装，因为后面加了 <code class="docutils literal notranslate"><span class="pre">--downloadonly</span></code>，表明只是下载。</p></li>
+<li><p>如果提示没有<code class="docutils literal notranslate"><span class="pre">--downloadonly</span></code>选项则需要安装<code class="docutils literal notranslate"><span class="pre">yum-plugin-downloadonly</span></code>软件包；</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>yum-plugin-downloadonly<span class="w"> </span>-y
+</pre></div>
+</div>
+</section>
+<section id="reposync">
+<h3>3. reposync<a class="headerlink" href="#reposync" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>该命令更加强大，可以将远端<code class="docutils literal notranslate"><span class="pre">yum</span></code>仓库里面的包全部下载到本地。这样构建自己的<code class="docutils literal notranslate"><span class="pre">yum</span></code>仓库，就不会遇到网络经常更新包而头痛的事情了。 该命令也是来自与<code class="docutils literal notranslate"><span class="pre">yum-utils</span></code>里面。</p></li>
+<li><p>示例：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>yum-utils<span class="w"> </span>-y
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>常用参数说明：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-r<span class="w">    </span>指定已经本地已经配置的<span class="w"> </span>yum<span class="w"> </span>仓库的<span class="w"> </span>repo源的名称。
+-p<span class="w">    </span>指定下载的路径
+-m<span class="w">    </span>指定下载的包的架构
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>示例：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reposync<span class="w"> </span>-r<span class="w"> </span>epel<span class="w"> </span>-p<span class="w"> </span>/opt/local_epel<span class="w"> </span>-m<span class="w"> </span>x86_64
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>下载以后可以创建为本地软件源：</p></li>
+</ul>
+<ol>
+<li><p>创建一个新的yum安装源文件，例如：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>vi<span class="w"> </span>/etc/yum.repos.d/local_epel.repo
+</pre></div>
+</div>
+</li>
+<li><p>在文件中添加以下内容：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>local_epel<span class="o">]</span>
+<span class="nv">name</span><span class="o">=</span>Local<span class="w"> </span>EPEL<span class="w"> </span>Repository
+<span class="nv">baseurl</span><span class="o">=</span>file:///opt/local_epel
+<span class="nv">enabled</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">gpgcheck</span><span class="o">=</span><span class="m">0</span>
+<span class="c1"># 其中，name是安装源的名称，baseurl是下载的包所在的目录路径，enabled设置为1表示启用该安装源，gpgcheck设置为0表示不进行GPG验证。</span>
+</pre></div>
+</div>
+</li>
+<li><p>保存并退出文件。</p></li>
+<li><p>运行以下命令来清除yum缓存：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>yum<span class="w"> </span>clean<span class="w"> </span>all
+</pre></div>
+</div>
+</li>
+<li><p>运行以下命令来更新yum缓存并安装软件包：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>yum<span class="w"> </span>update
+sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>&lt;package-name&gt;
+</pre></div>
+</div>
+</li>
+</ol>
+<ul class="simple">
+<li><p>其中，<code class="docutils literal notranslate"><span class="pre">&lt;package-name&gt;</span></code>是您想要安装的软件包名称。</p></li>
+<li><p>通过以上步骤，您就可以成功创建一个本地的yum安装源并安装下载的软件包了。</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CentOS_Install_X2Go.html" class="btn btn-neutral float-left" title="CentOS-7安装X2Go" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Linux_Enable_publickey_login.html" class="btn btn-neutral float-right" title="Linux-设置公钥登录" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+# CP2K编译与安装
+
+## 1. 编译环境
+
+- 编译环境：intel 2018
+- 编译器：intel 2018
+- MPI：intel 2018
+- FFTW：intel 2018
+- MKL：intel 2018
+- LAPACK：intel 2018
+- ScaLAPACK：intel 2018
+- ELPA：intel 2018
+- Libint：intel 2018
+- Libxc：intel 2018
+- Libvdwxc：intel 2018
+- Libxsmm：intel 2018
+
+## 2. 运行环境
+
+在安装库之前：
+
+- 编译安装CP2K-2023.1 使用 intel 2018 mkl
+- 更改文件install_cp2k_toolchain.sh
+
+```bash 
+cd cp2k-2023.1/tools/toolchain
+vim install_cp2k_toolchain.sh
+```
+
+1. 将该文件的以下位置代码：
+
+```bash
+# ------------------------------------------------------------------------
+# Work out default settings
+# ------------------------------------------------------------------------
+
+# tools to turn on by default:
+with_gcc="__SYSTEM__"
+```
+
+改为
+
+```bash
+with_gcc="__INSTALL__"
+```
+
+2. 将：
+
+```bash
+# Compiler conflicts
+if [ "${with_intel}" != "__DONTUSE__" ] && [ "${with_gcc}" = "__INSTALL__" ]; then
+  echo "You have chosen to use the Intel compiler, therefore the installation of the GCC compiler will be skipped."
+  with_gcc="__SYSTEM__"
+```
+
+改为
+
+```bash
+# Compiler conflicts
+if [ "${with_intel}" != "__DONTUSE__" ] && [ "${with_gcc}" = "__INSTALL__" ]; then
+  echo "You have chosen to use the Intel compiler, therefore the installation of the GCC compiler will be skipped."
+  with_gcc="__INSTALL__"
+```
+
+- 注：以上的步骤是使安装编译环境库的过程中即使检测到gcc编译器，也不跳过，仍然安装cp2k-2023.1自带的gcc编译器，这样做的目的是避免在之后的库以及cp2k的编译过程中出现编译错误。
+
+## 3. 安装所有库
+- 然后开始正式编译：（CPK需要的库最好提前准备放在build文件夹下）
+
+```bash
+(base) [root@node01 toolchain]# ./install_cp2k_toolchain.sh --with-gcc=install --math-mode=mkl --with-openmpi=install --with-ptscotch=install --with-superlu=install --with-pexsi=install --with-quip=install --with-plumed=install
+MPI is detected and it appears to be Intel MPI
+You have chosen to use the Intel compiler, therefore the installation of the GCC compiler will be skipped.
+You have chosen to install the GCC compiler, therefore MPI libraries have to be installed too
+and the use of the Intel compiler and Intel MPI will be disabled.
+Compiling with 128 processes for target native.
+==================== Installing GCC ====================
+gcc-12.2.0.tar.gz is found
+Installing GCC from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0
+gcc is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0/bin/gcc
+g++ is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0/bin/g++
+gfortran is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0/bin/gfortran
+Step gcc took 385.00 seconds.
+Step intel took 0.00 seconds.
+==================== Getting proc arch info using OpenBLAS tools ====================
+OpenBLAS detected LIBCORE = zen
+OpenBLAS detected ARCH    = x86_64
+==================== Installing CMake ====================
+cmake-3.25.1 is already installed, skipping it.
+Step cmake took 0.00 seconds.
+==================== Installing OpenMPI ====================
+openmpi-4.1.4.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4
+Slurm installation found. OpenMPI will be configured with --with-pmi.
+Found directory /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin
+Found directory /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/lib
+Found directory /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/include
+mpirun is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpirun
+mpicc is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpicc
+mpicxx is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpicxx
+mpif90 is installed as /opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpif90
+Step openmpi took 523.00 seconds.
+WARNING: (/opt/apps/cp2k-2023.1/tools/toolchain/scripts/stage2/install_mkl.sh, line 23) MKL FFTW3 interface is present, but FFTW library is needed for FFTW-MPI wrappers.
+==================== Finding MKL from system paths ====================
+MKLROOT is found to be /opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/mkl
+libm is found in ld search path
+libdl is found in ld search path
+Step mkl took 0.00 seconds.
+==================== Installing FFTW ====================
+fftw-3.3.10.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/fftw-3.3.10
+Step fftw took 67.00 seconds.
+==================== Installing LIBINT ====================
+libint-v2.6.0-cp2k-lmax-5.tgz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/libint-v2.6.0-cp2k-lmax-5
+Step libint took 143.00 seconds.
+==================== Installing LIBXC ====================
+libxc-6.0.0.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/libxc-6.0.0
+patching file src/mgga_xc_b97mv.c
+Step libxc took 41.00 seconds.
+==================== Installing Libxsmm ====================
+libxsmm-1.17.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/libxsmm-1.17
+Step libxsmm took 15.00 seconds.
+Step scalapack took 0.00 seconds.
+==================== Installing COSMA ====================
+COSMA-v2.6.2.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/COSMA-2.6.2
+Step cosma took 14.00 seconds.
+==================== Installing ELPA ====================
+elpa-2022.11.001.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/elpa-2022.11.001/cpu
+Step elpa took 73.00 seconds.
+==================== Installing PT-Scotch ====================
+scotch_6.0.0.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/scotch-6.0.0
+Step ptscotch took 3.00 seconds.
+==================== Installing SuperLU_DIST ====================
+superlu_dist_6.1.0.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/superlu_dist-6.1.0
+Step superlu took 9.00 seconds.
+==================== Installing PEXSI ====================
+pexsi_v1.2.0.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/pexsi-1.2.0
+Step pexsi took 58.00 seconds.
+==================== Installing QUIP ====================
+QUIP-0.9.10.tar.gz is found
+fox-b5b69ef9a46837bd944ba5c9bc1cf9d00a6198a7.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/quip-0.9.10
+Step quip took 250.00 seconds.
+==================== Installing gsl ====================
+gsl-2.7.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/gsl-2.7
+Step gsl took 67.00 seconds.
+==================== Installing PLUMED ====================
+plumed-src-2.8.1.tgz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/plumed-2.8.1
+Step plumed took 49.00 seconds.
+==================== Installing hdf5 ====================
+hdf5-1.12.0.tar.bz2 is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/hdf5-1.12.0
+Step hdf5 took 108.00 seconds.
+==================== Installing libvdwxc ====================
+libvdwxc-0.4.0.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/libvdwxc-0.4.0
+Step libvdwxc took 24.00 seconds.
+==================== Installing spglib ====================
+spglib-1.16.2.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/spglib-1.16.2
+Step spglib took 6.00 seconds.
+==================== Installing libvori ====================
+libvori-220621.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/libvori-220621
+Step libvori took 17.00 seconds.
+Step libtorch took 0.00 seconds.
+==================== Installing spfft ====================
+SpFFT-1.0.6.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/SpFFT-1.0.6
+Step spfft took 6.00 seconds.
+==================== Installing spla ====================
+SpLA-1.5.4.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/SpLA-1.5.4
+Step spla took 7.00 seconds.
+==================== Installing SIRIUS ====================
+sirius_7.3.2.tar.gz is found
+Installing from scratch into /opt/apps/cp2k-2023.1/tools/toolchain/install/sirius-7.3.2
+Step sirius took 46.00 seconds.
+==================== generating arch files ====================
+arch files can be found in the /opt/apps/cp2k-2023.1/tools/toolchain/install/arch subdirectory
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.ssmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_static.ssmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.sdbg
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_asan.ssmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_coverage.sdbg
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.psmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.pdbg
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_asan.psmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_static.psmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_warn.psmp
+Wrote /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_coverage.pdbg
+========================== usage =========================
+Done!
+Now copy:
+  cp /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/* to the cp2k/arch/ directory
+To use the installed tools and libraries and cp2k version
+compiled with it you will first need to execute at the prompt:
+  source /opt/apps/cp2k-2023.1/tools/toolchain/install/setup
+To build CP2K you should change directory:
+  cd cp2k/
+  make -j 128 ARCH=local VERSION="ssmp sdbg psmp pdbg"
+
+arch files for GPU enabled CUDA versions are named "local_cuda.*"
+arch files for GPU enabled HIP versions are named "local_hip.*"
+arch files for OpenCL (GPU) versions are named "local_opencl.*"
+arch files for coverage versions are named "local_coverage.*"
+
+Note that these pre-built arch files are for the GNU compiler, users have to adapt them for other compilers.
+It is possible to use the provided CP2K arch files as guidance.
+```
+
+### 3. compile cp2k-2023.1
+
+```bash 
+cp /opt/apps/cp2k-2023.1/tools/toolchain/install/arch/* /opt/apps/cp2k-2023.1/arch/
+source /opt/apps/cp2k-2023.1/tools/toolchain/install/setup
+cd /opt/apps/cp2k-2023.1
+make -j 128 ARCH=local VERSION="ssmp sdbg psmp pdbg"
+```
+
+### 4. 写环境变量
+
+```bash
+#cp2k-2023.1 use gcc-12.2.0 and intel-2018 mkl to compile, the intel ifort not use
+#intel-2018#
+source /opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/mkl/bin/mklvars.sh intel64
+#cp2k-2023.1
+source /opt/apps/cp2k-2023.1/tools/toolchain/install/setup
+export PATH=/opt/apps/cp2k-2023.1/exe/local:${PATH}
+# how to use:   source thisfile
+```
+
+🎉️ `source ~/.bashrc`之后，可使用诸如`cp2k.popt -v`命令查看是否成功。
+
+### 5. 测试
+
+```bash
+mkdir test
+cd test
+touch test.inp
+```
+
+- 写入以下内容
+
+```bash
+#Generated by Multiwfn
+&GLOBAL
+  PROJECT test
+  PRINT_LEVEL LOW
+  RUN_TYPE ENERGY
+&END GLOBAL
+
+&FORCE_EVAL
+  METHOD Quickstep
+  &SUBSYS
+    &CELL
+      A     7.13358000     0.00000000     0.00000000
+      B     0.00000000     7.13358000     0.00000000
+      C     0.00000000     0.00000000     7.13358000
+    &END CELL
+    &COORD
+      C     0.00000000    0.00000000    0.00000000
+      C     0.89169753    0.89169753    0.89169753
+      C     0.00000000    1.78339506    1.78339506
+      C     2.67509260    0.89169753    2.67509260
+      C     1.78339506    0.00000000    1.78339506
+      C     0.89169753    2.67509260    2.67509260
+      C     1.78339506    1.78339506    0.00000000
+      C     2.67509260    2.67509260    0.89169753
+      C     3.56679013    0.00000000    0.00000000
+      C     4.45848766    0.89169753    0.89169753
+      C     3.56679013    1.78339506    1.78339506
+      C     6.24188272    0.89169753    2.67509260
+      C     5.35018519    0.00000000    1.78339506
+      C     4.45848766    2.67509260    2.67509260
+      C     5.35018519    1.78339506    0.00000000
+      C     6.24188272    2.67509260    0.89169753
+      C     0.00000000    3.56679013    0.00000000
+      C     0.89169753    4.45848766    0.89169753
+      C     0.00000000    5.35018519    1.78339506
+      C     2.67509260    4.45848766    2.67509260
+      C     1.78339506    3.56679013    1.78339506
+      C     0.89169753    6.24188272    2.67509260
+      C     1.78339506    5.35018519    0.00000000
+      C     2.67509260    6.24188272    0.89169753
+      C     3.56679013    3.56679013    0.00000000
+      C     4.45848766    4.45848766    0.89169753
+      C     3.56679013    5.35018519    1.78339506
+      C     6.24188272    4.45848766    2.67509260
+      C     5.35018519    3.56679013    1.78339506
+      C     4.45848766    6.24188272    2.67509260
+      C     5.35018519    5.35018519    0.00000000
+      C     6.24188272    6.24188272    0.89169753
+      C     0.00000000    0.00000000    3.56679013
+      C     0.89169753    0.89169753    4.45848766
+      C     0.00000000    1.78339506    5.35018519
+      C     2.67509260    0.89169753    6.24188272
+      C     1.78339506    0.00000000    5.35018519
+      C     0.89169753    2.67509260    6.24188272
+      C     1.78339506    1.78339506    3.56679013
+      C     2.67509260    2.67509260    4.45848766
+      C     3.56679013    0.00000000    3.56679013
+      C     4.45848766    0.89169753    4.45848766
+      C     3.56679013    1.78339506    5.35018519
+      C     6.24188272    0.89169753    6.24188272
+      C     5.35018519    0.00000000    5.35018519
+      C     4.45848766    2.67509260    6.24188272
+      C     5.35018519    1.78339506    3.56679013
+      C     6.24188272    2.67509260    4.45848766
+      C     0.00000000    3.56679013    3.56679013
+      C     0.89169753    4.45848766    4.45848766
+      C     0.00000000    5.35018519    5.35018519
+      C     2.67509260    4.45848766    6.24188272
+      C     1.78339506    3.56679013    5.35018519
+      C     0.89169753    6.24188272    6.24188272
+      C     1.78339506    5.35018519    3.56679013
+      C     2.67509260    6.24188272    4.45848766
+      C     3.56679013    3.56679013    3.56679013
+      C     4.45848766    4.45848766    4.45848766
+      C     3.56679013    5.35018519    5.35018519
+      C     6.24188272    4.45848766    6.24188272
+      C     5.35018519    3.56679013    5.35018519
+      C     4.45848766    6.24188272    6.24188272
+      C     5.35018519    5.35018519    3.56679013
+      C     6.24188272    6.24188272    4.45848766
+    &END COORD
+    &KIND C
+      ELEMENT C
+      BASIS_SET DZVP-MOLOPT-SR-GTH
+      POTENTIAL GTH-PBE
+    &END KIND
+  &END SUBSYS
+
+  &DFT
+    BASIS_SET_FILE_NAME  BASIS_MOLOPT
+    POTENTIAL_FILE_NAME  POTENTIAL
+#   WFN_RESTART_FILE_NAME to_be_specified
+    CHARGE    0 #Net charge
+    MULTIPLICITY  1 #Spin multiplicity
+    &QS
+      EPS_DEFAULT 1E-10 #This is default. Set all EPS_xxx to values such that the energy will be correct up to this value
+    &END QS
+    &XC
+      &XC_FUNCTIONAL PBE
+      &END XC_FUNCTIONAL
+    &END XC
+    &MGRID
+      CUTOFF 350 #Use 500 for high accuracy calculation
+      REL_CUTOFF 50 #Use 60 for high accuracy calculation
+    &END MGRID
+    &SCF
+      MAX_SCF 128
+      EPS_SCF 1E-5 #Target accuracy for SCF convergence
+#     SCF_GUESS RESTART #Uncomment this can restart from WFN_RESTART_FILE_NAME file
+      &DIAGONALIZATION
+        ALGORITHM STANDARD #Algorithm for diagonalization. DAVIDSON is faster for large systems
+      &END DIAGONALIZATION
+      &MIXING
+        METHOD BROYDEN_MIXING
+        ALPHA 0.4 #Default. Mixing 40% of new density matrix with the old one
+        NBROYDEN 5 #Default is 4. Number of previous steps stored for the actual mixing scheme
+      &END MIXING
+    &END SCF
+  &END DFT
+&END FORCE_EVAL
+```
+
+执行计算：
+
+```bash
+$ mpirun -np 4 cp2k.popt -i cp2k.inp -o cp2k.out
+```
+

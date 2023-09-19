@@ -1,0 +1,37 @@
+# fail2ban避免非法登录
+
+```bash
+yum install fail2ban
+nano /etc/fail2ban/jail.conf
+# 找到[sshd]，增加enable
+```
+
+```bash
+[sshd]
+
+# To use more aggressive sshd modes set filter parameter "mode" in jail.local:
+# normal (default), ddos, extra or aggressive (combines all).
+# See "tests/files/logs/sshd" or "filter.d/sshd.conf" for usage example and details.
+#mode   = normal
+filter = sshd
+port    = ssh
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+enabled = true
+```
+
+```bash
+systemctl start fail2ban
+systemctl enable fail2ban
+fail2ban-client status sshd
+```
+
+```bash
+对某个ip取消限制
+fail2ban-client set sshd unbanip $ip
+```
+
+```bash
+查看被限制的ip
+fail2ban-client status sshd
+```

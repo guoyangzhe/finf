@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>配置服务器时间同步 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="配置NFS和NIS服务" href="3-set_NISandNFS.html" />
+    <link rel="prev" title="SSH免密登录" href="2-1-set_SyncSSH.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../1-hpc.html">HPC Cluster Deployment</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0-Network_configuration.html">初始准备与网络配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-Web_page_management.html">部署网页管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-1-set_SyncSSH.html">SSH免密登录</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">配置服务器时间同步</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1. 服务器时间同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2. 启动服务</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3-set_NISandNFS.html">配置NFS和NIS服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-Deployment_openHPC.html">部署OpenHPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-Install_AnacondaandIntel.html">安装Anaconda3&amp;Intel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6-update_to_huawei_mirror.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-Setting_yum_repository.html">设置自定义yum源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8-Deployment_Slurm.html">部署Slurm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9-Deployment_SciSoft.html">此处略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-Points_to_consider.html">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11-Optional_CentOS_Install_Dockers.html">CentOS-7安装Dockers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-Ref_CentOS7Setup.html">CentOS-7 Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-Optional_fail2ban.html">Fail2ban避免非法登录</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../1-hpc.html">HPC Cluster Deployment</a></li>
+      <li class="breadcrumb-item active">配置服务器时间同步</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC_Deployment/Easy_cluster_deployment/2-2-LinuxSyncTimeForC&S.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>配置服务器时间同步<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>1. 服务器时间同步<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>修改服务节点的<code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code>文件，添加如下内容</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/etc/ntp.conf
+<span class="c1"># 填入如下内容：</span>
+restrict<span class="w"> </span><span class="m">192</span>.168.237.0<span class="w"> </span>mask<span class="w"> </span><span class="m">255</span>.255.255.0<span class="w"> </span>nomodify<span class="w"> </span>notrap
+<span class="c1"># 在`server`部分添加一部分，并注释掉`server 0 ~ n`</span>
+server<span class="w"> </span><span class="m">127</span>.127.1.0
+Fudge<span class="w"> </span><span class="m">127</span>.127.1.0<span class="w"> </span>stratum<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>修改子节点的<code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code>文件，添加如下内容</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 填入如下内容：</span>
+restrict<span class="w"> </span><span class="m">192</span>.168.237.132<span class="w"> </span>nomodify<span class="w"> </span>notrap<span class="w"> </span>nopeer<span class="w"> </span>noquery<span class="w"> </span>
+restrict<span class="w"> </span><span class="m">192</span>.168.237.0<span class="w"> </span>mask<span class="w"> </span><span class="m">255</span>.255.255.0<span class="w"> </span>nomodify<span class="w"> </span>notrap
+<span class="c1"># 在`server`部分添加一部分，并注释掉`server 0 ~ n`</span>
+server<span class="w"> </span><span class="m">192</span>.168.237.132
+Fudge<span class="w"> </span><span class="m">192</span>.168.237.132<span class="w"> </span>stratum<span class="w"> </span><span class="m">10</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>2. 启动服务<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>启动服务</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>service<span class="w"> </span>ntpd<span class="w"> </span>restart
+ntpstat
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ntpd
+systemctl<span class="w"> </span>list-unit-files<span class="p">|</span>grep<span class="w"> </span>ntpd
+</pre></div>
+</div>
+<p>注：
+ntp服务器配置完毕后，需要等待5-10分钟才能与/etc/ntp.conf中配置的标准时间进行同步。
+等一段时间之后，再次使用ntpstat命令查看状态，直到所有节点都与指定的主节点连接上</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@cluster<span class="w"> </span>/<span class="o">]</span><span class="c1"># pdsh -w node[1-2] ntpstat</span>
+node1:<span class="w"> </span>synchronised<span class="w"> </span>to<span class="w"> </span>NTP<span class="w"> </span>server<span class="w"> </span><span class="o">(</span><span class="m">192</span>.168.237.132<span class="o">)</span><span class="w"> </span>at<span class="w"> </span>stratum<span class="w"> </span><span class="m">7</span>
+node1:<span class="w">    </span><span class="nb">time</span><span class="w"> </span>correct<span class="w"> </span>to<span class="w"> </span>within<span class="w"> </span><span class="m">1004</span><span class="w"> </span>ms
+node1:<span class="w">    </span>polling<span class="w"> </span>server<span class="w"> </span>every<span class="w"> </span><span class="m">64</span><span class="w"> </span>s
+node2:<span class="w"> </span>synchronised<span class="w"> </span>to<span class="w"> </span>NTP<span class="w"> </span>server<span class="w"> </span><span class="o">(</span><span class="m">192</span>.168.237.132<span class="o">)</span><span class="w"> </span>at<span class="w"> </span>stratum<span class="w"> </span><span class="m">7</span>
+node2:<span class="w">    </span><span class="nb">time</span><span class="w"> </span>correct<span class="w"> </span>to<span class="w"> </span>within<span class="w"> </span><span class="m">895</span><span class="w"> </span>ms
+node2:<span class="w">    </span>polling<span class="w"> </span>server<span class="w"> </span>every<span class="w"> </span><span class="m">64</span><span class="w"> </span>s
+</pre></div>
+</div>
+<p>这样就是同步成功了</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2-1-set_SyncSSH.html" class="btn btn-neutral float-left" title="SSH免密登录" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3-set_NISandNFS.html" class="btn btn-neutral float-right" title="配置NFS和NIS服务" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

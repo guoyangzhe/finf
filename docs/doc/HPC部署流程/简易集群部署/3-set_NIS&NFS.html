@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>配置NFS和NIS服务 &mdash; SciBro v0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="部署OpenHPC" href="4-%E9%83%A8%E7%BD%B2openHPC.html" />
+    <link rel="prev" title="配置服务器时间同步" href="2-2-LinuxSyncTimeForC%26S.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../hpc.html">HPC 简易集群部署</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0-%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE.html">初始准备与网络配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-%E7%BD%91%E9%A1%B5%E7%AE%A1%E7%90%86.html">部署网页管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-1-set_SyncSSH.html">ssh免密登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-2-LinuxSyncTimeForC%26S.html">配置服务器时间同步</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">配置NFS和NIS服务</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nfss">1. NFS服务s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nis">2. NIS服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3. 题外话</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="4-%E9%83%A8%E7%BD%B2openHPC.html">部署OpenHPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-%E5%AE%89%E8%A3%85anaconda%26intel.html">安装anaconda&amp;intel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6-%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E6%BA%90%E4%B8%BA%E5%8D%8E%E4%B8%BA%E9%95%9C%E5%83%8F.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89yum%E6%BA%90.html">设置自定义yum源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8-%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E7%BD%B2slurm.html">部署Slurm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9-%E9%83%A8%E7%BD%B2%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97%E8%BD%AF%E4%BB%B6.html">此处略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9.html">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11-%E5%8F%AF%E9%80%89%E4%B8%A8centos8%E5%AE%89%E8%A3%85dockers.html">centos7安装dockers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-%E5%8F%82%E8%80%83%E4%B8%A8Centos7Setup.html">Centos7Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-%E5%8F%AF%E9%80%89fail2ban%E9%81%BF%E5%85%8D%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95.html">fail2ban避免非法登录</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical%20Computing/%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html">主力软件推荐及分类</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/comsol%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">COMSOL 使用指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/%E8%A1%A8%E9%9D%A2%E7%AD%89%E7%A6%BB%E6%BF%80%E5%85%83.html">Surface Plasmon</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ProgramLanguages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/2-Python.html">Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ProgramLanguages/3-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">科研计算tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/1-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80Tips.html">编程语言 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/2-%E6%97%A5%E5%B8%B8%E5%8A%9E%E5%85%ACoffice.html">日常办公Office等 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/3-%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F.html">其他软件 Tips</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ACGN&amp;Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACGN%26Misc/%E4%BA%8C%E6%AC%A1%E5%85%83.html">二次元</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../hpc.html">HPC 简易集群部署</a></li>
+      <li class="breadcrumb-item active">配置NFS和NIS服务</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC部署流程/简易集群部署/3-set_NIS&NFS.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nfsnis">
+<h1>配置NFS和NIS服务<a class="headerlink" href="#nfsnis" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>本文默认使用的操作系统为：<code class="docutils literal notranslate"><span class="pre">CentOS</span> <span class="pre">7.6-7.9</span></code>版本。其余版本的操作系统请自行调整命令。</strong></p></li>
+<li><p><strong>请严格按照本文的流程去执行，一般不会报错，不要随意调整安装流程。</strong></p></li>
+</ul>
+<section id="nfss">
+<h2>1. NFS服务s<a class="headerlink" href="#nfss" title="Permalink to this heading"></a></h2>
+<section id="nfs">
+<h3>1.1 NFS服务介绍<a class="headerlink" href="#nfs" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><em>NFS(Network File System)网络文件系统，是一种分布式文件系统，允许网络中的计算机透明地共享资源。NFS是由Sun公司开发的，目前已经成为Unix和Linux系统中的标准服务。NFS是基于RPC(Remote Procedure Call)协议实现的，它允许网络中的计算机之间通过TCP/IP网络共享资源。NFS服务是基于客户端/服务器端的架构，NFS服务器端将共享的目录挂载到NFS客户端上，NFS客户端就可以像访问本地文件一样访问共享目录中的文件。NFS服务是基于共享目录的，所以在NFS服务器端需要先创建共享目录，然后将共享目录挂载到NFS客户端上，NFS客户端就可以访问共享目录中的文件了。</em></p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>1.2 服务端NFS的安装<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>NFS服务的安装包是<code class="docutils literal notranslate"><span class="pre">nfs-utils</span></code>，安装命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>nfs-utils
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>1.3 服务端NFS的配置<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>NFS服务的配置文件是/etc/exports，配置文件中的每一行都是一个共享目录的配置信息，配置信息的格式如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>共享目录<span class="w"> </span>客户端IP<span class="o">(</span>权限<span class="o">)</span>
+</pre></div>
+</div>
+<p>共享目录：需要共享的目录，可以是绝对路径，也可以是相对路径，如果是相对路径，则相对于<code class="docutils literal notranslate"><span class="pre">/etc/exports</span></code>文件所在的目录。</p>
+<p>客户端IP：可以是单个IP，也可以是IP段，也可以是域名，也可以是通配符<code class="docutils literal notranslate"><span class="pre">*</span></code>。</p>
+<p>权限：可以是ro(只读权限)，也可以是rw(读写权限)。</p>
+</li>
+<li><p>在管理节点上配置NFS服务器，将共享文件夹导出：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/exports
+</pre></div>
+</div>
+</li>
+<li><p>在文件中添加以下内容：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/shared_folder<span class="w">  </span>*<span class="o">(</span>rw,sync,no_root_squash<span class="o">)</span>
+
+<span class="c1"># 以下是示例：</span>
+/home<span class="w">  </span>*<span class="o">(</span>rw,no_root_squash,sync<span class="o">)</span>
+/share<span class="w"> </span>*<span class="o">(</span>rw,no_root_squash,sync<span class="o">)</span>
+/opt<span class="w">   </span>*<span class="o">(</span>rw,no_root_squash,sync<span class="o">)</span>
+/data1<span class="w">   </span>*<span class="o">(</span>rw,no_root_squash,sync<span class="o">)</span>
+/data2<span class="w">   </span>*<span class="o">(</span>rw,no_root_squash,sync<span class="o">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>其中，<code class="docutils literal notranslate"><span class="pre">/shared_folder</span></code>是共享文件夹的路径，<code class="docutils literal notranslate"><span class="pre">*</span></code>表示允许任何计算节点访问，<code class="docutils literal notranslate"><span class="pre">rw</span></code>表示读写权限，<code class="docutils literal notranslate"><span class="pre">sync</span></code>表示同步写入，<code class="docutils literal notranslate"><span class="pre">no_root_squash</span></code>表示允许<code class="docutils literal notranslate"><span class="pre">root</span></code>用户访问。</p></li>
+<li><p><strong>上述只要是进行共享的文件夹，在主宿主机上都要有，否则会报错。且权限要设置好（一般 <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">750</span> <span class="pre">/share_folder</span></code> ）。</strong></p></li>
+<li><p>在管理节点上启动NFS服务器：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>status<span class="w"> </span>nfs
+systemctl<span class="w"> </span>start<span class="w"> </span>nfs
+systemctl<span class="w"> </span>restart<span class="w"> </span>nfs
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nfs
+exportfs<span class="w"> </span>-r<span class="w">  </span><span class="c1"># 如果您对NFS配置文件进行了更改，请使用该命令重新加载配置文件</span>
+showmount<span class="w"> </span>-e<span class="w"> </span>master
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 请确保您的网络设置正确，并且NFS端口（默认为2049）未被防火墙阻止。</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>1.4 客户端NFS的安装<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>在计算节点上安装NFS客户端软件：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>nfs-utils
+</pre></div>
+</div>
+</li>
+<li><p>在计算节点上创建挂载点：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mkdir<span class="w"> </span>/shared_folder
+</pre></div>
+</div>
+</li>
+<li><p>在计算节点上挂载共享文件夹(之后写入rc.local)：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span>&lt;管理节点IP&gt;:/shared_folder<span class="w"> </span>/shared_folder
+<span class="c1"># 写入 /etc/rc.local  示例</span>
+mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span>master:/home<span class="w">  </span>/home
+mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span>master:/opt<span class="w">  </span>/opt
+mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span>master:/share<span class="w">  </span>/share
+</pre></div>
+</div>
+</li>
+<li><p>其中，<code class="docutils literal notranslate"><span class="pre">&lt;管理节点IP&gt;</span></code>是管理节点的IP地址，<code class="docutils literal notranslate"><span class="pre">/shared_folder</span></code>是共享文件夹的路径，<code class="docutils literal notranslate"><span class="pre">/shared_folder</span></code>是挂载点的路径。</p></li>
+<li><p>在计算节点上启动NFS服务器（不知有没有必要，但还是enable一下吧）：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>status<span class="w"> </span>nfs
+systemctl<span class="w"> </span>start<span class="w"> </span>nfs
+systemctl<span class="w"> </span>restart<span class="w"> </span>nfs
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nfs
+exportfs<span class="w"> </span>-r<span class="w">  </span><span class="c1"># 如果您对NFS配置文件进行了更改，请使用该命令重新加载配置文件</span>
+showmount<span class="w"> </span>-e<span class="w"> </span>master
+</pre></div>
+</div>
+</li>
+<li><p>验证挂载是否成功：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>df<span class="w"> </span>-h
+</pre></div>
+</div>
+</li>
+<li><p>如果成功挂载，您应该能够看到共享文件夹的信息。</p></li>
+<li><p>为了使挂载在重启后仍然有效，您可以将挂载命令添加到<code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code>文件中。例如：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;管理节点IP&gt;:/shared_folder<span class="w"> </span>/mnt/shared_folder<span class="w"> </span>nfs<span class="w"> </span>rw,sync,noauto<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+</li>
+<li><p>这将在启动时自动挂载共享文件夹。</p></li>
+</ul>
+</section>
+<section id="rc-local">
+<h3>1.5 （可选）客户端通过rc.local自动挂载<a class="headerlink" href="#rc-local" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>此外，也可将需要开机启动的命令直接写入/etc/rc.local的文件下</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>/var/lock/subsys/local
+mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span>node01:/home<span class="w">  </span>/home
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please note that you must run &#39;chmod +x /etc/rc.d/rc.local&#39; to ensure</span>
+<span class="c1"># that this script will be executed during boot.</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>/etc/rc.d/rc.local
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="fstab">
+<h3>1.6 （可选）客户端通过fstab自动挂载<a class="headerlink" href="#fstab" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>也可将需要开机启动的命令直接写入/etc/fstab的文件下</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>node01:/home<span class="w">  </span>/home<span class="w"> </span>nfs<span class="w"> </span>rw,sync,noauto<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+</li>
+<li><p>之后执行以下命令</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mount<span class="w"> </span>-a
+</pre></div>
+</div>
+</li>
+<li><p>NFS在客户端的使用方法：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>showmount<span class="w"> </span>-e<span class="w"> </span>master<span class="w"> </span><span class="c1">#会显示服务器的共享目录</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="autofs">
+<h3>1.7 （可选）客户端通过autofs自动挂载<a class="headerlink" href="#autofs" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>也可将需要开机启动的命令直接写入/etc/auto.master的文件下</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/home<span class="w"> </span>/etc/auto.home
+</pre></div>
+</div>
+</li>
+<li><p>在/etc/auto.home文件下写入</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>*<span class="w"> </span>-rw,sync<span class="w"> </span>node01:/home/<span class="p">&amp;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="nis">
+<h2>2. NIS服务<a class="headerlink" href="#nis" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>在有多台linux服务器的环境中,且一台linux服务器的账号又有很多且可能会相同，所以会出现理员很难管理的现象。NIS的主要功能是对主机账号系统等系统信息提供集中的管理。</p></li>
+<li><p>当NIS客户机需要进行用户登录的信息验证时，就向NIS服务器发出查询请求。当系统中的一台NIS服务器为多台NIS客户机提供服务时，用户登录系统中的任何一台NIS客户机都会从NIS服务器进行登录验证，这样就实现了集中管理用户账号的功能。</p></li>
+<li><p><strong>请注意，执行该步骤时要确保/home目录已经成功挂载并共享。</strong></p></li>
+<li><p><strong>系统已经重启。</strong></p></li>
+</ul>
+<section id="id4">
+<h3>2.1 NIS服务端配置<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>NIS服务端的安装包是ypserv，安装命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>ypserv<span class="w"> </span>rpcbind
+</pre></div>
+</div>
+</li>
+<li><p>创建NIS域：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/etc/sysconfig/network
+<span class="c1"># Created by anaconda</span>
+<span class="nv">NISDOMAIN</span><span class="o">=</span>master
+<span class="c1"># 该方法永久生效，但是需要重启</span>
+</pre></div>
+</div>
+</li>
+<li><p>以下这一步在自己的电脑上不需要设置，服务器上为了安全考虑需要设置。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 设置/etc/ypserv.conf主配置文件：</span>
+
+nano<span class="w"> </span>/etc/ypserv.conf
+
+*<span class="w">                              </span>:<span class="w"> </span>*<span class="w">       </span>:<span class="w"> </span>shadow.byname<span class="w">          </span>:<span class="w"> </span>port
+*<span class="w">                              </span>:<span class="w"> </span>*<span class="w">       </span>:<span class="w"> </span>passwd.adjunct.byname<span class="w">  </span>:<span class="w"> </span>port
+<span class="m">127</span>.0.0.1/255.255.255.0<span class="w">        </span>:<span class="w"> </span>*<span class="w">       </span>:<span class="w"> </span>*<span class="w">                      </span>:<span class="w"> </span>none<span class="w"> </span><span class="c1">#本地回环id,代表的是本机，允许本机访问所有的域</span>
+<span class="m">192</span>.168.241.0/255.255.255.0<span class="w">    </span>:<span class="w"> </span>*<span class="w">       </span>:<span class="w"> </span>*<span class="w">                      </span>:<span class="w"> </span>none
+*<span class="w">                              </span>:<span class="w"> </span>*<span class="w">       </span>:<span class="w"> </span>*<span class="w">                      </span>:<span class="w"> </span>deny
+</pre></div>
+</div>
+</li>
+<li><p>启动和启用NIS服务：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>start<span class="w"> </span>ypserv<span class="w"> </span><span class="c1"># 首先要启动ypserv服务，否则建立NIS数据库会报错</span>
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ypserv
+systemctl<span class="w"> </span>start<span class="w"> </span>rpcbind
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>rpcbind
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>2.2 NIS客户端配置<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>NIS客户端的安装包是ypbind，安装命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>ypbind<span class="w"> </span>rpcbind
+</pre></div>
+</div>
+</li>
+<li><p>NIS客户端的配置文件是<code class="docutils literal notranslate"><span class="pre">/etc/yp.conf</span></code>，配置文件中的每一行都是一个NIS客户端的配置信息，配置信息的格式如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>domain<span class="w"> </span>&lt;NIS域名&gt;<span class="w"> </span>server<span class="w"> </span>&lt;NIS服务器IP&gt;
+<span class="c1"># 示例：</span>
+domain<span class="w"> </span>master<span class="w"> </span>server<span class="w"> </span>master
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>注：
+rpm<span class="w"> </span>-qf<span class="w"> </span><span class="sb">`</span>which<span class="w"> </span>yppasswd<span class="sb">`</span><span class="w"> </span><span class="c1">#查看命令来源 </span>
+显示：yp-tools-2.14-5.el7.x86_64<span class="w"> </span><span class="c1"># (安装ypbind时会自动解决依赖关系安装yp-tools)</span>
+<span class="c1"># 使用yppasswd可以远程修改NIS服务器的密码</span>
+<span class="c1"># 查看安装了哪些软件：rpm -qa yp*</span>
+</pre></div>
+</div>
+</li>
+<li><p>设置NIS域名–同master
+NIS是会通过域名来分辨不同账号的密码数据，因此必须要在服务器与客户端都指定相同的NIS域名。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/etc/sysconfig/network
+<span class="c1"># Created by anaconda</span>
+<span class="nv">NISDOMAIN</span><span class="o">=</span>master
+<span class="c1"># 该方法永久生效，但是需要重启</span>
+</pre></div>
+</div>
+</li>
+<li><p>配置nsswitch.conf</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># /etc/nsswitch.conf</span>
+passwd:<span class="w">     </span>files<span class="w"> </span>nis
+shadow:<span class="w">     </span>files<span class="w"> </span>nis
+group:<span class="w">      </span>files<span class="w"> </span>nis
+
+hosts:<span class="w">      </span>files<span class="w"> </span>dns<span class="w"> </span>myhostname<span class="w"> </span>nis<span class="w"> </span><span class="c1"># 添加nis</span>
+</pre></div>
+</div>
+</li>
+<li><p>启动服务：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>start<span class="w"> </span>ypbind
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ypbind
+systemctl<span class="w"> </span>start<span class="w"> </span>rpcbind
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>rpcbind
+</pre></div>
+</div>
+</li>
+<li><p>验证：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>status<span class="w"> </span>ypbind<span class="w"> </span><span class="c1">#显示running则表示成功</span>
+systemctl<span class="w"> </span>status<span class="w"> </span>rpcbind<span class="w"> </span><span class="c1">#显示running则表示成功</span>
+</pre></div>
+</div>
+</li>
+<li><p>验证：在客户端上输入<code class="docutils literal notranslate"><span class="pre">yptest</span></code>，能看到nis服务器上的用户</p></li>
+<li><p><strong>注意：如若不成功，请使用系统工具 <code class="docutils literal notranslate"><span class="pre">setup</span></code> 进行设置。</strong>
+选择 Authentication configuration，选择 Use NIS，然后输入 NIS domain name 和 NIS server IP address，最后点击 OK 即可。</p></li>
+</ul>
+</section>
+<section id="nis-2-1">
+<h3>2.3 NIS服务端映射（该步骤可在2.1之后执行）<a class="headerlink" href="#nis-2-1" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>配置NIS映射表：
+<em>创建NIS映射表文件（例如passwd、group等）并将其复制到/var/yp目录下：</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>/etc/passwd<span class="w"> </span>/var/yp/passwd
+</pre></div>
+</div>
+</li>
+<li><p>生成NIS映射表：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/var/yp
+make
+</pre></div>
+</div>
+</li>
+<li><p>查看服务：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rpcinfo<span class="w"> </span>-p<span class="w"> </span>master
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id6">
+<h2>3. 题外话<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>CentOS7挂载硬盘示例（请灵活更改自己的命令）：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node01<span class="w"> </span>/<span class="o">]</span><span class="c1"># lsblk</span>
+NAME<span class="w">            </span>MAJ:MIN<span class="w"> </span>RM<span class="w">   </span>SIZE<span class="w"> </span>RO<span class="w"> </span>TYPE<span class="w"> </span>MOUNTPOINT
+sda<span class="w">               </span><span class="m">8</span>:0<span class="w">    </span><span class="m">1</span><span class="w">   </span><span class="m">7</span>.3T<span class="w">  </span><span class="m">0</span><span class="w"> </span>disk
+sdb<span class="w">               </span><span class="m">8</span>:16<span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">7</span>.3T<span class="w">  </span><span class="m">0</span><span class="w"> </span>disk
+sdc<span class="w">               </span><span class="m">8</span>:32<span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">7</span>.3T<span class="w">  </span><span class="m">0</span><span class="w"> </span>disk
+└─sdc1<span class="w">            </span><span class="m">8</span>:33<span class="w">   </span><span class="m">1</span><span class="w">   </span><span class="m">7</span>.3T<span class="w">  </span><span class="m">0</span><span class="w"> </span>part<span class="w"> </span>/home
+
+<span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node02<span class="w"> </span>data3<span class="o">]</span><span class="c1"># blkid</span>
+/dev/sda2:<span class="w"> </span><span class="nv">LABEL</span><span class="o">=</span><span class="s2">&quot;ROOT&quot;</span><span class="w"> </span><span class="nv">UUID</span><span class="o">=</span><span class="s2">&quot;6f979e18-09c9-435e-b09d-274b7f967903&quot;</span><span class="w"> </span><span class="nv">TYPE</span><span class="o">=</span><span class="s2">&quot;ext3&quot;</span><span class="w"> </span><span class="nv">PARTUUID</span><span class="o">=</span><span class="s2">&quot;873f3f46-b046-4e1c-ab5f-94de3d1f9522&quot;</span>
+/dev/sda1:<span class="w"> </span><span class="nv">LABEL</span><span class="o">=</span><span class="s2">&quot;EFI&quot;</span><span class="w"> </span><span class="nv">UUID</span><span class="o">=</span><span class="s2">&quot;9991-A2DE&quot;</span><span class="w"> </span><span class="nv">TYPE</span><span class="o">=</span><span class="s2">&quot;vfat&quot;</span><span class="w"> </span><span class="nv">PARTLABEL</span><span class="o">=</span><span class="s2">&quot;EFI System Partition&quot;</span><span class="w"> </span><span class="nv">PARTUUID</span><span class="o">=</span><span class="s2">&quot;031855d3-56a7-441f-9a3d-392efd575f0f&quot;</span>
+<span class="c1">#诸如此类</span>
+
+<span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node02<span class="w"> </span>data3<span class="o">]</span><span class="c1"># fdisk -l</span>
+WARNING:<span class="w"> </span>fdisk<span class="w"> </span>GPT<span class="w"> </span>support<span class="w"> </span>is<span class="w"> </span>currently<span class="w"> </span>new,<span class="w"> </span>and<span class="w"> </span>therefore<span class="w"> </span><span class="k">in</span><span class="w"> </span>an<span class="w"> </span>experimental<span class="w"> </span>phase.<span class="w"> </span>Use<span class="w"> </span>at<span class="w"> </span>your<span class="w"> </span>own<span class="w"> </span>discretion.
+
+Disk<span class="w"> </span>/dev/sda:<span class="w"> </span><span class="m">512</span>.1<span class="w"> </span>GB,<span class="w"> </span><span class="m">512110190592</span><span class="w"> </span>bytes,<span class="w"> </span><span class="m">1000215216</span><span class="w"> </span>sectors
+<span class="nv">Units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sectors<span class="w"> </span>of<span class="w"> </span><span class="m">1</span><span class="w"> </span>*<span class="w"> </span><span class="nv">512</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">512</span><span class="w"> </span>bytes
+Sector<span class="w"> </span>size<span class="w"> </span><span class="o">(</span>logical/physical<span class="o">)</span>:<span class="w"> </span><span class="m">512</span><span class="w"> </span>bytes<span class="w"> </span>/<span class="w"> </span><span class="m">4096</span><span class="w"> </span>bytes
+I/O<span class="w"> </span>size<span class="w"> </span><span class="o">(</span>minimum/optimal<span class="o">)</span>:<span class="w"> </span><span class="m">4096</span><span class="w"> </span>bytes<span class="w"> </span>/<span class="w"> </span><span class="m">4096</span><span class="w"> </span>bytes
+Disk<span class="w"> </span>label<span class="w"> </span>type:<span class="w"> </span>gpt
+Disk<span class="w"> </span>identifier:<span class="w"> </span>0ED54899-BCF2-4DB7-8103-3FA21DAD0DCC
+
+
+<span class="c1">#         Start          End    Size  Type            Name</span>
+<span class="w"> </span><span class="m">1</span><span class="w">         </span><span class="m">2048</span><span class="w">      </span><span class="m">2099199</span><span class="w">      </span>1G<span class="w">  </span>EFI<span class="w"> </span>System<span class="w">      </span>EFI<span class="w"> </span>System<span class="w"> </span>Partition
+<span class="w"> </span><span class="m">2</span><span class="w">      </span><span class="m">2099200</span><span class="w">    </span><span class="m">865996799</span><span class="w">    </span>412G<span class="w">  </span>Microsoft<span class="w"> </span>basic
+<span class="w"> </span><span class="m">3</span><span class="w">    </span><span class="m">865996800</span><span class="w">   </span><span class="m">1000214527</span><span class="w">     </span>64G<span class="w">  </span>Linux<span class="w"> </span>swap
+WARNING:<span class="w"> </span>fdisk<span class="w"> </span>GPT<span class="w"> </span>support<span class="w"> </span>is<span class="w"> </span>currently<span class="w"> </span>new,<span class="w"> </span>and<span class="w"> </span>therefore<span class="w"> </span><span class="k">in</span><span class="w"> </span>an<span class="w"> </span>experimental<span class="w"> </span>phase.<span class="w"> </span>Use<span class="w"> </span>at<span class="w"> </span>your<span class="w"> </span>own<span class="w"> </span>discretion.
+<span class="c1">#=================================================================================================================</span>
+
+<span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node02<span class="w"> </span>data3<span class="o">]</span><span class="c1"># nano /etc/fstab</span>
+<span class="c1">#示例：</span>
+<span class="nv">UUID</span><span class="o">=</span>a2fd2367-2227-4a96-a5c8-757f11c1d386<span class="w">        </span>/data4<span class="w">                  </span>ext4<span class="w">    </span>defaults<span class="w">        </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="2-2-LinuxSyncTimeForC%26S.html" class="btn btn-neutral float-left" title="配置服务器时间同步" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="4-%E9%83%A8%E7%BD%B2openHPC.html" class="btn btn-neutral float-right" title="部署OpenHPC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Sat, 08 Jul 2023 17:20:13.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

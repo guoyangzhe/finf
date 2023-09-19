@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPAW编译与安装 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="GPAW 基组" href="GPAW_basic.html" />
+    <link rel="prev" title="VASP编译与安装" href="VASP_compile_install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../TheoreticalComputing2.html">Ab Initio</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CP2K_compile_install.html">CP2K编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VASP_compile_install.html">VASP编译与安装</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GPAW编译与安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. 安装依赖库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2. 安装<code class="docutils literal notranslate"><span class="pre">gpaw</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpaw-install-paw-datasets">3. 安装<code class="docutils literal notranslate"><span class="pre">gpaw</span></code>所需的赝势文件（Install PAW datasets）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">4. 测试<code class="docutils literal notranslate"><span class="pre">gpaw</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">5. 最终软件的环境变量（仅作参考）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpaw-tools">6. 安装<code class="docutils literal notranslate"><span class="pre">gpaw-tools</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">7. 激活环境变量后再次测试<code class="docutils literal notranslate"><span class="pre">gpaw</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">8. 编者注</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW_basic.html">GPAW 基组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus_compile_install.html">Octopus编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QE_compile_install.html">Quantum Espresso编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Abinit_compile_install.html">Abinit 编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phonon.html">Phonon 的计算–基于CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="excitation.html">电子激发与X光光谱的计算–CP2K</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../TheoreticalComputing2.html">Ab Initio</a></li>
+      <li class="breadcrumb-item active">GPAW编译与安装</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical_Computing/Ab_Initio/GPAW_compile_install.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gpaw">
+<h1>GPAW编译与安装<a class="headerlink" href="#gpaw" title="Link to this heading"></a></h1>
+<p>注：
+手动方式安装<code class="docutils literal notranslate"><span class="pre">gpaw</span></code>最重要的是修改<code class="docutils literal notranslate"><span class="pre">customize.py</span></code>文件，在文件里把要关联的库路径添加修改正确，并把<code class="docutils literal notranslate"><span class="pre">False</span></code>改为<code class="docutils literal notranslate"><span class="pre">True</span></code>。只有把<code class="docutils literal notranslate"><span class="pre">customize.py</span></code>文件看懂，才能正确编译<code class="docutils literal notranslate"><span class="pre">gpaw</span></code></p>
+<ul class="simple">
+<li><p>官方要求的安装必要软件包</p></li>
+</ul>
+<p>官网安装说明链接<a class="reference external" href="https://wiki.fysik.dtu.dk/gpaw/install.html#">https://wiki.fysik.dtu.dk/gpaw/install.html#</a></p>
+<ul class="simple">
+<li><p>Python 3.5 or later（使用python3.5以上版本是因为ase需要的python版本已经是3.5了）</p></li>
+<li><p>NumPy 1.9 or later (base N-dimensional array package)</p></li>
+<li><p>SciPy 0.14 or later (library for scientific computing)</p></li>
+<li><p>ASE 3.18.0 or later (atomic simulation environment)</p></li>
+<li><p>a C-compiler</p></li>
+<li><p>LibXC 3.x or 4.x</p></li>
+<li><p>BLAS and LAPACK libraries</p></li>
+</ul>
+<p>Optional, but highly recommended:</p>
+<ul class="simple">
+<li><p>an MPI library (required for parallel calculations)</p></li>
+<li><p>FFTW (for increased performance)</p></li>
+<li><p>BLACS and ScaLAPACK</p></li>
+</ul>
+<section id="id1">
+<h2>1. 安装依赖库<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>安装<code class="docutils literal notranslate"><span class="pre">anaconda3</span></code>之后，一些<code class="docutils literal notranslate"><span class="pre">python</span></code>库就可以安装了，<code class="docutils literal notranslate"><span class="pre">Python</span></code>、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>、<code class="docutils literal notranslate"><span class="pre">Scipy</span></code>、<code class="docutils literal notranslate"><span class="pre">ASE</span></code>、<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>均可安装在库中</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>****<span class="w"> </span>
+</pre></div>
+</div>
+<section id="blaslapack-ubuntu">
+<h3>1.1 安装<code class="docutils literal notranslate"><span class="pre">BLAS</span></code>、<code class="docutils literal notranslate"><span class="pre">LAPACK</span></code>（Ubuntu系统直接安装，不需要自行编译）<a class="headerlink" href="#blaslapack-ubuntu" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>参考Octopus安装说明
+</pre></div>
+</div>
+</section>
+<section id="scalapack">
+<h3>1.2 安装SCALAPACK（可选择系统直接安装，不需要自行编译）<a class="headerlink" href="#scalapack" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>xvf<span class="w"> </span>scalapack_installer.tgz<span class="w"> </span>
+<span class="nb">cd</span><span class="w"> </span>scalapack_installer<span class="w"> </span>
+</pre></div>
+</div>
+<p>修改<code class="docutils literal notranslate"><span class="pre">setup.py</span></code>文件，把<code class="docutils literal notranslate"><span class="pre">prefix</span></code>改为<code class="docutils literal notranslate"><span class="pre">/home/gn/gpaw2160/scalapack</span></code>，把<code class="docutils literal notranslate"><span class="pre">f90</span></code>改为<code class="docutils literal notranslate"><span class="pre">gfortran</span></code>，把<code class="docutils literal notranslate"><span class="pre">downall</span></code>改为<code class="docutils literal notranslate"><span class="pre">True</span></code>，保存退出</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./setup.py<span class="w"> </span>--prefix<span class="o">=</span>/home/gn/gpaw2160/scalapack<span class="w"> </span>--f90<span class="o">=</span>gfortran<span class="w"> </span>--downall
+</pre></div>
+</div>
+<p>创建软链接:
+把编译的<code class="docutils literal notranslate"><span class="pre">libscalapack.a</span></code>拷贝到<code class="docutils literal notranslate"><span class="pre">/usr/lib64</span></code>目录下，并链接为<code class="docutils literal notranslate"><span class="pre">libscalapack-openmpi.a</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-s<span class="w"> </span>/usr/lib64/libscalapack.a<span class="w"> </span>/usr/lib64/libscalapack-openmpi.a
+</pre></div>
+</div>
+</section>
+<section id="fftw">
+<h3>1.3 安装<code class="docutils literal notranslate"><span class="pre">FFTW</span></code>（需要重新编译）<a class="headerlink" href="#fftw" title="Link to this heading"></a></h3>
+<p>大多数软件并不需要fftw编译并行，但gpaw需要libfftw3_mpi.so
+下载
+ftp://ftp.fftw.org/pub/fftw/fftw-3.3.5.tar.gz
+安装</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>xvf<span class="w"> </span>fftw-3.3.5.tar.gz
+<span class="nb">cd</span><span class="w"> </span>fftw-3.3.5
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/libraries/gnu8-fftw/3.3.4<span class="w"> </span>--enable-mpi<span class="w"> </span>--enable-shared<span class="o">=</span>yes
+make
+make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>查看<code class="docutils literal notranslate"><span class="pre">/opt/libraries/gnu8-fftw/3.3.4/lib</span></code>目录中，如果有<code class="docutils literal notranslate"><span class="pre">libfftw3_mpi</span></code>文件即为成功。</p>
+</section>
+<section id="openmpi">
+<h3>1.4 安装<code class="docutils literal notranslate"><span class="pre">openmpi</span></code>（需要重新编译）<a class="headerlink" href="#openmpi" title="Link to this heading"></a></h3>
+<p>下载<a class="reference external" href="https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz">https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.gz</a></p>
+<p>安装</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>xvf<span class="w"> </span>openmpi-4.1.1.tar.gz
+<span class="nb">cd</span><span class="w"> </span>openmpi-4.1.1
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/libraries/gnu8-openmpi/4.1.4
+make<span class="w"> </span>all<span class="w"> </span>install<span class="w"> </span>-j
+vi<span class="w"> </span>~/.bashrc
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/sob/openmpi313/bin
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/sob/openmpi313/lib
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+</pre></div>
+</div>
+</section>
+<section id="libxc">
+<h3>1.5 安装<code class="docutils literal notranslate"><span class="pre">libxc</span></code>（需要重新编译）<a class="headerlink" href="#libxc" title="Link to this heading"></a></h3>
+<p>下载<a class="reference external" href="https://gitlab.com/libxc/libxc/-/archive/4.3.4/libxc-4.3.4.tar.gz">https://gitlab.com/libxc/libxc/-/archive/4.3.4/libxc-4.3.4.tar.gz</a></p>
+<p>安装</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>xvf<span class="w"> </span>libxc-4.3.4.tar.gz<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>libxc-4.3.4<span class="w">  </span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/libraries/gnu8-libxc/4.3.4<span class="w"> </span>--enable-shared<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>这是一个密度泛函理论(<code class="docutils literal notranslate"><span class="pre">DFT</span></code>)的交换关联泛函库，其中你可以找到不同类型的泛函，例如：<code class="docutils literal notranslate"><span class="pre">LDA</span></code>, <code class="docutils literal notranslate"><span class="pre">GGA</span></code>, <code class="docutils literal notranslate"><span class="pre">hybrids</span></code>, 和 <code class="docutils literal notranslate"><span class="pre">mGGA</span></code>。 <code class="docutils literal notranslate"><span class="pre">Libxc</span></code>库也可以用于<code class="docutils literal notranslate"><span class="pre">Abinit</span></code>软件，目前最新版本为6.1.0。</p>
+</section>
+<section id="elpa">
+<h3>1.6 安装<code class="docutils literal notranslate"><span class="pre">ELPA</span></code>（需要重新编译）<a class="headerlink" href="#elpa" title="Link to this heading"></a></h3>
+<p>下载<a class="reference external" href="https://elpa.mpcdf.mpg.de/html/Releases/2021.05.001/elpa-2021.05.001.tar.gz">https://elpa.mpcdf.mpg.de/html/Releases/2021.05.001/elpa-2021.05.001.tar.gz</a></p>
+<p>安装</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/libraries/gnu8-elpa/2021.05.002<span class="w"> </span><span class="nv">FC</span><span class="o">=</span>mpiifort<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>mpiicc<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>mpiicpc<span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O3 -xHost&quot;</span><span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-O3 -xHost&quot;</span><span class="w"> </span><span class="nv">FCFLAGS</span><span class="o">=</span><span class="s2">&quot;-O3 -xHost&quot;</span><span class="w"> </span>--enable-openmp
+
+make<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>install<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>clean
+</pre></div>
+</div>
+</section>
+<section id="libvdwxc">
+<h3>1.7 安装<code class="docutils literal notranslate"><span class="pre">libvdwxc</span></code>（需要重新编译）<a class="headerlink" href="#libvdwxc" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>fftw3<span class="w"> </span>fftw3-devel
+</pre></div>
+</div>
+<p>下载<a class="reference external" href="https://gitlab.com/libvdwxc/libvdwxc/-/archive/0.4.0/libvdwxc-0.4.0.tar.gz">https://gitlab.com/libvdwxc/libvdwxc/-/archive/0.4.0/libvdwxc-0.4.0.tar.gz</a></p>
+<p>安装</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/opt/libraries/gnu8-libvdwxc/0.4.0<span class="w"> </span><span class="nv">CC</span><span class="o">=</span><span class="s2">&quot;gcc&quot;</span><span class="w"> </span><span class="nv">FC</span><span class="o">=</span><span class="s2">&quot;gfortran&quot;</span><span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-O3 -march=native&quot;</span><span class="w"> </span><span class="nv">FCFLAGS</span><span class="o">=</span><span class="s2">&quot;-g -O2&quot;</span>
+
+make<span class="w"> </span>-j<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h2>2. 安装<code class="docutils literal notranslate"><span class="pre">gpaw</span></code><a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="id3">
+<h3>2.1 下载<code class="docutils literal notranslate"><span class="pre">gpaw</span></code>源码<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://gitlab.com/gpaw/gpaw/-/archive/master/gpaw-master.tar.gz
+tar<span class="w"> </span>xvf<span class="w"> </span>gpaw-22.8.0.tar.gz
+<span class="nb">cd</span><span class="w"> </span>gpaw-22.8.0
+</pre></div>
+</div>
+</section>
+<section id="siteconfig-py">
+<h3>2.2 修改<code class="docutils literal notranslate"><span class="pre">siteconfig.py</span></code>文件<a class="headerlink" href="#siteconfig-py" title="Link to this heading"></a></h3>
+<p>复制<code class="docutils literal notranslate"><span class="pre">siteconfig.py.example</span></code>文件为<code class="docutils literal notranslate"><span class="pre">siteconfig.py</span></code>文件</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>siteconfig.py.example<span class="w"> </span>siteconfig.py
+</pre></div>
+</div>
+<p>修改<code class="docutils literal notranslate"><span class="pre">siteconfig.py</span></code>文件</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>siteconfig.py
+</pre></div>
+</div>
+<p>改为如下内容</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;&quot;&quot;User provided customizations.</span>
+
+<span class="s2">Here one changes the default arguments for compiling _gpaw.so.</span>
+
+<span class="s2">Here are all the lists that can be modified:</span>
+
+<span class="s2">* libraries</span>
+<span class="s2">  List of libraries to link: -l&lt;lib1&gt; -l&lt;lib2&gt; ...</span>
+<span class="s2">* library_dirs</span>
+<span class="s2">  Library search directories: -L&lt;dir1&gt; -L&lt;dir2&gt; ...</span>
+<span class="s2">* include_dirs</span>
+<span class="s2">  Header search directories: -I&lt;dir1&gt; -I&lt;dir2&gt; ...</span>
+<span class="s2">* extra_link_args</span>
+<span class="s2">  Arguments forwarded directly to linker</span>
+<span class="s2">* extra_compile_args</span>
+<span class="s2">  Arguments forwarded directly to compiler</span>
+<span class="s2">* runtime_library_dirs</span>
+<span class="s2">  Runtime library search directories: -Wl,-rpath=&lt;dir1&gt; -Wl,-rpath=&lt;dir2&gt; ...</span>
+<span class="s2">* extra_objects</span>
+<span class="s2">* define_macros</span>
+
+<span class="s2">The following lists work like above, but are only linked when compiling</span>
+<span class="s2">the parallel interpreter:</span>
+
+<span class="s2">* mpi_libraries</span>
+<span class="s2">* mpi_library_dirs</span>
+<span class="s2">* mpi_include_dirs</span>
+<span class="s2">* mpi_runtime_library_dirs</span>
+<span class="s2">* mpi_define_macros</span>
+
+<span class="s2">To override use the form:</span>
+
+<span class="s2">    libraries = [&#39;somelib&#39;, &#39;otherlib&#39;]</span>
+
+<span class="s2">To append use the form</span>
+
+<span class="s2">    libraries += [&#39;somelib&#39;, &#39;otherlib&#39;]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># flake8: noqa</span>
+
+<span class="c1"># compiler = &#39;gcc&#39;</span>
+<span class="c1"># mpicompiler = &#39;mpicc&#39;</span>
+<span class="c1"># mpilinker = &#39;mpicc&#39;</span>
+<span class="c1"># platform_id = &#39;&#39;</span>
+
+<span class="c1"># FFTW3:</span>
+<span class="nv">fftw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>True
+<span class="k">if</span><span class="w"> </span>fftw:
+<span class="w">    </span><span class="nv">libraries</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;fftw3&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="nv">library_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8/lib/&#39;</span><span class="o">]</span>
+<span class="c1"># ScaLAPACK (version 2.0.1+ required):</span>
+<span class="nv">scalapack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>True
+<span class="k">if</span><span class="w"> </span>scalapack:
+<span class="w">    </span><span class="nv">libraries</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;scalapack&#39;</span>,<span class="s1">&#39;openblas&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="nv">library_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;/opt/ohpc/pub/libs/gnu8/openmpi3/scalapack/2.0.2/lib/&#39;</span>,<span class="s1">&#39;/opt/ohpc/pub/libs/gnu8/openblas/0.3.7/lib/&#39;</span><span class="o">]</span>
+
+<span class="c1"># Use Elpa (requires ScaLAPACK and Elpa API 20171201):</span>
+<span class="k">if</span><span class="w"> </span><span class="m">0</span>:
+<span class="w">    </span><span class="nv">elpa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>True
+<span class="w">    </span><span class="nv">elpadir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/opt/libraries/gnu8-elpa/2021.05.002&#39;</span>
+<span class="w">    </span><span class="nv">libraries</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;elpa&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="nv">library_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;{}/lib&#39;</span>.format<span class="o">(</span>elpadir<span class="o">)]</span>
+<span class="w">    </span><span class="nv">extra_link_args</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;-Wl,-rpath={}/lib&#39;</span>.format<span class="o">(</span>elpadir<span class="o">)]</span>
+<span class="w">    </span><span class="nv">include_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;{}/include/elpa_openmp-2021.05.002&#39;</span>.format<span class="o">(</span>elpadir<span class="o">)]</span>
+
+<span class="c1"># LibXC:</span>
+<span class="c1"># In order to link libxc installed in a non-standard location</span>
+<span class="c1"># (e.g.: configure --prefix=/home/user/libxc-2.0.1-1), use:</span>
+
+<span class="c1"># - static linking:</span>
+<span class="k">if</span><span class="w"> </span><span class="m">0</span>:
+<span class="w">    </span><span class="nv">xc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/opt/libraries/gnu8-libxc/4.3.4/&#39;</span>
+<span class="w">    </span><span class="nv">include_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span>xc<span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;include&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="nv">extra_link_args</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span>xc<span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;lib/libxc.a&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="s1">&#39;xc&#39;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span>libraries:
+<span class="w">        </span>libraries.remove<span class="o">(</span><span class="s1">&#39;xc&#39;</span><span class="o">)</span>
+
+<span class="c1"># - dynamic linking (requires rpath or setting LD_LIBRARY_PATH at runtime):</span>
+<span class="k">if</span><span class="w"> </span><span class="m">0</span>:
+<span class="w">    </span><span class="nv">xc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/opt/libraries/gnu8-libxc/4.3.4/&#39;</span>
+<span class="w">    </span><span class="nv">include_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span>xc<span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;include&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="nv">library_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span>xc<span class="w"> </span>+<span class="w"> </span><span class="s1">&#39;lib&#39;</span><span class="o">]</span>
+<span class="w">    </span><span class="c1"># You can use rpath to avoid changing LD_LIBRARY_PATH:</span>
+<span class="w">    </span><span class="nv">extra_link_args</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;-Wl,-rpath={xc}/lib&#39;</span>.format<span class="o">(</span><span class="nv">xc</span><span class="o">=</span>xc<span class="o">)]</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="s1">&#39;xc&#39;</span><span class="w"> </span>not<span class="w"> </span><span class="k">in</span><span class="w"> </span>libraries:
+<span class="w">        </span>libraries.append<span class="o">(</span><span class="s1">&#39;xc&#39;</span><span class="o">)</span>
+
+
+<span class="c1"># libvdwxc:</span>
+<span class="k">if</span><span class="w"> </span><span class="m">0</span>:
+<span class="w">    </span><span class="nv">libvdwxc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>True
+<span class="w">    </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/opt/libraries/gnu8-libvdwxc/0.4.0&#39;</span>
+<span class="w">    </span><span class="nv">extra_link_args</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;-Wl,-rpath=%s/lib&#39;</span><span class="w"> </span>%<span class="w"> </span>path<span class="o">]</span>
+<span class="w">    </span><span class="nv">library_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;%s/lib&#39;</span><span class="w"> </span>%<span class="w"> </span>path<span class="o">]</span>
+<span class="w">    </span><span class="nv">include_dirs</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;%s/include&#39;</span><span class="w"> </span>%<span class="w"> </span>path<span class="o">]</span>
+<span class="w">    </span><span class="nv">libraries</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;vdwxc&#39;</span><span class="o">]</span>
+
+<span class="nv">extra_compile_args</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;-fopenmp&#39;</span><span class="o">]</span>
+<span class="nv">extra_link_args</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;-fopenmp&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>注：<code class="docutils literal notranslate"><span class="pre">fftw</span></code>、<code class="docutils literal notranslate"><span class="pre">scalapack</span></code>、<code class="docutils literal notranslate"><span class="pre">elpa</span></code>、<code class="docutils literal notranslate"><span class="pre">libxc</span></code>、<code class="docutils literal notranslate"><span class="pre">libvdwxc</span></code>这些库的路径需要根据实际情况修改。</p>
+<p>如果是在服务器上编译（有ophc和PBS）
+写好siteconfig.py文件之后保存退出
+加载所有能用到的库
+然后开始编译
+<code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> (这样才能把所有的库安装上)
+如果使用pip，则不能安装所有的库，会失败</p>
+<p>以后更新gpaw，直接下载源码，编写siteconfig.py文件，进行编译即可，切记要升级一些依赖的库。</p>
+</section>
+</section>
+<section id="gpaw-install-paw-datasets">
+<h2>3. 安装<code class="docutils literal notranslate"><span class="pre">gpaw</span></code>所需的赝势文件（Install PAW datasets）<a class="headerlink" href="#gpaw-install-paw-datasets" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gpaw<span class="w"> </span>install-data<span class="w"> </span>~/gpaw-21.6.0/datasets
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>4. 测试<code class="docutils literal notranslate"><span class="pre">gpaw</span></code><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path_to_gpaw/gpaw-22.8.0
+python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import gpaw; print(gpaw.__version__)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>5. 最终软件的环境变量（仅作参考）<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#GPAW#</span>
+conda<span class="w"> </span>activate<span class="w"> </span>gpaw
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">MPI_HOME</span><span class="o">=</span>/opt/ohpc/pub/mpi/openmpi3-gnu8/3.1.4<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$MPI_HOME</span>/share/man:<span class="nv">$MANPATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBXC_HOME</span><span class="o">=</span>/opt/libraries/gnu8-libxc/4.3.4<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/lib:<span class="nv">$LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$LIBXC_HOME</span>/include:<span class="nv">$C_INCLUDE_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">FFTW_HOME</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/fftw/3.3.8<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/share/man:<span class="nv">$MANPATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$FFTW_HOME</span>/include:<span class="nv">$C_INCLUDE_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENBLAS_HOME</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openblas/0.3.7<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$OPENBLAS_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$OPENBLAS_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$OPENBLAS_HOME</span>/lib:<span class="nv">$LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$OPENBLAS_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">SCALAPACK_HOME</span><span class="o">=</span>/opt/ohpc/pub/libs/gnu8/openmpi3/scalapack/2.0.2<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$SCALAPACK_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$SCALAPACK_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$SCALAPACK_HOME</span>/lib:<span class="nv">$LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$SCALAPACK_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">ELPA_HOME</span><span class="o">=</span>/opt/libraries/gnu8-elpa/2021.05.002<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ELPA_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ELPA_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$ELPA_HOME</span>/include:<span class="nv">$INCLUDE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MANPATH</span><span class="o">=</span><span class="nv">$ELPA_HOME</span>/share/man:<span class="nv">$MANPATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span><span class="nv">$ELPA_HOME</span>//include/elpa_openmp-2021.05.002/elpa/:<span class="nv">$C_INCLUDE_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBVDWXC_HOME</span><span class="o">=</span>/opt/libraries/gnu8-libvdwxc/0.4.0<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$LIBVDWXC_HOME</span>/bin:<span class="nv">$PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LIBVDWXC_HOME</span>:<span class="nv">$LD_LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LIBVDWXC_HOME</span>:<span class="nv">$LIBRARY_PATH</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INCLUDE</span><span class="o">=</span><span class="nv">$LIBVDWXC_HOME</span>/include:<span class="nv">$INCLUDE</span>
+
+<span class="c1">#gpaw-tools</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/opt/apps/tools/gpaw-tools-23.2.0:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="gpaw-tools">
+<h2>6. 安装<code class="docutils literal notranslate"><span class="pre">gpaw-tools</span></code><a class="headerlink" href="#gpaw-tools" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>gpaw
+pip<span class="w"> </span>install<span class="w"> </span>gpaw-tools
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>7. 激活环境变量后再次测试<code class="docutils literal notranslate"><span class="pre">gpaw</span></code><a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gpaw<span class="w"> </span>info
+gpaw<span class="w"> </span>info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;libxc&#39;</span>
+gpaw<span class="w"> </span><span class="nb">test</span>
+gpaw<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--parallel<span class="o">=</span><span class="m">2</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>8. 编者注<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>由于作者时间有限，本文中的安装流程没有经过严格的测试，仅供参考。如果有问题，欢迎提出issue，或者直接联系作者。</p></li>
+<li><p>本文存在很多问题，读者切不可照搬，待作者有时间一定进行修正。</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="VASP_compile_install.html" class="btn btn-neutral float-left" title="VASP编译与安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="GPAW_basic.html" class="btn btn-neutral float-right" title="GPAW 基组" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

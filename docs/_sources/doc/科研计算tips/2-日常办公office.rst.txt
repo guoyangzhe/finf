@@ -1,0 +1,10 @@
+.. _Tips2:
+
+=======================
+日常办公Office等 Tips
+=======================
+
+.. toctree::
+    :maxdepth: 2
+
+    日常办公office/wordtips

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>python的一些乱七八糟 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Fortran tips" href="../3-fortrantips.html" />
+    <link rel="prev" title="溶液配比计算" href="Solution_proportion_calculation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../1-ProgramTips.html">ProgramTips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../2-Python.html">Python相关</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="deployment_Auto-GPT.html">配置Auto-GPT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Solution_proportion_calculation.html">溶液配比计算</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">python的一些乱七八糟</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3-fortrantips.html">Fortran tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../4-pythontips.html">Python tips</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../1-ProgramTips.html">ProgramTips</a></li>
+          <li class="breadcrumb-item"><a href="../2-Python.html">Python相关</a></li>
+      <li class="breadcrumb-item active">python的一些乱七八糟</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Scientific_tips/ProgramTips/Python/Python_study.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- TOC --><ul class="simple">
+<li><p><a class="reference external" href="#python%E7%9A%84%E4%B8%80%E4%BA%9B%E4%B9%B1%E4%B8%83%E5%85%AB%E7%B3%9F">python的一些乱七八糟</a></p>
+<ul>
+<li><p><a class="reference external" href="#1-python-%E5%BA%93">1. python 库</a></p>
+<ul>
+<li><p><a class="reference external" href="#11-shutil%E5%BA%93">1.1 shutil库</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#2-python-%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95">2. python 函数的用法</a></p>
+<ul>
+<li><p><a class="reference external" href="#21-%E7%BB%98%E5%9B%BE%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0">2.1 绘图相关参数</a></p>
+<ul>
+<li><p><a class="reference external" href="#211-cmap%E5%87%BD%E6%95%B0">2.1.1 cmap函数</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC --><section id="python">
+<h1>python的一些乱七八糟<a class="headerlink" href="#python" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p>本文不涉及python较基础的print、input、if、for等语法，只记录一些日常用到的函数和参数。</p></li>
+</ul>
+<section id="id1">
+<h2>1. python 库<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="shutil">
+<h3>1.1 shutil库<a class="headerlink" href="#shutil" title="Link to this heading"></a></h3>
+<p><img alt="Shutil" src="../../../../_images/Shutil.png" /></p>
+</section>
+</section>
+<section id="id2">
+<h2>2. python 函数的用法<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="id3">
+<h3>2.1 绘图相关参数<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="cmap">
+<h4>2.1.1 cmap函数<a class="headerlink" href="#cmap" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>这个函数中可选的cmap参数包括：
+例： <code class="docutils literal notranslate"><span class="pre">cmap='seismic'</span></code></p></li>
+</ul>
+<ol class="simple">
+<li><p>seismic：红-白-蓝配色，用于表示正负值之间的差异。</p></li>
+<li><p>jet：黑-蓝-青-黄-红配色，用于表示连续变化的数据。</p></li>
+<li><p>coolwarm：深蓝-白-红配色，用于表示正负值之间的差异。</p></li>
+<li><p>viridis：从深绿到黄绿到黄的单调配色，用于表示连续变化的数据。</p></li>
+<li><p>plasma：紫-粉红-橙-黄单调配色，用于表示连续变化的数据。</p></li>
+</ol>
+<ul class="simple">
+<li><p>除了上面列出的常用的颜色映射外，还有许多其他的颜色映射可供选择。在选择颜色映射时，需要根据数据类型和分布特性进行评估，并根据需要调整对比度、亮度、饱和度等参数，以便最大程度地突出数据的特征。</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Solution_proportion_calculation.html" class="btn btn-neutral float-left" title="溶液配比计算" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../3-fortrantips.html" class="btn btn-neutral float-right" title="Fortran tips" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

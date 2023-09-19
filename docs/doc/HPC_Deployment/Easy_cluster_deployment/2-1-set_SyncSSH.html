@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSH免密登录 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="配置服务器时间同步" href="2-2-LinuxSyncTimeForC%26S.html" />
+    <link rel="prev" title="部署网页管理" href="1-Web_page_management.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../1-hpc.html">HPC Cluster Deployment</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0-Network_configuration.html">初始准备与网络配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-Web_page_management.html">部署网页管理</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SSH免密登录</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. 配置服务节点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2. 配置计算节点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3. 配置无密登陆</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2-2-LinuxSyncTimeForC%26S.html">配置服务器时间同步</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-set_NISandNFS.html">配置NFS和NIS服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-Deployment_openHPC.html">部署OpenHPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-Install_AnacondaandIntel.html">安装Anaconda3&amp;Intel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6-update_to_huawei_mirror.html">CentOS-7 更新软件源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7-Setting_yum_repository.html">设置自定义yum源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8-Deployment_Slurm.html">部署Slurm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9-Deployment_SciSoft.html">此处略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-Points_to_consider.html">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11-Optional_CentOS_Install_Dockers.html">CentOS-7安装Dockers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-Ref_CentOS7Setup.html">CentOS-7 Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-Optional_fail2ban.html">Fail2ban避免非法登录</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../1-hpc.html">HPC Cluster Deployment</a></li>
+      <li class="breadcrumb-item active">SSH免密登录</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/HPC_Deployment/Easy_cluster_deployment/2-1-set_SyncSSH.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ssh">
+<h1>SSH免密登录<a class="headerlink" href="#ssh" title="Link to this heading"></a></h1>
+<p>注：各节点执行同样命令可以利用 pdsh 命令或for循环处理：
+在node[1-10]节点执行 id slurm 可用下述命令之一：
+pdsh： pdsh -w node[1-10] id slurm
+for循环： for i in <code class="docutils literal notranslate"><span class="pre">seq</span> <span class="pre">1</span> <span class="pre">10</span></code>; do ssh node$i id slurm; done</p>
+<section id="id1">
+<h2>1. 配置服务节点<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="root">
+<h3>1.0 进入服务节点的<code class="docutils literal notranslate"><span class="pre">root</span></code><a class="headerlink" href="#root" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>su<span class="w"> </span>root
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>1.1 关闭防火墙服务<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>stop<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>disable<span class="w"> </span>firewalld.service
+firewall-cmd<span class="w"> </span>--state
+<span class="c1">#显示not running</span>
+</pre></div>
+</div>
+</section>
+<section id="hosts">
+<h3>1.2 修改hosts文件<a class="headerlink" href="#hosts" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/etc/hosts
+<span class="c1"># 填入</span>
+<span class="m">192</span>.168.64.10<span class="w"> </span>master<span class="w"> </span>master
+<span class="m">192</span>.168.64.11<span class="w"> </span>node01<span class="w"> </span>node01
+<span class="c1"># CTRL+X y 保存退出</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3>1.3 退出root<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">exit</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>2. 配置计算节点<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="id5">
+<h3>2.0 进入计算节点的<code class="docutils literal notranslate"><span class="pre">root</span></code><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>root@192.168.237.128
+systemctl<span class="w"> </span>stop<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>disable<span class="w"> </span>firewalld.service
+firewall-cmd<span class="w"> </span>--state
+<span class="c1">#显示not running</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>2.1 修改hosts文件<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/etc/hosts
+<span class="c1"># 填入</span>
+<span class="m">192</span>.168.64.10<span class="w"> </span>master<span class="w"> </span>master
+<span class="m">192</span>.168.64.11<span class="w"> </span>node01<span class="w"> </span>node01
+<span class="c1"># CTRL+X y 保存退出</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>2.2 退出root<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">exit</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>3. 配置无密登陆<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<section id="id9">
+<h3>3.1 生成密钥<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>rsa
+<span class="c1"># 一路回车</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>3.2 将公钥复制到其他节点<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-copy-id<span class="w"> </span>master
+ssh-copy-id<span class="w"> </span>node01
+<span class="c1"># ssh-copy-id命令用于将本地计算机上的公钥复制到远程计算机的authorized_keys文件中，以实现无密码登录。当您使用ssh-copy-id命令时，它会将您的公钥添加到远程计算机的~/.ssh/authorized_keys文件中，这样您就可以使用私钥进行无密码登录。这对于自动化脚本、远程管理和配置管理非常有用。</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>3.3 测试<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>master
+ssh<span class="w"> </span>node01
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="1-Web_page_management.html" class="btn btn-neutral float-left" title="部署网页管理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2-2-LinuxSyncTimeForC%26S.html" class="btn btn-neutral float-right" title="配置服务器时间同步" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

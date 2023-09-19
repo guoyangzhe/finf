@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CP2K编译与安装 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="VASP编译与安装" href="VASP_compile_install.html" />
+    <link rel="prev" title="Ab Initio" href="../TheoreticalComputing2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../TheoreticalComputing2.html">Ab Initio</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CP2K编译与安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. 编译环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2. 运行环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3. 安装所有库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="VASP_compile_install.html">VASP编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW_compile_install.html">GPAW编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPAW_basic.html">GPAW 基组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Octopus_compile_install.html">Octopus编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QE_compile_install.html">Quantum Espresso编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Abinit_compile_install.html">Abinit 编译与安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phonon.html">Phonon 的计算–基于CP2K</a></li>
+<li class="toctree-l2"><a class="reference internal" href="excitation.html">电子激发与X光光谱的计算–CP2K</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../TheoreticalComputing2.html">Ab Initio</a></li>
+      <li class="breadcrumb-item active">CP2K编译与安装</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical_Computing/Ab_Initio/CP2K_compile_install.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cp2k">
+<h1>CP2K编译与安装<a class="headerlink" href="#cp2k" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>1. 编译环境<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>编译环境：intel 2018</p></li>
+<li><p>编译器：intel 2018</p></li>
+<li><p>MPI：intel 2018</p></li>
+<li><p>FFTW：intel 2018</p></li>
+<li><p>MKL：intel 2018</p></li>
+<li><p>LAPACK：intel 2018</p></li>
+<li><p>ScaLAPACK：intel 2018</p></li>
+<li><p>ELPA：intel 2018</p></li>
+<li><p>Libint：intel 2018</p></li>
+<li><p>Libxc：intel 2018</p></li>
+<li><p>Libvdwxc：intel 2018</p></li>
+<li><p>Libxsmm：intel 2018</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>2. 运行环境<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>在安装库之前：</p>
+<ul class="simple">
+<li><p>编译安装CP2K-2023.1 使用 intel 2018 mkl</p></li>
+<li><p>更改文件install_cp2k_toolchain.sh</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>cp2k-2023.1/tools/toolchain
+vim<span class="w"> </span>install_cp2k_toolchain.sh
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>将该文件的以下位置代码：</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Work out default settings</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
+
+<span class="c1"># tools to turn on by default:</span>
+<span class="nv">with_gcc</span><span class="o">=</span><span class="s2">&quot;__SYSTEM__&quot;</span>
+</pre></div>
+</div>
+<p>改为</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">with_gcc</span><span class="o">=</span><span class="s2">&quot;__INSTALL__&quot;</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>将：</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compiler conflicts</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">with_intel</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;__DONTUSE__&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">with_gcc</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;__INSTALL__&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;You have chosen to use the Intel compiler, therefore the installation of the GCC compiler will be skipped.&quot;</span>
+<span class="w">  </span><span class="nv">with_gcc</span><span class="o">=</span><span class="s2">&quot;__SYSTEM__&quot;</span>
+</pre></div>
+</div>
+<p>改为</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compiler conflicts</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">with_intel</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;__DONTUSE__&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">with_gcc</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;__INSTALL__&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;You have chosen to use the Intel compiler, therefore the installation of the GCC compiler will be skipped.&quot;</span>
+<span class="w">  </span><span class="nv">with_gcc</span><span class="o">=</span><span class="s2">&quot;__INSTALL__&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>注：以上的步骤是使安装编译环境库的过程中即使检测到gcc编译器，也不跳过，仍然安装cp2k-2023.1自带的gcc编译器，这样做的目的是避免在之后的库以及cp2k的编译过程中出现编译错误。</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>3. 安装所有库<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>然后开始正式编译：（CPK需要的库最好提前准备放在build文件夹下）</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>base<span class="o">)</span><span class="w"> </span><span class="o">[</span>root@node01<span class="w"> </span>toolchain<span class="o">]</span><span class="c1"># ./install_cp2k_toolchain.sh --with-gcc=install --math-mode=mkl --with-openmpi=install --with-ptscotch=install --with-superlu=install --with-pexsi=install --with-quip=install --with-plumed=install</span>
+MPI<span class="w"> </span>is<span class="w"> </span>detected<span class="w"> </span>and<span class="w"> </span>it<span class="w"> </span>appears<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>Intel<span class="w"> </span>MPI
+You<span class="w"> </span>have<span class="w"> </span>chosen<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>Intel<span class="w"> </span>compiler,<span class="w"> </span>therefore<span class="w"> </span>the<span class="w"> </span>installation<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>GCC<span class="w"> </span>compiler<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>skipped.
+You<span class="w"> </span>have<span class="w"> </span>chosen<span class="w"> </span>to<span class="w"> </span>install<span class="w"> </span>the<span class="w"> </span>GCC<span class="w"> </span>compiler,<span class="w"> </span>therefore<span class="w"> </span>MPI<span class="w"> </span>libraries<span class="w"> </span>have<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>installed<span class="w"> </span>too
+and<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>Intel<span class="w"> </span>compiler<span class="w"> </span>and<span class="w"> </span>Intel<span class="w"> </span>MPI<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>disabled.
+Compiling<span class="w"> </span>with<span class="w"> </span><span class="m">128</span><span class="w"> </span>processes<span class="w"> </span><span class="k">for</span><span class="w"> </span>target<span class="w"> </span>native.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">GCC</span><span class="w"> </span><span class="o">====================</span>
+gcc-12.2.0.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>GCC<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0
+gcc<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0/bin/gcc
+g++<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0/bin/g++
+gfortran<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/gcc-12.2.0/bin/gfortran
+Step<span class="w"> </span>gcc<span class="w"> </span>took<span class="w"> </span><span class="m">385</span>.00<span class="w"> </span>seconds.
+Step<span class="w"> </span>intel<span class="w"> </span>took<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Getting<span class="w"> </span>proc<span class="w"> </span>arch<span class="w"> </span>info<span class="w"> </span>using<span class="w"> </span>OpenBLAS<span class="w"> </span><span class="nv">tools</span><span class="w"> </span><span class="o">====================</span>
+OpenBLAS<span class="w"> </span>detected<span class="w"> </span><span class="nv">LIBCORE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>zen
+OpenBLAS<span class="w"> </span>detected<span class="w"> </span><span class="nv">ARCH</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nv">x86_64</span>
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">CMake</span><span class="w"> </span><span class="o">====================</span>
+cmake-3.25.1<span class="w"> </span>is<span class="w"> </span>already<span class="w"> </span>installed,<span class="w"> </span>skipping<span class="w"> </span>it.
+Step<span class="w"> </span>cmake<span class="w"> </span>took<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">OpenMPI</span><span class="w"> </span><span class="o">====================</span>
+openmpi-4.1.4.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4
+Slurm<span class="w"> </span>installation<span class="w"> </span>found.<span class="w"> </span>OpenMPI<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>configured<span class="w"> </span>with<span class="w"> </span>--with-pmi.
+Found<span class="w"> </span>directory<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin
+Found<span class="w"> </span>directory<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/lib
+Found<span class="w"> </span>directory<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/include
+mpirun<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpirun
+mpicc<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpicc
+mpicxx<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpicxx
+mpif90<span class="w"> </span>is<span class="w"> </span>installed<span class="w"> </span>as<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/openmpi-4.1.4/bin/mpif90
+Step<span class="w"> </span>openmpi<span class="w"> </span>took<span class="w"> </span><span class="m">523</span>.00<span class="w"> </span>seconds.
+WARNING:<span class="w"> </span><span class="o">(</span>/opt/apps/cp2k-2023.1/tools/toolchain/scripts/stage2/install_mkl.sh,<span class="w"> </span>line<span class="w"> </span><span class="m">23</span><span class="o">)</span><span class="w"> </span>MKL<span class="w"> </span>FFTW3<span class="w"> </span>interface<span class="w"> </span>is<span class="w"> </span>present,<span class="w"> </span>but<span class="w"> </span>FFTW<span class="w"> </span>library<span class="w"> </span>is<span class="w"> </span>needed<span class="w"> </span><span class="k">for</span><span class="w"> </span>FFTW-MPI<span class="w"> </span>wrappers.
+<span class="o">====================</span><span class="w"> </span>Finding<span class="w"> </span>MKL<span class="w"> </span>from<span class="w"> </span>system<span class="w"> </span><span class="nv">paths</span><span class="w"> </span><span class="o">====================</span>
+MKLROOT<span class="w"> </span>is<span class="w"> </span>found<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>/opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/mkl
+libm<span class="w"> </span>is<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span>ld<span class="w"> </span>search<span class="w"> </span>path
+libdl<span class="w"> </span>is<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span>ld<span class="w"> </span>search<span class="w"> </span>path
+Step<span class="w"> </span>mkl<span class="w"> </span>took<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">FFTW</span><span class="w"> </span><span class="o">====================</span>
+fftw-3.3.10.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/fftw-3.3.10
+Step<span class="w"> </span>fftw<span class="w"> </span>took<span class="w"> </span><span class="m">67</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">LIBINT</span><span class="w"> </span><span class="o">====================</span>
+libint-v2.6.0-cp2k-lmax-5.tgz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/libint-v2.6.0-cp2k-lmax-5
+Step<span class="w"> </span>libint<span class="w"> </span>took<span class="w"> </span><span class="m">143</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">LIBXC</span><span class="w"> </span><span class="o">====================</span>
+libxc-6.0.0.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/libxc-6.0.0
+patching<span class="w"> </span>file<span class="w"> </span>src/mgga_xc_b97mv.c
+Step<span class="w"> </span>libxc<span class="w"> </span>took<span class="w"> </span><span class="m">41</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">Libxsmm</span><span class="w"> </span><span class="o">====================</span>
+libxsmm-1.17.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/libxsmm-1.17
+Step<span class="w"> </span>libxsmm<span class="w"> </span>took<span class="w"> </span><span class="m">15</span>.00<span class="w"> </span>seconds.
+Step<span class="w"> </span>scalapack<span class="w"> </span>took<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">COSMA</span><span class="w"> </span><span class="o">====================</span>
+COSMA-v2.6.2.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/COSMA-2.6.2
+Step<span class="w"> </span>cosma<span class="w"> </span>took<span class="w"> </span><span class="m">14</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">ELPA</span><span class="w"> </span><span class="o">====================</span>
+elpa-2022.11.001.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/elpa-2022.11.001/cpu
+Step<span class="w"> </span>elpa<span class="w"> </span>took<span class="w"> </span><span class="m">73</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span>PT-Scotch<span class="w"> </span><span class="o">====================</span>
+scotch_6.0.0.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/scotch-6.0.0
+Step<span class="w"> </span>ptscotch<span class="w"> </span>took<span class="w"> </span><span class="m">3</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">SuperLU_DIST</span><span class="w"> </span><span class="o">====================</span>
+superlu_dist_6.1.0.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/superlu_dist-6.1.0
+Step<span class="w"> </span>superlu<span class="w"> </span>took<span class="w"> </span><span class="m">9</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">PEXSI</span><span class="w"> </span><span class="o">====================</span>
+pexsi_v1.2.0.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/pexsi-1.2.0
+Step<span class="w"> </span>pexsi<span class="w"> </span>took<span class="w"> </span><span class="m">58</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">QUIP</span><span class="w"> </span><span class="o">====================</span>
+QUIP-0.9.10.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+fox-b5b69ef9a46837bd944ba5c9bc1cf9d00a6198a7.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/quip-0.9.10
+Step<span class="w"> </span>quip<span class="w"> </span>took<span class="w"> </span><span class="m">250</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">gsl</span><span class="w"> </span><span class="o">====================</span>
+gsl-2.7.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/gsl-2.7
+Step<span class="w"> </span>gsl<span class="w"> </span>took<span class="w"> </span><span class="m">67</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">PLUMED</span><span class="w"> </span><span class="o">====================</span>
+plumed-src-2.8.1.tgz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/plumed-2.8.1
+Step<span class="w"> </span>plumed<span class="w"> </span>took<span class="w"> </span><span class="m">49</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">hdf5</span><span class="w"> </span><span class="o">====================</span>
+hdf5-1.12.0.tar.bz2<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/hdf5-1.12.0
+Step<span class="w"> </span>hdf5<span class="w"> </span>took<span class="w"> </span><span class="m">108</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">libvdwxc</span><span class="w"> </span><span class="o">====================</span>
+libvdwxc-0.4.0.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/libvdwxc-0.4.0
+Step<span class="w"> </span>libvdwxc<span class="w"> </span>took<span class="w"> </span><span class="m">24</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">spglib</span><span class="w"> </span><span class="o">====================</span>
+spglib-1.16.2.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/spglib-1.16.2
+Step<span class="w"> </span>spglib<span class="w"> </span>took<span class="w"> </span><span class="m">6</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">libvori</span><span class="w"> </span><span class="o">====================</span>
+libvori-220621.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/libvori-220621
+Step<span class="w"> </span>libvori<span class="w"> </span>took<span class="w"> </span><span class="m">17</span>.00<span class="w"> </span>seconds.
+Step<span class="w"> </span>libtorch<span class="w"> </span>took<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">spfft</span><span class="w"> </span><span class="o">====================</span>
+SpFFT-1.0.6.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/SpFFT-1.0.6
+Step<span class="w"> </span>spfft<span class="w"> </span>took<span class="w"> </span><span class="m">6</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">spla</span><span class="w"> </span><span class="o">====================</span>
+SpLA-1.5.4.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/SpLA-1.5.4
+Step<span class="w"> </span>spla<span class="w"> </span>took<span class="w"> </span><span class="m">7</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>Installing<span class="w"> </span><span class="nv">SIRIUS</span><span class="w"> </span><span class="o">====================</span>
+sirius_7.3.2.tar.gz<span class="w"> </span>is<span class="w"> </span>found
+Installing<span class="w"> </span>from<span class="w"> </span>scratch<span class="w"> </span>into<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/sirius-7.3.2
+Step<span class="w"> </span>sirius<span class="w"> </span>took<span class="w"> </span><span class="m">46</span>.00<span class="w"> </span>seconds.
+<span class="o">====================</span><span class="w"> </span>generating<span class="w"> </span>arch<span class="w"> </span><span class="nv">files</span><span class="w"> </span><span class="o">====================</span>
+arch<span class="w"> </span>files<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch<span class="w"> </span>subdirectory
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.ssmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_static.ssmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.sdbg
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_asan.ssmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_coverage.sdbg
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.psmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local.pdbg
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_asan.psmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_static.psmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_warn.psmp
+Wrote<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/local_coverage.pdbg
+<span class="o">==========================</span><span class="w"> </span><span class="nv">usage</span><span class="w"> </span><span class="o">=========================</span>
+Done!
+Now<span class="w"> </span>copy:
+<span class="w">  </span>cp<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/*<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>cp2k/arch/<span class="w"> </span>directory
+To<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>installed<span class="w"> </span>tools<span class="w"> </span>and<span class="w"> </span>libraries<span class="w"> </span>and<span class="w"> </span>cp2k<span class="w"> </span>version
+compiled<span class="w"> </span>with<span class="w"> </span>it<span class="w"> </span>you<span class="w"> </span>will<span class="w"> </span>first<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span>execute<span class="w"> </span>at<span class="w"> </span>the<span class="w"> </span>prompt:
+<span class="w">  </span><span class="nb">source</span><span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/setup
+To<span class="w"> </span>build<span class="w"> </span>CP2K<span class="w"> </span>you<span class="w"> </span>should<span class="w"> </span>change<span class="w"> </span>directory:
+<span class="w">  </span><span class="nb">cd</span><span class="w"> </span>cp2k/
+<span class="w">  </span>make<span class="w"> </span>-j<span class="w"> </span><span class="m">128</span><span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span><span class="nb">local</span><span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&quot;ssmp sdbg psmp pdbg&quot;</span>
+
+arch<span class="w"> </span>files<span class="w"> </span><span class="k">for</span><span class="w"> </span>GPU<span class="w"> </span>enabled<span class="w"> </span>CUDA<span class="w"> </span>versions<span class="w"> </span>are<span class="w"> </span>named<span class="w"> </span><span class="s2">&quot;local_cuda.*&quot;</span>
+arch<span class="w"> </span>files<span class="w"> </span><span class="k">for</span><span class="w"> </span>GPU<span class="w"> </span>enabled<span class="w"> </span>HIP<span class="w"> </span>versions<span class="w"> </span>are<span class="w"> </span>named<span class="w"> </span><span class="s2">&quot;local_hip.*&quot;</span>
+arch<span class="w"> </span>files<span class="w"> </span><span class="k">for</span><span class="w"> </span>OpenCL<span class="w"> </span><span class="o">(</span>GPU<span class="o">)</span><span class="w"> </span>versions<span class="w"> </span>are<span class="w"> </span>named<span class="w"> </span><span class="s2">&quot;local_opencl.*&quot;</span>
+arch<span class="w"> </span>files<span class="w"> </span><span class="k">for</span><span class="w"> </span>coverage<span class="w"> </span>versions<span class="w"> </span>are<span class="w"> </span>named<span class="w"> </span><span class="s2">&quot;local_coverage.*&quot;</span>
+
+Note<span class="w"> </span>that<span class="w"> </span>these<span class="w"> </span>pre-built<span class="w"> </span>arch<span class="w"> </span>files<span class="w"> </span>are<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>GNU<span class="w"> </span>compiler,<span class="w"> </span>users<span class="w"> </span>have<span class="w"> </span>to<span class="w"> </span>adapt<span class="w"> </span>them<span class="w"> </span><span class="k">for</span><span class="w"> </span>other<span class="w"> </span>compilers.
+It<span class="w"> </span>is<span class="w"> </span>possible<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>provided<span class="w"> </span>CP2K<span class="w"> </span>arch<span class="w"> </span>files<span class="w"> </span>as<span class="w"> </span>guidance.
+</pre></div>
+</div>
+<section id="compile-cp2k-2023-1">
+<h3>3. compile cp2k-2023.1<a class="headerlink" href="#compile-cp2k-2023-1" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/arch/*<span class="w"> </span>/opt/apps/cp2k-2023.1/arch/
+<span class="nb">source</span><span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/setup
+<span class="nb">cd</span><span class="w"> </span>/opt/apps/cp2k-2023.1
+make<span class="w"> </span>-j<span class="w"> </span><span class="m">128</span><span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span><span class="nb">local</span><span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&quot;ssmp sdbg psmp pdbg&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>4. 写环境变量<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#cp2k-2023.1 use gcc-12.2.0 and intel-2018 mkl to compile, the intel ifort not use</span>
+<span class="c1">#intel-2018#</span>
+<span class="nb">source</span><span class="w"> </span>/opt/intel/intel-2018up4/compilers_and_libraries_2018.5.274/linux/mkl/bin/mklvars.sh<span class="w"> </span>intel64
+<span class="c1">#cp2k-2023.1</span>
+<span class="nb">source</span><span class="w"> </span>/opt/apps/cp2k-2023.1/tools/toolchain/install/setup
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span>/opt/apps/cp2k-2023.1/exe/local:<span class="si">${</span><span class="nv">PATH</span><span class="si">}</span>
+<span class="c1"># how to use:   source thisfile</span>
+</pre></div>
+</div>
+<p>🎉️ <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.bashrc</span></code>之后，可使用诸如<code class="docutils literal notranslate"><span class="pre">cp2k.popt</span> <span class="pre">-v</span></code>命令查看是否成功。</p>
+</section>
+<section id="id5">
+<h3>5. 测试<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span><span class="nb">test</span>
+<span class="nb">cd</span><span class="w"> </span><span class="nb">test</span>
+touch<span class="w"> </span>test.inp
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>写入以下内容</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Generated by Multiwfn</span>
+<span class="p">&amp;</span>GLOBAL
+<span class="w">  </span>PROJECT<span class="w"> </span><span class="nb">test</span>
+<span class="w">  </span>PRINT_LEVEL<span class="w"> </span>LOW
+<span class="w">  </span>RUN_TYPE<span class="w"> </span>ENERGY
+<span class="p">&amp;</span>END<span class="w"> </span>GLOBAL
+
+<span class="p">&amp;</span>FORCE_EVAL
+<span class="w">  </span>METHOD<span class="w"> </span>Quickstep
+<span class="w">  </span><span class="p">&amp;</span>SUBSYS
+<span class="w">    </span><span class="p">&amp;</span>CELL
+<span class="w">      </span>A<span class="w">     </span><span class="m">7</span>.13358000<span class="w">     </span><span class="m">0</span>.00000000<span class="w">     </span><span class="m">0</span>.00000000
+<span class="w">      </span>B<span class="w">     </span><span class="m">0</span>.00000000<span class="w">     </span><span class="m">7</span>.13358000<span class="w">     </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">     </span><span class="m">0</span>.00000000<span class="w">     </span><span class="m">7</span>.13358000
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>CELL
+<span class="w">    </span><span class="p">&amp;</span>COORD
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">1</span>.78339506
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">2</span>.67509260
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">0</span>.00000000
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">0</span>.89169753
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.00000000<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">0</span>.89169753<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">1</span>.78339506<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">2</span>.67509260<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">      </span>C<span class="w">     </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">3</span>.56679013<span class="w">    </span><span class="m">5</span>.35018519
+<span class="w">      </span>C<span class="w">     </span><span class="m">4</span>.45848766<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">6</span>.24188272
+<span class="w">      </span>C<span class="w">     </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">5</span>.35018519<span class="w">    </span><span class="m">3</span>.56679013
+<span class="w">      </span>C<span class="w">     </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">6</span>.24188272<span class="w">    </span><span class="m">4</span>.45848766
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>COORD
+<span class="w">    </span><span class="p">&amp;</span>KIND<span class="w"> </span>C
+<span class="w">      </span>ELEMENT<span class="w"> </span>C
+<span class="w">      </span>BASIS_SET<span class="w"> </span>DZVP-MOLOPT-SR-GTH
+<span class="w">      </span>POTENTIAL<span class="w"> </span>GTH-PBE
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>KIND
+<span class="w">  </span><span class="p">&amp;</span>END<span class="w"> </span>SUBSYS
+
+<span class="w">  </span><span class="p">&amp;</span>DFT
+<span class="w">    </span>BASIS_SET_FILE_NAME<span class="w">  </span>BASIS_MOLOPT
+<span class="w">    </span>POTENTIAL_FILE_NAME<span class="w">  </span>POTENTIAL
+<span class="c1">#   WFN_RESTART_FILE_NAME to_be_specified</span>
+<span class="w">    </span>CHARGE<span class="w">    </span><span class="m">0</span><span class="w"> </span><span class="c1">#Net charge</span>
+<span class="w">    </span>MULTIPLICITY<span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="c1">#Spin multiplicity</span>
+<span class="w">    </span><span class="p">&amp;</span>QS
+<span class="w">      </span>EPS_DEFAULT<span class="w"> </span>1E-10<span class="w"> </span><span class="c1">#This is default. Set all EPS_xxx to values such that the energy will be correct up to this value</span>
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>QS
+<span class="w">    </span><span class="p">&amp;</span>XC
+<span class="w">      </span><span class="p">&amp;</span>XC_FUNCTIONAL<span class="w"> </span>PBE
+<span class="w">      </span><span class="p">&amp;</span>END<span class="w"> </span>XC_FUNCTIONAL
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>XC
+<span class="w">    </span><span class="p">&amp;</span>MGRID
+<span class="w">      </span>CUTOFF<span class="w"> </span><span class="m">350</span><span class="w"> </span><span class="c1">#Use 500 for high accuracy calculation</span>
+<span class="w">      </span>REL_CUTOFF<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="c1">#Use 60 for high accuracy calculation</span>
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>MGRID
+<span class="w">    </span><span class="p">&amp;</span>SCF
+<span class="w">      </span>MAX_SCF<span class="w"> </span><span class="m">128</span>
+<span class="w">      </span>EPS_SCF<span class="w"> </span>1E-5<span class="w"> </span><span class="c1">#Target accuracy for SCF convergence</span>
+<span class="c1">#     SCF_GUESS RESTART #Uncomment this can restart from WFN_RESTART_FILE_NAME file</span>
+<span class="w">      </span><span class="p">&amp;</span>DIAGONALIZATION
+<span class="w">        </span>ALGORITHM<span class="w"> </span>STANDARD<span class="w"> </span><span class="c1">#Algorithm for diagonalization. DAVIDSON is faster for large systems</span>
+<span class="w">      </span><span class="p">&amp;</span>END<span class="w"> </span>DIAGONALIZATION
+<span class="w">      </span><span class="p">&amp;</span>MIXING
+<span class="w">        </span>METHOD<span class="w"> </span>BROYDEN_MIXING
+<span class="w">        </span>ALPHA<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span><span class="c1">#Default. Mixing 40% of new density matrix with the old one</span>
+<span class="w">        </span>NBROYDEN<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="c1">#Default is 4. Number of previous steps stored for the actual mixing scheme</span>
+<span class="w">      </span><span class="p">&amp;</span>END<span class="w"> </span>MIXING
+<span class="w">    </span><span class="p">&amp;</span>END<span class="w"> </span>SCF
+<span class="w">  </span><span class="p">&amp;</span>END<span class="w"> </span>DFT
+<span class="p">&amp;</span>END<span class="w"> </span>FORCE_EVAL
+</pre></div>
+</div>
+<p>执行计算：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mpirun<span class="w"> </span>-np<span class="w"> </span><span class="m">4</span><span class="w"> </span>cp2k.popt<span class="w"> </span>-i<span class="w"> </span>cp2k.inp<span class="w"> </span>-o<span class="w"> </span>cp2k.out
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../TheoreticalComputing2.html" class="btn btn-neutral float-left" title="Ab Initio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="VASP_compile_install.html" class="btn btn-neutral float-right" title="VASP编译与安装" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

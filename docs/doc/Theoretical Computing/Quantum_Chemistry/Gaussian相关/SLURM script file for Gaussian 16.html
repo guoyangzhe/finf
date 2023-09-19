@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLURM script file for Gaussian 16 &mdash; SciBro v0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="ORCA 相关" href="../orca.html" />
+    <link rel="prev" title="Gaussian计算案例" href="Gaussian%E8%AE%A1%E7%AE%97%E6%A1%88%E4%BE%8B.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HPC%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/hpc.html">HPC 简易集群部署</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../TheoreticalComputing.html">Quantum Chemistry</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../gaussian.html">Gaussain 相关</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Gaussian%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85.html">Gaussian编译与安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Gaussian%E8%AE%A1%E7%AE%97%E6%A1%88%E4%BE%8B.html">Gaussian计算案例</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SLURM script file for Gaussian 16</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../orca.html">ORCA 相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TheoreticalComputing3.html">Molecular Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../%E4%B8%BB%E5%8A%9B%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%8A%E5%88%86%E7%B1%BB.html">主力软件推荐及分类</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Photonics/optical.html">Spectroscopy and Principles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/comsol%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.html">COMSOL 使用指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Plasmon/%E8%A1%A8%E9%9D%A2%E7%AD%89%E7%A6%BB%E6%BF%80%E5%85%83.html">Surface Plasmon</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ProgramLanguages</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ProgramLanguages/1-Fortran.html">Fortran相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ProgramLanguages/2-Python.html">Python相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ProgramLanguages/3-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">科研计算tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/1-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80Tips.html">编程语言 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/2-%E6%97%A5%E5%B8%B8%E5%8A%9E%E5%85%ACoffice.html">日常办公Office等 Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../%E7%A7%91%E7%A0%94%E8%AE%A1%E7%AE%97tips/3-%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F.html">其他软件 Tips</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ACGN&amp;Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACGN%26Misc/%E4%BA%8C%E6%AC%A1%E5%85%83.html">二次元</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../TheoreticalComputing.html">Quantum Chemistry</a></li>
+          <li class="breadcrumb-item"><a href="../gaussian.html">Gaussain 相关</a></li>
+      <li class="breadcrumb-item active">SLURM script file for Gaussian 16</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Theoretical Computing/Quantum_Chemistry/Gaussian相关/SLURM script file for Gaussian 16.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="slurm-script-file-for-gaussian-16">
+<h1>SLURM script file for Gaussian 16<a class="headerlink" href="#slurm-script-file-for-gaussian-16" title="Permalink to this heading"></a></h1>
+<div class="literal-block-wrapper docutils container" id="test333">
+<div class="code-block-caption"><span class="caption-text">test</span><a class="headerlink" href="#test333" title="Permalink to this code"></a></div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/bash -l</span>
+<span class="hll"><span class="linenos"> 2</span><span class="c1"># Section for defining queueing system variables:</span>
+</span><span class="linenos"> 3</span><span class="c1"># SLURM-section</span>
+<span class="linenos"> 4</span><span class="c1">#SBATCH --job-name=watdim01</span>
+<span class="linenos"> 5</span><span class="c1">#SBATCH --output=watdim01.slurmout</span>
+<span class="linenos"> 6</span><span class="c1">#SBATCH --partition=cluster8</span>
+<span class="linenos"> 7</span><span class="c1">#SBATCH --nodes=1</span>
+<span class="linenos"> 8</span><span class="c1">#SBATCH --cpus-per-task=8</span>
+<span class="linenos"> 9</span><span class="c1">#SBATCH --threads-per-core=1</span>
+<span class="linenos">10</span><span class="c1">#SBATCH --mem-per-cpu=2000</span>
+<span class="linenos">11</span><span class="c1">######################################</span>
+<span class="linenos">12</span><span class="c1"># Section for defining job variables and settings:</span>
+<span class="linenos">13</span><span class="nv">g16root</span><span class="o">=</span><span class="s2">&quot;/scr1/g16_a.03_sse4&quot;</span>
+<span class="linenos">14</span><span class="nv">g16dir</span><span class="o">=</span><span class="s2">&quot;/scr1/g16_a.03_sse4/g16&quot;</span>
+<span class="linenos">15</span><span class="nv">LaunchDir</span><span class="o">=</span><span class="nv">$PWD</span><span class="p">;</span>
+<span class="linenos">16</span><span class="nv">LocalRunDir</span><span class="o">=</span>/scr1/<span class="nv">$USER</span>/<span class="nv">$SLURM_JOB_ID</span>
+<span class="linenos">17</span><span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_SCRDIR</span><span class="o">=</span><span class="nv">$LocalRunDir</span><span class="p">;</span>
+<span class="linenos">18</span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
+<span class="linenos">19</span><span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_EXEDIR</span><span class="o">=</span><span class="nv">$g16dir</span>
+<span class="linenos">20</span><span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_ARCHDIR</span><span class="o">=</span><span class="nv">$g16dir</span>
+<span class="linenos">21</span>cat<span class="w"> </span>&gt;/<span class="nv">$LocalRunDir</span>/<span class="nv">$SLURM_JOB_NAME</span>.gjf<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="linenos">22</span><span class="s">%chk=$GAUSS_SCRDIR/$SLURM_JOB_NAME.chk</span>
+<span class="linenos">23</span><span class="s">%CPU=0-7</span>
+<span class="linenos">24</span><span class="s">%mem=16000MB</span>
+<span class="linenos">25</span><span class="s">#p b3lyp/6-31+G(d,p) opt=(Z-Matrix) iop(1/7=30) int=ultrafine  EmpiricalDispersion=GD3</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="s">watdim01 water dimer b3lyp-D3/6-31+G(d,p) opt tight Cs, int=ultrafine</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="s">0 1</span>
+<span class="linenos">30</span><span class="s">O1</span>
+<span class="linenos">31</span><span class="s">H2  1  r2</span>
+<span class="linenos">32</span><span class="s">H3  1  r3  2  a3</span>
+<span class="linenos">33</span><span class="s">X4  2  1.0  1  90.0  3  180.0</span>
+<span class="linenos">34</span><span class="s">O5  2  r5  4  a5  1  180.0</span>
+<span class="linenos">35</span><span class="s">H6  5  r6  2  a6  4  d6</span>
+<span class="linenos">36</span><span class="s">H7  5  r6  2  a6  4  -d6</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="s">r2=0.9732</span>
+<span class="linenos">39</span><span class="s">r3=0.9641</span>
+<span class="linenos">40</span><span class="s">r5=1.9128</span>
+<span class="linenos">41</span><span class="s">r6=0.9659</span>
+<span class="linenos">42</span><span class="s">a3=105.9</span>
+<span class="linenos">43</span><span class="s">a5=83.1</span>
+<span class="linenos">44</span><span class="s">a6=112.1</span>
+<span class="linenos">45</span><span class="s">d6=59.6</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="s">EOF</span>
+<span class="linenos">49</span><span class="nv">$g16dir</span>/g16<span class="w"> </span>&lt;<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>/<span class="nv">$SLURM_JOB_NAME</span>.gjf<span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$LaunchDir</span>/<span class="nv">$SLURM_JOB_NAME</span>.log
+<span class="linenos">50</span>cp<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>/<span class="nv">$SLURM_JOB_NAME</span>.chk<span class="w"> </span><span class="nv">$LaunchDir</span>/
+<span class="linenos">51</span><span class="c1"># The following line will clean up /scr1 after finishing the job</span>
+<span class="linenos">52</span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$LocalRunDir</span>
+<span class="linenos">53</span><span class="c1"># If your job finishes normally, delete the empty .slurmout file</span>
+<span class="linenos">54</span><span class="nv">slurmout_check</span><span class="o">=</span><span class="sb">`</span>cat<span class="w"> </span><span class="nv">$SLURM_JOB_NAME</span>.slurmout<span class="sb">`</span>
+<span class="linenos">55</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="nv">$slurmout_check</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="linenos">56</span>rm<span class="w"> </span>-f<span class="w"> </span><span class="nv">$SLURM_JOB_NAME</span>.slurmout
+<span class="linenos">57</span><span class="k">fi</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Gaussian%E8%AE%A1%E7%AE%97%E6%A1%88%E4%BE%8B.html" class="btn btn-neutral float-left" title="Gaussian计算案例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../orca.html" class="btn btn-neutral float-right" title="ORCA 相关" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Sat, 08 Jul 2023 17:20:13.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

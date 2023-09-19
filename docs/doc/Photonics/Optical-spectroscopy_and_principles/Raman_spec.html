@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Raman] 拉曼光谱 &mdash; SciBro</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/sphinx_rtd_size.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=10067107"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="[Schottky barrier] 肖特基势垒" href="Schottky_Barrier.html" />
+    <link rel="prev" title="[IR]红外光谱" href="IR.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #663d74" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SciBro
+              <img src="../../../_static/logo-1.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.1 stable
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">HPC Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/1-hpc.html">HPC Cluster Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../HPC_Deployment/2-LinuxShell.html">Linux Shell</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Computing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/Recommended_Software.html">Recommended and categorized software for major applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing.html">Quantum Chemistry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing2.html">Ab Initio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Theoretical_Computing/TheoreticalComputing3.html">Molecular Dynamics</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Photonics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gpawopticalresponse.html">GPAW Optical Response</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../optical.html">Spectroscopy and Principles</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="UV-Vis.html">[UV-Vis]紫外-可见吸收光谱</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fluorescence.html">[Fluorescence]荧光光谱</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IR.html">[IR]红外光谱</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">[Raman] 拉曼光谱</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">😂 原理介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">📐 实际应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">📚 参考文献</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">💯 总结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Schottky_Barrier.html">[Schottky barrier] 肖特基势垒</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Plasmon</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/1-Surface_Plasmon.html">Surface Plasmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Plasmon/2-FEMandFDTD.html">FEM and FDTD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Scientific tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/1-ProgramTips.html">ProgramTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/2-office.html">OfficeTips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/3-OtherSoft.html">OtherSoft. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Scientific_tips/4-Frequently_links.html">Frequently Used Links</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #663d74" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SciBro</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../optical.html">Spectroscopy and Principles</a></li>
+      <li class="breadcrumb-item active">[Raman] 拉曼光谱</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/ngaodut/scibro/blob/masterdoc/Photonics/Optical-spectroscopy_and_principles/Raman_spec.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!-- TOC --><ul class="simple">
+<li><p><a class="reference external" href="#raman-%E6%8B%89%E6%9B%BC%E5%85%89%E8%B0%B1">[Raman] 拉曼光谱</a></p>
+<ul>
+<li><p><a class="reference external" href="#-%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D">😂 原理介绍</a></p>
+<ul>
+<li><p><a class="reference external" href="#%E6%8B%89%E6%9B%BC%E5%85%89%E8%B0%B1%E6%8A%80%E6%9C%AF">拉曼光谱技术</a></p></li>
+<li><p><a class="reference external" href="#%E6%8B%89%E6%9B%BC%E6%95%A3%E5%B0%84%E9%A2%91%E7%8E%87">拉曼散射频率</a></p></li>
+<li><p><a class="reference external" href="#%E5%AE%9E%E9%AA%8C%E4%B8%8A%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0">实验上如何实现</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#-%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8">📐 实际应用</a></p>
+<ul>
+<li><p><a class="reference external" href="#%E5%85%B6%E4%BB%96">其他</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">📚 参考文献</a></p></li>
+<li><p><a class="reference external" href="#-%E6%80%BB%E7%BB%93">💯 总结</a></p></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC --><section id="raman">
+<h1>[Raman] 拉曼光谱<a class="headerlink" href="#raman" title="Link to this heading"></a></h1>
+<p>N.Gao 2023/4/16</p>
+<section id="id1">
+<h2>😂 原理介绍<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><strong>拉曼光谱</strong>（Raman spectroscopy）是一种用来研究物质的分子振动、旋转和振动的非侵入性技术。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>它利用激光的光学原理，通过照射样品并测量散射光的频率变化，从而得出物质分子的信息。
+拉曼光谱技术可以用来鉴定物质、分析其组成、结构和化学键等方面的信息。
+拉曼光谱技术的基本原理是拉曼散射效应，也就是在激光照射下，分子会吸收和散射光的能量，导致光的频率发生变化。
+这个变化与分子振动、旋转和振动的信息有关，因此可以通过分析散射光的频率变化来推断分子的信息。
+拉曼光谱技术广泛应用于化学、生物、物理学等领域，是一种重要的分析工具。
+</pre></div>
+</div>
+<section id="id2">
+<h3>拉曼光谱技术<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p><strong>拉曼光谱技术</strong> 的<em>基本原理</em>是拉曼散射效应，也称为拉曼效应。当样品受到激光光束的照射时，分子内部的电子、原子核和化学键等会因为光的作用而发生振动、旋转和振动旋转等运动，导致样品内部电场的变化，从而产生散射光。与入射光的频率相比较，散射光的频率发生了微小的变化，这种频率差就是拉曼位移（Raman shift），它包含了分子振动的信息。</p>
+</section>
+<section id="id3">
+<h3>拉曼散射频率<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p><strong>拉曼散射</strong> 的<em>频率</em>差量非常小，通常在数十到数千赫兹的范围内，因此需要非常高精度的光学仪器来测量。通常，拉曼光谱技术会通过将样品置于高功率激光束下，然后通过光谱仪将散射光分离和测量。这种技术可以提供分子的振动模式、结构和化学键等信息，可以用来鉴定物质、分析组成和结构等。
+总之，拉曼光谱技术的基本原理是通过分析样品受到激光照射后散射光的频率变化，从而获得分子振动、旋转和化学键等信息。</p>
+</section>
+<section id="id4">
+<h3>实验上如何实现<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>实验上，拉曼光谱的测量是通过光谱仪来实现的。首先，一束激光被聚焦到待测物样品上，激光的能量会与样品中的分子相互作用，从而导致分子发生振动和转动。然后，样品中的分子会发射出拉曼散射光，即散射光子的能量等于入射光子的能量加上或减去分子的振动或转动能量。这些散射光子的频率和强度可以通过光谱仪来测量。光谱仪会将样品所产生的散射光分散成不同频率的光束，并通过一个光敏探测器来测量各个频率的光的强度。在拉曼光谱图上，横轴表示频率差（即拉曼位移），纵轴表示散射光的强度。在光谱图中，每个特征峰的位置和强度都代表着样品中不同的振动模式和化学键的信息。在实验上， <strong>拉曼强度</strong> 是指散射光的强度，通常用强度单位如<code class="docutils literal notranslate"><span class="pre">计数</span></code>、<code class="docutils literal notranslate"><span class="pre">弧度</span></code>、<code class="docutils literal notranslate"><span class="pre">百分比</span></code>等来表示。在拉曼光谱测量中，拉曼强度越高，就代表着样品中振动模式或化学键的振动越强烈。通过对样品的拉曼强度的测量和分析，可以得到样品中分子的结构、组成和化学键等信息。</p>
+</section>
+</section>
+<section id="id5">
+<h2>📐 实际应用<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>待更新</p></li>
+</ul>
+<section id="id6">
+<h3>其他<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>待更新</p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2>📚 参考文献<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>待更新</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>💯 总结<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>待更新</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="IR.html" class="btn btn-neutral float-left" title="[IR]红外光谱" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Schottky_Barrier.html" class="btn btn-neutral float-right" title="[Schottky barrier] 肖特基势垒" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, blgxwk, gndut@outlook.com.
+      <span class="lastupdated">Last updated on Tue, 19 Sep 2023 19:27:43.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
