@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
-project = 'finf'
+project = 'Kwok\'s Blog'
 copyright = f'{datetime.date.today().year}, finf, kwok3626@gmail.me'
 #copyright =f '2023blgxwk, gudut@outlook.com, gn, Last updated on {datetime.date.today().year}'
 author = 'Kwok'
@@ -80,7 +80,7 @@ html_context = {
     'github_version': 'master',
     }
 
-html_title = 'finf'
+html_title = 'Home'
 
 html_favicon = 'favicon.png' # 或者 'favicon.ico'
 html_logo = "../media/rest-syntax/pic-video/logo-1.png"
