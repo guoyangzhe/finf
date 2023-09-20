@@ -13,7 +13,7 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 project = 'Kwok\'s Blog'
-copyright = f'{datetime.date.today().year}, finf, kwok3626@gmail.me'
+copyright = f'{datetime.date.today().year}, finf, kwok3626@gmail.com'
 #copyright =f '2023blgxwk, gudut@outlook.com, gn, Last updated on {datetime.date.today().year}'
 author = 'Kwok'
 version = 'v0.1'
